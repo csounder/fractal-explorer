@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dr.C - Fractal Explorer - (L-Systems)</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #151515;
+        --bg-tertiary: #1a1a1a;
+        --accent: #00ff88;
+        --accent-dim: #00cc66;
+        --accent-glow: rgba(0, 255, 136, 0.3);
+        --text: #e0e0e0;
+        --text-dim: #999;
+        --border: #333;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Rajdhani", sans-serif;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      h1 {
+        font-family: "Orbitron", monospace;
+        font-size: 3.5em;
+        font-weight: 800;
+        color: var(--accent);
+        text-shadow:
+          0 0 20px var(--accent-glow),
+          0 0 40px var(--accent-glow);
+        margin-bottom: 10px;
+      }
+
+      .tagline {
+        font-size: 1.4em;
+        color: var(--text-dim);
+        margin-top: 10px;
+      }
+
+      .hero {
+        background: var(--bg-secondary);
+        border: 2px solid var(--accent);
+        border-radius: 12px;
+        padding: 40px;
+        margin-bottom: 40px;
+        box-shadow: 0 0 30px var(--accent-glow);
+      }
+
+      .hero h2 {
+        font-family: "Orbitron", monospace;
+        color: var(--accent);
+        margin-bottom: 20px;
+      }
+
+      .hero p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 15px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .feature-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 20px var(--accent-glow);
+        transform: translateY(-5px);
+      }
+
+      .feature-card h3 {
+        font-family: "Orbitron", monospace;
+        color: var(--accent);
+        margin-bottom: 15px;
+        font-size: 1.3em;
+      }
+
+      .feature-card p {
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+
+      .cta-section {
+        text-align: center;
+        margin: 60px 0;
+      }
+
+      .cta-button {
+        display: inline-block;
+        font-family: "Orbitron", monospace;
+        font-size: 1.5em;
+        font-weight: 600;
+        color: var(--bg-primary);
+        background: var(--accent);
+        padding: 20px 50px;
+        border-radius: 8px;
+        text-decoration: none;
+        box-shadow: 0 0 30px var(--accent-glow);
+        transition: all 0.3s ease;
+        margin: 10px;
+      }
+
+      .cta-button:hover {
+        background: #00ffaa;
+        box-shadow: 0 0 50px var(--accent-glow);
+        transform: scale(1.05);
+      }
+
+      .secondary-button {
+        background: var(--bg-secondary);
+        color: var(--accent);
+        border: 2px solid var(--accent);
+      }
+
+      .secondary-button:hover {
+        background: var(--accent);
+        color: var(--bg-primary);
+      }
+
+      .preset-showcase {
+        background: var(--bg-tertiary);
+        border-radius: 8px;
+        padding: 30px;
+        margin-bottom: 40px;
+      }
+
+      .preset-showcase h2 {
+        font-family: "Orbitron", monospace;
+        color: var(--accent);
+        margin-bottom: 20px;
+      }
+
+      .preset-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .preset-item {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 0.95em;
+        color: var(--text-dim);
+      }
+
+      .spec-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .spec-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .spec-list li:last-child {
+        border-bottom: none;
+      }
+
+      .spec-list strong {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 80px;
+        padding-top: 40px;
+        border-top: 1px solid var(--border);
+        color: var(--text-dim);
+      }
+
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🌿 Dr.C - Fractal Explorer</h1>
+        <p class="tagline">
+          L-System Sonification with Csound WASM 7 • Live Performance Tool
+        </p>
+      </header>
+
+      <div class="hero">
+        <h2>What is Dr.C - Fractal Explorer?</h2>
+        <p>
+          Dr.C - Fractal Explorer is a professional web-based instrument that
+          transforms L-system fractals into music in real-time. Using Csound
+          WASM 7 for professional audio synthesis, it maps fractal geometry
+          (depth, angle, position) to synthesis parameters, creating organic,
+          evolving soundscapes.
+        </p>
+        <p>
+          Designed for both algorithmic composition and live performance, it
+          includes 57 factory presets, 8 synthesis engines, master volume
+          control, and comprehensive parameter mapping. All processing runs
+          client-side in your browser — no installation required.
+        </p>
+      </div>
+
+      <div class="cta-section">
+        <a href="app.html" class="cta-button">🎵 LAUNCH APPLICATION</a>
+        <a href="QUICKSTART.md" class="cta-button secondary-button"
+          >📖 QUICK START GUIDE</a
+        >
+        <a href="TECHNICAL.md" class="cta-button secondary-button"
+          >⚙️ TECHNICAL DOCS</a
+        >
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>🌀 5 Fractal Types</h3>
+          <p>
+            Algae, Tree, Dragon Curve, Koch Snowflake, and Sierpinski Triangle.
+            Each with unique geometric properties that create distinct musical
+            patterns.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🎹 8 Synthesis Engines</h3>
+          <p>
+            Karplus-Strong Pluck, FM Bell, Additive Bell, Clarinet, Organ,
+            Granular Synthesis, Complex FM (4-operator), and Noise & Filters.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🎛️ Parameter Mapping</h3>
+          <p>
+            Map fractal properties to pitch, duration, timbre, pan, attack,
+            release, reverb room size, and reverb wet mix. Real-time control
+            over all parameters.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🏭 57 Factory Presets</h3>
+          <p>
+            Curated presets: 15 fractal-based, 24 instrument-based, 5 extra
+            noise presets, and 13 fast tempo (⚡) variations. Each showcases
+            unique mappings and sonic characteristics. Auto-play enabled for
+            live performance.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🔊 Csound WASM 7</h3>
+          <p>
+            Professional audio synthesis using Csound 7 in the browser. Includes
+            freeverb reverb, 1st-order ambisonic spatialization, and polyphonic
+            voice management.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h3>🎨 Real-time Visualization</h3>
+          <p>
+            Watch fractals grow in real-time with playback highlighting. Current
+            note cursor and parameter overlay show exactly what's playing.
+          </p>
+        </div>
+      </div>
+
+      <div class="preset-showcase">
+        <h2>🎵 Factory Preset Bank (57 Total)</h2>
+
+        <h3 style="color: var(--text); margin-top: 30px; margin-bottom: 10px">
+          Fractal-Based Presets (15)
+        </h3>
+        <div class="preset-list">
+          <div class="preset-item">🌿 Algae: Gentle Growth</div>
+          <div class="preset-item">🌿 Algae: Bell Garden</div>
+          <div class="preset-item">🌿 Algae: Organic FM</div>
+          <div class="preset-item">🌲 Tree: Morning Branches</div>
+          <div class="preset-item">🌲 Tree: Sacred Geometry</div>
+          <div class="preset-item">🌲 Tree: Plucked Canopy</div>
+          <div class="preset-item">🐉 Dragon: Spiral Dance</div>
+          <div class="preset-item">🐉 Dragon: Metallic Bells</div>
+          <div class="preset-item">🐉 Dragon: Granular Fold</div>
+          <div class="preset-item">❄️ Koch: Crystal Snowflake</div>
+          <div class="preset-item">❄️ Koch: Ice Cathedral</div>
+          <div class="preset-item">❄️ Koch: Fractal Chimes</div>
+          <div class="preset-item">🔺 Sierpinski: Triangle Ritual</div>
+          <div class="preset-item">🔺 Sierpinski: Sacred FM</div>
+          <div class="preset-item">🔺 Sierpinski: Geometric Bells</div>
+        </div>
+
+        <h3 style="color: var(--text); margin-top: 30px; margin-bottom: 10px">
+          Instrument-Based Presets (24)
+        </h3>
+        <div class="preset-list">
+          <div class="preset-item">🎸 Pluck: Fast Arpeggio</div>
+          <div class="preset-item">🎸 Pluck: Bright Melody</div>
+          <div class="preset-item">🎸 Pluck: Deep Resonance</div>
+          <div class="preset-item">🔔 FM Bell: Shimmer</div>
+          <div class="preset-item">🔔 FM Bell: Cascade</div>
+          <div class="preset-item">🔔 FM Bell: Bright Chime</div>
+          <div class="preset-item">🎵 Bell: Crystal Garden</div>
+          <div class="preset-item">🎵 Bell: Temple Gong</div>
+          <div class="preset-item">🎵 Bell: Wind Chimes</div>
+          <div class="preset-item">🎷 Clarinet: Forest Walk</div>
+          <div class="preset-item">🎷 Clarinet: Warm Legato</div>
+          <div class="preset-item">🎷 Clarinet: Bright Staccato</div>
+          <div class="preset-item">🎹 Organ: Cathedral Drone</div>
+          <div class="preset-item">🎹 Organ: Harmonic Layers</div>
+          <div class="preset-item">🎹 Organ: Celestial Harmony</div>
+          <div class="preset-item">⚛️ Granular: Cloud Texture</div>
+          <div class="preset-item">⚛️ Granular: Dense Swarm</div>
+          <div class="preset-item">⚛️ Granular: Sparse Bells</div>
+          <div class="preset-item">🌀 Complex FM: Parallel Harmonics</div>
+          <div class="preset-item">🌀 Complex FM: Cascade Bells</div>
+          <div class="preset-item">🌀 Complex FM: Diamond Algorithm</div>
+          <div class="preset-item">💨 Noise: Wind Sweep</div>
+          <div class="preset-item">💨 Noise: Bandpass Rhythm</div>
+          <div class="preset-item">💨 Noise: Pink Cascade</div>
+        </div>
+
+        <h3 style="color: var(--text); margin-top: 30px; margin-bottom: 10px">
+          Extra Noise Presets (5)
+        </h3>
+        <div class="preset-list">
+          <div class="preset-item">💨 Noise: Highpass Shimmer</div>
+          <div class="preset-item">💨 Noise: Resonant Sweep</div>
+          <div class="preset-item">💨 Noise: Brown Texture</div>
+          <div class="preset-item">💨 Noise: Cyclic Filter Dance</div>
+          <div class="preset-item">💨 Noise: White Storm</div>
+        </div>
+
+        <h3 style="color: var(--text); margin-top: 30px; margin-bottom: 10px">
+          Fast Tempo Presets ⚡ (13)
+        </h3>
+        <div class="preset-list">
+          <div class="preset-item">⚡ Algae: Fast Growth</div>
+          <div class="preset-item">⚡ Tree: Racing Branches</div>
+          <div class="preset-item">⚡ Dragon: Speed Spiral</div>
+          <div class="preset-item">⚡ Koch: Crystal Rush</div>
+          <div class="preset-item">⚡ Sierpinski: Triangle Sprint</div>
+          <div class="preset-item">⚡ Pluck: Lightning</div>
+          <div class="preset-item">⚡ FM Bell: Rapid Fire</div>
+          <div class="preset-item">⚡ Bell: Blitz</div>
+          <div class="preset-item">⚡ Clarinet: Velocity</div>
+          <div class="preset-item">⚡ Organ: Toccata</div>
+          <div class="preset-item">⚡ Granular: Swarm Attack</div>
+          <div class="preset-item">⚡ Complex FM: Turbo</div>
+          <div class="preset-item">⚡ Noise: Hurricane</div>
+        </div>
+      </div>
+
+      <div class="hero">
+        <h2>⚙️ Technical Specifications</h2>
+        <ul class="spec-list">
+          <li><strong>Audio Engine:</strong> Csound WASM 7.0.0-beta26</li>
+          <li>
+            <strong>Sample Rate:</strong> 44.1kHz, 32 samples/block, stereo
+            output
+          </li>
+          <li>
+            <strong>Instruments:</strong> 8 synthesis engines (5 melodic + 3
+            textural)
+          </li>
+          <li>
+            <strong>Effects:</strong> Freeverb reverb, 1st-order ambisonic
+            spatialization
+          </li>
+          <li>
+            <strong>Fractals:</strong> L-system generator with 5 built-in curves
+          </li>
+          <li>
+            <strong>Mappings:</strong> 8 fractal-to-synthesis parameter mappings
+          </li>
+          <li><strong>Master Volume:</strong> Real-time control (0-100%)</li>
+          <li><strong>Polyphony:</strong> 1-32 voices (user adjustable)</li>
+          <li><strong>Tempo Range:</strong> 30-300 BPM with max 2000 events</li>
+          <li>
+            <strong>Factory Presets:</strong> 57 total (15 fractal + 24
+            instrument + 5 noise + 13 fast)
+          </li>
+          <li>
+            <strong>Preset System:</strong> localStorage-based with
+            save/load/delete
+          </li>
+          <li>
+            <strong>Browser Support:</strong> Modern browsers with Web Audio API
+          </li>
+        </ul>
+      </div>
+
+      <div class="cta-section">
+        <a href="app.html" class="cta-button">🎵 START EXPLORING</a>
+      </div>
+
+      <footer>
+        <p>
+          <strong>Dr.C - Fractal Explorer - (L-Systems)</strong><br />
+          Part of the Dr.C Suite by
+          <a href="https://github.com/rboulanger" target="_blank"
+            >Richard Boulanger</a
+          ><br />
+          Powered by <a href="https://csound.com" target="_blank">Csound</a> •
+          Built with ❤️ for algorithmic music exploration
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9em">
+          <a href="https://github.com/rboulanger/fractal-explorer"
+            >GitHub Repository</a
+          >
+          |
+          <a href="QUICKSTART.md">Quick Start Guide</a> |
+          <a href="TECHNICAL.md">Technical Documentation</a> |
+          <a href="README.md">README</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

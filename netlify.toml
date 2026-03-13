@@ -1,0 +1,66 @@
+# Netlify Configuration for Dr.C - Fractal Explorer
+
+[build]
+  # No build command needed (static HTML files)
+  publish = "."
+  
+[build.environment]
+  # No environment variables needed
+
+# Redirect rules
+[[redirects]]
+  # Redirect root to landing page
+  from = "/"
+  to = "/index.html"
+  status = 200
+  
+[[redirects]]
+  # Redirect /app to main application
+  from = "/app"
+  to = "/app.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Cache control for static assets
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    # Don't cache HTML files (always get latest version)
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    # Serve markdown files as plain text with UTF-8
+    Content-Type = "text/markdown; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+# Custom error pages (optional)
+# [[redirects]]
+#   from = "/404"
+#   to = "/index.html"
+#   status = 404
+
+# Deployment context settings
+[context.production]
+  # Production environment (main branch)
+  command = "echo 'No build required - static site'"
+
+[context.deploy-preview]
+  # Deploy preview (pull requests)
+  command = "echo 'No build required - static site'"
+
+[context.branch-deploy]
+  # Branch deploys (feature branches)
+  command = "echo 'No build required - static site'"
