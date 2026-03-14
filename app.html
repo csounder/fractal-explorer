@@ -884,35 +884,7 @@
           </select>
         </div>
 
-        <div class="control-group">
-          <label>ENVELOPE (affects new notes only)</label>
-
-          <label>Attack <span class="value" id="atkVal">10ms</span></label>
-          <input type="range" id="attack" min="1" max="500" value="10" />
-          <label>Attack Mapping</label>
-          <select id="attackMapEnv">
-            <option value="manual" selected>Manual (use slider)</option>
-            <option value="depth">Depth → Attack (1-1000ms)</option>
-            <option value="angle">Angle → Attack (1-1000ms)</option>
-            <option value="position">Position → Attack (1-1000ms)</option>
-            <option value="inverse">Inverse Depth → Attack</option>
-          </select>
-
-          <label style="margin-top: 12px"
-            >Release <span class="value" id="relVal">100ms</span></label
-          >
-          <input type="range" id="release" min="10" max="2000" value="100" />
-          <label>Release Mapping</label>
-          <select id="releaseMapEnv">
-            <option value="manual" selected>Manual (use slider)</option>
-            <option value="depth">Depth → Release (10-2000ms)</option>
-            <option value="angle">Angle → Release (10-2000ms)</option>
-            <option value="position">Position → Release (10-2000ms)</option>
-            <option value="inverse">Inverse Depth → Release</option>
-          </select>
-        </div>
-
-        <div class="control-group">
+         <div class="control-group">
           <label>MUSIC SETTINGS</label>
           <div class="grid-2">
             <div>
@@ -1162,6 +1134,36 @@
                <option value="constant">Pure Tone</option>
                <option value="depth">Depth → Noise Mix</option>
                <option value="angle" selected>Angle → Noise Mix</option>
+             </select>
+           </div>
+         </div>
+
+         <!-- ENVELOPE SECTION -->
+         <div class="control-section">
+           <h3>Envelope</h3>
+           <div class="control-group">
+             <label>Attack <span class="value" id="atkVal">10ms</span></label>
+             <input type="range" id="attack" min="1" max="500" value="10" />
+             <label>Attack Mapping</label>
+             <select id="attackMapEnv">
+               <option value="manual" selected>Manual (use slider)</option>
+               <option value="depth">Depth → Attack (1-1000ms)</option>
+               <option value="angle">Angle → Attack (1-1000ms)</option>
+               <option value="position">Position → Attack (1-1000ms)</option>
+               <option value="inverse">Inverse Depth → Attack</option>
+             </select>
+
+             <label style="margin-top: 8px"
+               >Release <span class="value" id="relVal">100ms</span></label
+             >
+             <input type="range" id="release" min="10" max="2000" value="100" />
+             <label>Release Mapping</label>
+             <select id="releaseMapEnv">
+               <option value="manual" selected>Manual (use slider)</option>
+               <option value="depth">Depth → Release (10-2000ms)</option>
+               <option value="angle">Angle → Release (10-2000ms)</option>
+               <option value="position">Position → Release (10-2000ms)</option>
+               <option value="inverse">Inverse Depth → Release</option>
              </select>
            </div>
          </div>
