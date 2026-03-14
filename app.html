@@ -768,24 +768,7 @@
             <input type="checkbox" id="playOnLoad" checked />
             Auto-play on load
           </label>
-          <div style="display: flex; gap: 8px; margin-top: 8px">
-            <button
-              onclick="loadFactoryPresets(true); refreshPresetList(); setTimeout(() => { const count = Object.keys(JSON.parse(localStorage.getItem('fractalPresets') || '{}')).length; alert('✓ Factory presets loaded!\n\nTotal presets in storage: ' + count + '\n\n57 factory presets:\n• 15 fractal-based\n• 24 instrument-based\n• 5 extra noise\n• 13 fast tempo (⚡)'); }, 100)"
-              style="
-                flex: 1;
-                padding: 6px;
-                background: #00aa00;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-weight: 600;
-                font-size: 11px;
-              "
-            >
-              🏭 LOAD FACTORY (57)
-            </button>
 
-          </div>
         </div>
 
         <div class="control-group">
