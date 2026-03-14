@@ -5648,15 +5648,29 @@ ${orchCode}
       let currentScale = "major";
       let currentTempo = 120;
 
-      // Scale degree intervals (semitones from root)
-      const scalePatterns = {
-        major: [0, 2, 4, 5, 7, 9, 11], // Ionian
-        minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
-        pentatonic: [0, 2, 4, 7, 9], // Major pentatonic
-        blues: [0, 3, 5, 6, 7, 10], // Blues scale
-        harmonic: [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
-        whole: [0, 2, 4, 6, 8, 10], // Whole tone scale
-      };
+       // Scale degree intervals (semitones from root)
+       const scalePatterns = {
+         none: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
+         chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
+         major: [0, 2, 4, 5, 7, 9, 11], // Ionian
+         minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
+         dorian: [0, 2, 3, 5, 7, 9, 10], // Dorian mode
+         phrygian: [0, 1, 3, 5, 7, 8, 10], // Phrygian mode
+         lydian: [0, 2, 4, 6, 7, 9, 11], // Lydian mode
+         mixolydian: [0, 2, 4, 5, 7, 9, 10], // Mixolydian mode
+         locrian: [0, 1, 3, 5, 6, 8, 10], // Locrian mode
+         "harmonic-minor": [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
+         "melodic-minor": [0, 2, 3, 5, 7, 9, 11], // Melodic minor (ascending)
+         "pentatonic-major": [0, 2, 4, 7, 9], // Major pentatonic
+         "pentatonic-minor": [0, 3, 5, 7, 10], // Minor pentatonic
+         blues: [0, 3, 5, 6, 7, 10], // Blues scale
+         "whole-tone": [0, 2, 4, 6, 8, 10], // Whole tone scale
+         "bohlen-pierce": [0, 1, 3, 5, 6, 8, 10, 12], // Bohlen-Pierce (simplified to 12 steps)
+         "quarter-tone": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5], // Quarter tones
+         "19tet": Array.from({length: 19}, (_, i) => (i * 12) / 19), // 19-TET
+         "31tet": Array.from({length: 31}, (_, i) => (i * 12) / 31), // 31-TET
+         "53tet": Array.from({length: 53}, (_, i) => (i * 12) / 53), // 53-TET
+       };
 
       // MIDI note to frequency mapping
       const noteNames = [
