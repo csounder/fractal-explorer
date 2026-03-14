@@ -1050,28 +1050,6 @@
 
 
         <div class="control-group">
-          <label>EVENT DENSITY</label>
-          <label>Max Events <span class="value" id="maxVal">500</span></label>
-          <input
-            type="range"
-            id="maxEvents"
-            min="100"
-            max="2000"
-            step="100"
-            value="500"
-          />
-          <label>Max Polyphony <span class="value" id="polyVal">2</span></label>
-          <input
-            type="range"
-            id="maxPoly"
-            min="1"
-            max="32"
-            step="1"
-            value="2"
-          />
-        </div>
-
-        <div class="control-group">
           <label>PARAMETER MAPPINGS</label>
           <label
             ><input
@@ -1105,6 +1083,31 @@
       <!-- Music Controls - Right Panel with FULL SYNTHESIS CONTROLS -->
       <div id="music-controls">
         
+        <!-- EVENT DENSITY SECTION -->
+        <div class="control-section">
+          <h3>Event Density</h3>
+          <div class="control-group">
+            <label>Max Events <span class="value" id="maxVal">500</span></label>
+            <input
+              type="range"
+              id="maxEvents"
+              min="100"
+              max="2000"
+              step="100"
+              value="500"
+            />
+            <label>Max Polyphony <span class="value" id="polyVal">2</span></label>
+            <input
+              type="range"
+              id="maxPoly"
+              min="1"
+              max="32"
+              step="1"
+              value="2"
+            />
+          </div>
+        </div>
+
         <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
         <div class="control-section">
           <h3>Quantize - <span style="font-size: 0.85em">Key, Scale, Rhythm</span></h3>
