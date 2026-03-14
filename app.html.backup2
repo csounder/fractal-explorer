@@ -114,7 +114,7 @@
       }
       #container {
         display: grid;
-        grid-template-columns: 300px 1fr 340px;
+        grid-template-columns: 380px 1fr;
         grid-template-rows: auto 1fr auto;
         height: 100vh;
         gap: 0;
@@ -197,36 +197,10 @@
       }
       #controls {
         background: var(--bg-secondary);
-        padding: 20px;
+        padding: 25px;
         overflow-y: auto;
         box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.6);
         border-right: 1px solid var(--border);
-        grid-column: 1;
-      }
-      #music-controls {
-        background: var(--bg-secondary);
-        padding: 20px;
-        overflow-y: auto;
-        box-shadow: inset -2px 0 8px rgba(0, 0, 0, 0.6);
-        border-left: 1px solid var(--border);
-        grid-column: 3;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      #music-controls::-webkit-scrollbar {
-        width: 8px;
-      }
-      #music-controls::-webkit-scrollbar-track {
-        background: var(--bg-primary);
-      }
-      #music-controls::-webkit-scrollbar-thumb {
-        background: var(--accent-dim);
-        border-radius: 4px;
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
-      }
-      #music-controls::-webkit-scrollbar-thumb:hover {
-        background: var(--accent);
       }
       #controls::-webkit-scrollbar {
         width: 8px;
@@ -246,7 +220,6 @@
         background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
         position: relative;
         overflow: hidden;
-        grid-column: 2;
       }
       #visualization::before {
         content: "";
@@ -276,9 +249,6 @@
         filter: drop-shadow(0 0 20px var(--accent-glow));
       }
       #footer {
-        display: none;
-      }
-      #footer-old {
         grid-column: 1 / -1;
         background: linear-gradient(
           135deg,
@@ -554,64 +524,6 @@
         color: var(--accent);
         text-shadow: var(--glow-accent);
       }
-
-      /* Hide old fixed positioning elements */
-      .quantization-fixed {
-        display: none !important;
-      }
-      #csdOutput {
-        display: none !important;
-      }
-
-      /* Right panel sections */
-      .music-section {
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 15px;
-      }
-      .music-section:last-child {
-        border-bottom: none;
-      }
-      .music-section h3 {
-        font-family: "Orbitron", sans-serif;
-        font-size: 0.85em;
-        color: var(--accent);
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      /* Master Volume Control */
-      .volume-control {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 15px;
-      }
-      .volume-control label {
-        font-size: 0.85em;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .volume-control input[type="range"] {
-        width: 100%;
-        cursor: pointer;
-      }
-
-      /* Playback buttons at top of left panel */
-      #playback-buttons {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid var(--border);
-      }
-      #playback-buttons button {
-        flex: 1;
-        padding: 8px 12px;
-        font-size: 0.9em;
-        font-weight: 600;
-      }
     </style>
   </head>
   <body data-theme="green">
@@ -621,39 +533,6 @@
       </div>
 
       <div id="controls">
-        <!-- Playback Controls at Top -->
-         <div id="playback-buttons">
-           <button
-             id="playBtn"
-             onclick="togglePlayStop()"
-             style="background: var(--accent); color: var(--bg-primary)"
-           >
-             ▶ Play Audio
-           </button>
-         </div>
-
-        <!-- Master Volume (Left Panel) -->
-        <div class="volume-control">
-          <label>🔊 Volume</label>
-          <input
-            type="range"
-            id="masterVolume"
-            min="0"
-            max="100"
-            value="70"
-            onchange="updateMasterVolume()"
-          />
-          <span
-            id="volumeValue"
-            style="
-              font-size: 0.8em;
-              color: var(--accent-dim);
-              text-align: center;
-            "
-            >70%</span
-          >
-        </div>
-
         <div class="control-group">
           <label>L-SYSTEM PRESETS</label>
           <button class="preset-btn" onclick="loadPreset('algae')">
@@ -1128,266 +1007,18 @@
 
       <div id="visualization"><canvas id="canvas"></canvas></div>
 
-      <!-- Music Controls - Right Panel with FULL SYNTHESIS CONTROLS -->
-      <div id="music-controls">
-        
-        <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
-        <div class="control-section">
-          <h3>Quantize - <span style="font-size: 0.85em">Key, Scale, Rhythm</span></h3>
-          <div class="control-group">
-            <label>Key / Root Note</label>
-            <select id="keySelect" onchange="updateKey()">
-              <option value="atonal">Atonal (Curve-Based)</option>
-              <option value="C">C</option>
-              <option value="C#" selected>C# / Db</option>
-              <option value="D">D</option>
-              <option value="D#">D# / Eb</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="F#">F# / Gb</option>
-              <option value="G">G</option>
-              <option value="G#">G# / Ab</option>
-              <option value="A">A</option>
-              <option value="A#">A# / Bb</option>
-              <option value="B">B</option>
-            </select>
-          </div>
-          <div class="control-group">
-            <label>Scale Quantization</label>
-            <select id="scaleSelect" onchange="updateScale()">
-              <option value="none">Non-Quantized (Continuous)</option>
-              <option value="chromatic">Chromatic (12-TET)</option>
-              <option value="major">Major Scale</option>
-              <option value="minor">Natural Minor</option>
-              <option value="dorian">Dorian Mode</option>
-              <option value="phrygian">Phrygian Mode</option>
-              <option value="lydian">Lydian Mode</option>
-              <option value="mixolydian">Mixolydian Mode</option>
-              <option value="locrian">Locrian Mode</option>
-              <option value="harmonic-minor">Harmonic Minor</option>
-              <option value="melodic-minor">Melodic Minor</option>
-              <option value="pentatonic-major" selected>Pentatonic Major</option>
-              <option value="pentatonic-minor">Pentatonic Minor</option>
-              <option value="blues">Blues Scale</option>
-              <option value="whole-tone">Whole Tone</option>
-              <option value="bohlen-pierce">Bohlen-Pierce (13-ET)</option>
-              <option value="quarter-tone">Quarter-Tone (24-ET)</option>
-              <option value="19tet">19-Tone Equal Temperament</option>
-              <option value="31tet">31-Tone Equal Temperament</option>
-              <option value="53tet">53-Tone Equal Temperament</option>
-            </select>
-          </div>
-          <div class="control-group">
-            <label>Rhythm Quantization</label>
-            <select id="tempoInput" onchange="updateTempo()">
-              <option value="none">Non-Quantized (Continuous)</option>
-              <option value="whole">Whole Notes</option>
-              <option value="half">Half Notes</option>
-              <option value="quarter">Quarter Notes</option>
-              <option value="eighth" selected>Eighth Notes</option>
-              <option value="sixteenth">Sixteenth Notes</option>
-              <option value="thirtysecond">Thirty-Second Notes</option>
-              <option value="sixtyfourth">Sixty-Fourth Notes</option>
-              <option value="onetwentyeighth">128th Notes</option>
-              <option value="dotted-whole">Dotted Whole Notes</option>
-              <option value="dotted-half">Dotted Half Notes</option>
-              <option value="dotted-quarter">Dotted Quarter Notes</option>
-              <option value="dotted-eighth">Dotted Eighth Notes</option>
-              <option value="dotted-sixteenth">Dotted Sixteenth Notes</option>
-              <option value="dotted-thirtysecond">Dotted 32nd Notes</option>
-              <option value="dotted-sixtyfourth">Dotted 64th Notes</option>
-              <option value="dotted-onetwentyeighth">Dotted 128th Notes</option>
-              <option value="triplet-half">Triplet Half Notes</option>
-              <option value="triplet-quarter">Triplet Quarter Notes</option>
-              <option value="triplet-eighth">Triplet Eighth Notes</option>
-              <option value="triplet-sixteenth">Triplet Sixteenth Notes</option>
-              <option value="triplet-thirtysecond">Triplet 32nd Notes</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- SOUND SYNTHESIS -->
-      </div>
-      </div>
-
       <div id="footer">
         <div id="status">Loading Csound WASM...</div>
-        <div
-          class="btn-group"
-          style="margin: 0; display: flex; gap: 8px; flex-wrap: wrap"
-        >
-
-          <button
-            id="toggleConsoleBtn"
-            onclick="toggleConsole()"
-            style="background: #667eea"
-          >
-            👁️ Hide Console
-          </button>
-          <button
-            id="recordCsdBtn"
-            onclick="startCSDRecording()"
-            style="background: #e74c3c"
-          >
-            🔴 Record CSD
-          </button>
-          <button
-            id="downloadCsdBtn"
-            onclick="downloadCsd()"
-            disabled
-            style="background: #95a5a6"
-          >
-            💾 Download
-          </button>
-          <span style="font-size: 11px; color: #aaa; line-height: 2.5"
-            >Space = play/stop</span
-          >
-        </div>
-      </div>
-
-      <!-- Quantization Controls - Hidden, will be in right panel -->
-      <div
-        class="quantization-fixed"
-        style="
-          position: fixed;
-          bottom: 20px;
-          left: 20px;
-          background: rgba(10, 10, 30, 0.95);
-          border: 2px solid #00ff88;
-          border-radius: 8px;
-          padding: 15px;
-          width: 280px;
-          z-index: 999;
-        "
-      >
-        <h3 style="color: #00ff88; margin: 0 0 12px 0; font-size: 13px">
-          🎵 Quantization
-        </h3>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 10px">
-          <div>
-            <label
-              style="
-                font-size: 11px;
-                color: #00ff88;
-                display: block;
-                margin-bottom: 4px;
-              "
-              >🔑 Key</label
-            >
-            <select
-              id="keySelect"
-              onchange="updateKey()"
-              style="
-                width: 100%;
-                padding: 6px;
-                background: #0a0a0a;
-                color: #00ff88;
-                border: 1px solid #00ff88;
-                border-radius: 3px;
-                font-size: 11px;
-              "
-            >
-              <option value="C">C</option>
-              <option value="C#">C#</option>
-              <option value="D">D</option>
-              <option value="D#">D#</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="F#">F#</option>
-              <option value="G">G</option>
-              <option value="G#">G#</option>
-              <option value="A">A</option>
-              <option value="A#">A#</option>
-              <option value="B">B</option>
-            </select>
-          </div>
-          <div>
-            <label
-              style="
-                font-size: 11px;
-                color: #00ff88;
-                display: block;
-                margin-bottom: 4px;
-              "
-              >📊 Scale</label
-            >
-            <select
-              id="scaleSelect"
-              onchange="updateScale()"
-              style="
-                width: 100%;
-                padding: 6px;
-                background: #0a0a0a;
-                color: #00ff88;
-                border: 1px solid #00ff88;
-                border-radius: 3px;
-                font-size: 11px;
-              "
-            >
-              <option value="major">Major</option>
-              <option value="minor">Minor</option>
-              <option value="pentatonic">Pentatonic</option>
-              <option value="blues">Blues</option>
-              <option value="harmonic">Harmonic</option>
-              <option value="whole">Whole Tone</option>
-            </select>
-          </div>
-          <div>
-            <label
-              style="
-                font-size: 11px;
-                color: #00ff88;
-                display: block;
-                margin-bottom: 4px;
-              "
-              >⏱️ Tempo (BPM)</label
-            >
-            <input
-              type="number"
-              id="tempoInput"
-              min="40"
-              max="240"
-              value="120"
-              onchange="updateTempo()"
-              style="
-                width: 100%;
-                padding: 6px;
-                background: #0a0a0a;
-                color: #00ff88;
-                border: 1px solid #00ff88;
-                border-radius: 3px;
-                font-size: 11px;
-              "
-            />
-          </div>
+        <div class="btn-group" style="margin: 0">
+          <button id="playBtn" onclick="play()" disabled>Play</button>
+          <button id="stopBtn" onclick="stop()">Stop</button>
+          <button id="exportCsdBtn" onclick="exportCSD()" disabled style="background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">💾 Export CSD</button>
         </div>
       </div>
     </div>
 
     <!-- CSD Output Console -->
-    <textarea
-      id="csdOutput"
-      readonly
-      style="
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 600px;
-        height: 450px;
-        background: rgba(10, 10, 30, 0.95);
-        color: #00ff88;
-        border: 2px solid #00ff88;
-        border-radius: 8px;
-        padding: 15px;
-        font-family: &quot;Monaco&quot;, monospace;
-        font-size: 11px;
-        display: none;
-        resize: both;
-        overflow: auto;
-        z-index: 1000;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-      "
-    ></textarea>
+    <textarea id="csdOutput" readonly style="position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: 'Monaco', monospace; font-size: 11px; display: none; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);"></textarea>
     <script>
       let csound = null;
       let isPlaying = false;
@@ -2447,10 +2078,9 @@
         }
 
         isPlaying = true;
-        initializeCSDRecording(); // Start recording events for CSD export
-        enableCSDExport(); // Enable export button
-        document.getElementById("playBtn").textContent = "⏹ Stop Audio";
-        document.getElementById("playBtn").style.background = "var(--accent-dim)";
+        initializeCSDRecording();  // Start recording events for CSD export
+        enableCSDExport();  // Enable export button
+        document.getElementById("playBtn").disabled = true;
         document.getElementById("status").textContent = "Playing...";
 
         const baseFreq = parseFloat(document.getElementById("baseFreq").value);
@@ -2850,7 +2480,7 @@
             if (isPlaying && csound && csoundReady) {
               csound.inputMessage(scoreEvent);
 
-              logEventToCSD(scoreEvent, time); // Log for CSD export
+              logEventToCSD(scoreEvent, time);  // Log for CSD export
               // Update reverb parameters (ALWAYS set channels, even in manual mode)
               let roomNorm = roomSize; // Start with slider value
               if (roomSizeMap === "depth") {
@@ -2945,22 +2575,12 @@
 
         isPlaying = false;
         currentNoteIndex = -1;
-        document.getElementById("playBtn").textContent = "▶ Play Audio";
-        document.getElementById("playBtn").style.background = "var(--accent)";
+        document.getElementById("playBtn").disabled = false;
         document.getElementById("status").textContent = "Stopped";
 
         // Clear visualization highlighting
         if (paths.length > 0 && paths.bounds) {
           drawPaths(paths, paths.bounds, -1);
-        }
-      };
-
-      // Toggle Play/Stop with single button (like Mandelbrot Explorer)
-      window.togglePlayStop = async function () {
-        if (isPlaying) {
-          await stop();
-        } else {
-          await play();
         }
       };
 
@@ -5482,7 +5102,6 @@
         } else {
           debugLog(`Factory presets already loaded (39 total)`);
         }
-      }
       // ========================================
       // CSD EXPORT FUNCTIONALITY
       // ========================================
@@ -5490,325 +5109,60 @@
       let csdEventLog = [];
       let isCSDRecording = false;
 
-      window.initializeCSDRecording = function () {
+      window.initializeCSDRecording = function() {
         csdEventLog = [];
         isCSDRecording = true;
       };
 
-      window.logEventToCSD = function (scoreEvent, time) {
+      window.logEventToCSD = function(scoreEvent, time) {
         if (isCSDRecording) {
           csdEventLog.push({ statement: scoreEvent, timestamp: time });
         }
       };
 
-      window.enableCSDExport = function () {
+      window.enableCSDExport = function() {
         const btn = document.getElementById("exportCsdBtn");
         if (btn) btn.disabled = false;
       };
 
-      window.exportCSD = async function () {
-        console.log("exportCSD called");
-
-        if (csdEventLog.length === 0) {
-          alert("No events recorded. Generate and play a fractal first!");
-          return;
-        }
-
-        try {
-          const lsystemParams = {
-            axiom: document.getElementById("axiom")?.value || "?",
-            rules: document.getElementById("rules")?.value || "?",
-            iterations:
-              parseFloat(document.getElementById("iterations")?.value) || 0,
-            angle: parseFloat(document.getElementById("angle")?.value) || 0,
-            baseFreq:
-              parseFloat(document.getElementById("basefreq")?.value) || 220,
-            tempo: parseFloat(document.getElementById("tempo")?.value) || 120,
-            pitchMap: document.getElementById("pitchmap")?.value || "depth",
-            durMap: document.getElementById("durmap")?.value || "constant",
-            presetMode:
-              document.getElementById("presetmode")?.value || "warm_pad",
-          };
-
-          const timestamp = new Date().toISOString();
-          const orchCode =
-            typeof orchestraCode !== "undefined"
-              ? orchestraCode
-              : getDefaultOrchestra();
-
-          const csdHeader = `<CsoundSynthesizer>
-<CsOptions>
--odac -d -m0
-</CsOptions>
-<CsInstruments>
-${orchCode}
-</CsInstruments>
-<CsScore>
-; ============================================================
-; FRACTAL EXPLORER - L-SYSTEM GENERATED COMPOSITION
-; ============================================================
-; Generated: ${timestamp}
-;
-; L-System Configuration:
-;   Axiom: ${lsystemParams.axiom}
-;   Rules: ${lsystemParams.rules.replace(/\n/g, " | ")}
-;   Iterations: ${lsystemParams.iterations}
-;   Angle: ${lsystemParams.angle}°
-;
-; Musical Parameters:
-;   Base Frequency: ${lsystemParams.baseFreq} Hz
-;   Tempo: ${lsystemParams.tempo} BPM
-;   Pitch Mapping: ${lsystemParams.pitchMap}
-;   Duration Mapping: ${lsystemParams.durMap}
-;   Synthesis Preset: ${lsystemParams.presetMode}
-;
-; Score Statistics:
-;   Total Events: ${csdEventLog.length}
-;   Duration: ${(csdEventLog[csdEventLog.length - 1]?.timestamp || 0).toFixed(3)}s
-; ============================================================
-
-`;
-
-          let scoreStatements = "";
-          csdEventLog.forEach((event) => {
-            scoreStatements += event.statement + "\n";
-          });
-
-          const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
-          const fullCSD = csdHeader + scoreStatements + csdFooter;
-
-          // Display in textarea (create if needed)
-          let output = document.getElementById("csdOutput");
-          if (!output) {
-            console.warn("Creating textarea element...");
-            output = document.createElement("textarea");
-            output.id = "csdOutput";
-            output.readOnly = true;
-            output.style.cssText =
-              'position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: "Monaco", monospace; font-size: 11px; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);';
-            document.body.appendChild(output);
-          }
-
-          output.value = fullCSD;
-          output.style.display = "block";
-
-          console.log("✓ CSD content displayed in console");
-          console.log(`✓ Generated ${csdEventLog.length} events`);
-
-          downloadCSDFile(fullCSD);
-        } catch (error) {
-          console.error("Export error:", error);
-          alert("Error exporting CSD: " + error.message);
-        }
+      window.exportCSD = async function() {
+        if (csdEventLog.length === 0) { alert("No events recorded. Generate and play a fractal first!"); return; }
+        const lsystemParams = {
+          axiom: document.getElementById("axiom").value,
+          rules: document.getElementById("rules").value,
+          iterations: parseFloat(document.getElementById("iterations").value),
+          angle: parseFloat(document.getElementById("angle").value),
+          baseFreq: parseFloat(document.getElementById("basefreq").value),
+          tempo: parseFloat(document.getElementById("tempo").value),
+          pitchMap: document.getElementById("pitchmap").value,
+          durMap: document.getElementById("durmap").value,
+          presetMode: document.getElementById("presetmode").value,
+        };
+        const timestamp = new Date().toISOString();
+        const orchCode = typeof orchestraCode !== "undefined" ? orchestraCode : getDefaultOrchestra();
+        const csdHeader = `<CsoundSynthesizer><CsOptions>-odac -d -m0</CsOptions><CsInstruments>${orchCode}</CsInstruments><CsScore>; L-System Generated Composition; Generated: ${timestamp}; Axiom: ${lsystemParams.axiom}; Iterations: ${lsystemParams.iterations}; Angle: ${lsystemParams.angle}°; Base Freq: ${lsystemParams.baseFreq}Hz, Tempo: ${lsystemParams.tempo}BPM; Total Events: ${csdEventLog.length};n`;
+        let scoreStatements = "";
+        csdEventLog.forEach(e => { scoreStatements += e.statement + "\n"; });
+        const fullCSD = csdHeader + scoreStatements + "\ne\n</CsScore>\n</CsoundSynthesizer>";
+        const output = document.getElementById("csdOutput");
+        output.value = fullCSD; output.style.display = "block";
+        downloadCSDFile(fullCSD);
       };
 
       function downloadCSDFile(content) {
-        try {
-          const timestamp = new Date()
-            .toISOString()
-            .replace(/:/g, "-")
-            .split(".")[0];
-          const filename = `fractal-explorer_${timestamp}.csd`;
+        const ts = new Date().toISOString().replace(/:/g, "-").split(".")[0];
+        const fn = `fractal-explorer_${ts}.csd`;
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = fn;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        document.getElementById("status").textContent = `✓ Exported: ${fn}`;
+        debugLog(`✓ Downloaded: ${fn}`);
+      };
 
-          const blob = new Blob([content], {
-            type: "text/plain;charset=utf-8",
-          });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = filename;
-
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-
-          setTimeout(() => URL.revokeObjectURL(url), 100);
-
-          document.getElementById("status").textContent =
-            `✓ Exported: ${filename}`;
-          debugLog(`✓ Downloaded: ${filename}`);
-          console.log(`✓ File downloaded: ${filename}`);
-        } catch (error) {
-          console.error("Download error:", error);
-          alert("Error downloading file: " + error.message);
-        }
       }
-
-      // ========================================
-      // UI CONTROL FUNCTIONS
-      // ========================================
-
-      window.toggleConsole = function () {
-        const output = document.getElementById("csdOutput");
-        const btn = document.getElementById("toggleConsoleBtn");
-        if (output.style.display === "none") {
-          output.style.display = "block";
-          btn.textContent = "👁️ Hide Console";
-          btn.style.background = "#667eea";
-        } else {
-          output.style.display = "none";
-          btn.textContent = "👁️ Show Console";
-          btn.style.background = "#444";
-        }
-      };
-
-      window.startCSDRecording = function () {
-        const btn = document.getElementById("recordCsdBtn");
-        const dlBtn = document.getElementById("downloadCsdBtn");
-
-        if (!isCSDRecording) {
-          // Start recording
-          csdEventLog = [];
-          isCSDRecording = true;
-          btn.textContent = "🟢 Stop Recording";
-          btn.style.background = "#27ae60";
-          dlBtn.disabled = true;
-          document.getElementById("status").textContent =
-            "🔴 Recording CSD events...";
-          debugLog("🔴 CSD Recording started");
-        } else {
-          // Stop recording
-          isCSDRecording = false;
-          btn.textContent = "🔴 Record CSD";
-          btn.style.background = "#e74c3c";
-          dlBtn.disabled = false;
-          document.getElementById("status").textContent =
-            `✓ Recording stopped (${csdEventLog.length} events)`;
-          debugLog(`✓ CSD Recording stopped (${csdEventLog.length} events)`);
-          window.exportCSD();
-        }
-      };
-
-      window.downloadCsd = function () {
-        if (csdEventLog.length === 0) {
-          alert("No events recorded. Generate and play a fractal first!");
-          return;
-        }
-        window.exportCSD();
-      };
-
-      // ========================================
-      // QUANTIZATION FUNCTIONS & SCALE LOGIC
-      // ========================================
-
-      let currentKey = "C";
-      let currentScale = "major";
-      let currentTempo = 120;
-
-      // Scale degree intervals (semitones from root)
-      const scalePatterns = {
-        major: [0, 2, 4, 5, 7, 9, 11], // Ionian
-        minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
-        pentatonic: [0, 2, 4, 7, 9], // Major pentatonic
-        blues: [0, 3, 5, 6, 7, 10], // Blues scale
-        harmonic: [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
-        whole: [0, 2, 4, 6, 8, 10], // Whole tone scale
-      };
-
-      // MIDI note to frequency mapping
-      const noteNames = [
-        "C",
-        "C#",
-        "D",
-        "D#",
-        "E",
-        "F",
-        "F#",
-        "G",
-        "G#",
-        "A",
-        "A#",
-        "B",
-      ];
-
-      function noteToMidi(noteName) {
-        const octave = 4; // Default octave
-        const noteIndex = noteNames.indexOf(noteName);
-        return noteIndex + octave * 12 + 12; // MIDI note number
-      }
-
-      function frequencyToMidi(freq) {
-        return Math.round(12 * Math.log2(freq / 440) + 69);
-      }
-
-      function midiToFrequency(midi) {
-        return 440 * Math.pow(2, (midi - 69) / 12);
-      }
-
-      window.quantizeNoteToScale = function (frequency) {
-        // Convert frequency to MIDI note
-        let midiNote = frequencyToMidi(frequency);
-        const rootMidi = noteToMidi(currentKey);
-
-        // Get semitones above root
-        const semitonesFromRoot = midiNote - rootMidi;
-        const octaveOffset = Math.floor(semitonesFromRoot / 12) * 12;
-        const noteInOctave = ((semitonesFromRoot % 12) + 12) % 12;
-
-        // Get pattern for current scale
-        const pattern = scalePatterns[currentScale] || scalePatterns.major;
-
-        // Find closest degree in scale
-        let closestDegree = pattern[0];
-        let minDistance = Math.abs(noteInOctave - closestDegree);
-
-        for (let degree of pattern) {
-          const distance = Math.abs(noteInOctave - degree);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closestDegree = degree;
-          }
-        }
-
-        // Quantized MIDI note
-        const quantizedMidi = rootMidi + octaveOffset + closestDegree;
-        return midiToFrequency(quantizedMidi);
-      };
-
-      window.updateKey = function () {
-        const keySelect = document.getElementById("keySelect");
-        currentKey = keySelect.value;
-        debugLog(`🔑 Key changed to: ${currentKey}`);
-      };
-
-      window.updateScale = function () {
-        const scaleSelect = document.getElementById("scaleSelect");
-        currentScale = scaleSelect.value;
-        debugLog(`📊 Scale changed to: ${currentScale}`);
-      };
-
-      window.updateTempo = function () {
-        const tempoInput = document.getElementById("tempoInput");
-        currentTempo = parseInt(tempoInput.value) || 120;
-        debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
-      };
-
-      window.updateMasterVolume = function () {
-        const volumeSlider = document.getElementById("masterVolume");
-        const volumeValue = document.getElementById("volumeValue");
-        const volume = parseInt(volumeSlider.value);
-        volumeValue.textContent = volume + "%";
-        // Scale: 0-100 → 0.0-1.0
-        const normalizedVolume = volume / 100;
-        if (csound) {
-          csound.setControlChannel("masterVolume", normalizedVolume);
-        }
-        debugLog(`🔊 Master Volume: ${volume}%`);
-      };
-
-      // ========================================
-      // SPACE BAR CONTROL
-      // ========================================
-
-      document.addEventListener("keydown", function (event) {
-        if (event.code === "Space") {
-          event.preventDefault();
-          const playBtn = document.getElementById("playBtn");
-          if (!playBtn.disabled) {
-            togglePlayStop();
-          }
-        }
-      });
 
       // Make functions global
       window.savePreset = savePreset;
