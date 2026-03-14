@@ -805,40 +805,7 @@
         </div>
 
          <!-- GRANULAR SYNTHESIS CONTROLS -->
-        <div class="control-group" id="granularControls" style="display: none">
-          <label style="color: var(--accent); font-weight: 600"
-            >⚙️ GRANULAR PARAMETERS</label
-          >
-          <label>Grain Density Map</label>
-          <select id="grainDensityMap">
-            <option value="constant">Constant (20 grains/sec)</option>
-            <option value="depth">Depth → Density</option>
-            <option value="angle" selected>Angle → Density</option>
-            <option value="position">Position → Density</option>
-          </select>
-          <label>Grain Size Map</label>
-          <select id="grainSizeMap">
-            <option value="constant">Constant (50ms)</option>
-            <option value="depth" selected>Depth → Size</option>
-            <option value="angle">Angle → Size</option>
-            <option value="inverse">Inverse Depth</option>
-          </select>
-          <label>Grain Pitch Variation Map</label>
-          <select id="grainPitchVarMap">
-            <option value="none">No Variation</option>
-            <option value="depth">Depth → Pitch Spread</option>
-            <option value="angle" selected>Angle → Pitch Spread</option>
-            <option value="random">Random Variation</option>
-          </select>
-          <label>Grain Texture Map</label>
-          <select id="grainTextureMap">
-            <option value="constant">Pure Tone</option>
-            <option value="depth">Depth → Noise Mix</option>
-            <option value="angle" selected>Angle → Noise Mix</option>
-          </select>
-        </div>
-
-        <!-- COMPLEX FM CONTROLS -->
+         <!-- COMPLEX FM CONTROLS -->
         <div class="control-group" id="complexFMControls" style="display: none">
           <label style="color: var(--accent); font-weight: 600"
             >⚙️ COMPLEX FM PARAMETERS</label
@@ -1159,11 +1126,48 @@
                <option value="position">Position → Wet Mix (0-100%)</option>
                <option value="inverse">Inverse Depth → Wet Mix</option>
              </select>
+          </div>
+         </div>
+
+         <!-- GRANULAR PARAMETERS SECTION -->
+         <div class="control-section" id="granularControls" style="display: none">
+           <h3>Granular Parameters</h3>
+           <div class="control-group">
+             <label>Grain Density Map</label>
+             <select id="grainDensityMap">
+               <option value="constant">Constant (20 grains/sec)</option>
+               <option value="depth">Depth → Density</option>
+               <option value="angle" selected>Angle → Density</option>
+               <option value="position">Position → Density</option>
+             </select>
+
+             <label style="margin-top: 8px">Grain Size Map</label>
+             <select id="grainSizeMap">
+               <option value="constant">Constant (50ms)</option>
+               <option value="depth" selected>Depth → Size</option>
+               <option value="angle">Angle → Size</option>
+               <option value="inverse">Inverse Depth</option>
+             </select>
+
+             <label style="margin-top: 8px">Grain Pitch Variation Map</label>
+             <select id="grainPitchVarMap">
+               <option value="none">No Variation</option>
+               <option value="depth">Depth → Pitch Spread</option>
+               <option value="angle" selected>Angle → Pitch Spread</option>
+               <option value="random">Random Variation</option>
+             </select>
+
+             <label style="margin-top: 8px">Grain Texture Map</label>
+             <select id="grainTextureMap">
+               <option value="constant">Pure Tone</option>
+               <option value="depth">Depth → Noise Mix</option>
+               <option value="angle" selected>Angle → Noise Mix</option>
+             </select>
            </div>
          </div>
 
-         <!-- SOUND SYNTHESIS -->
-       </div>
+          <!-- SOUND SYNTHESIS -->
+        </div>
       </div>
 
       <div id="footer">
