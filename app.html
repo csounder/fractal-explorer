@@ -4142,8 +4142,10 @@ ${orchCode}
           // Calculate maxDepth locally
           const maxDepth = Math.max(...selectedPathsGlobal.map((p) => p.depth), 1);
 
+          // Build score ONLY - comments, ftables, notes, footer
           let score = "; Csound Score Generated from Fractal Explorer\n";
           score += "; L-System Preset: " + document.getElementById("soundPreset").value + "\n";
+          score += "; Sound Synthesis: " + document.getElementById("soundPreset").value + "\n";
           score += "; Key: " + document.getElementById("keySelect").value + "\n";
           score += "; Scale: " + document.getElementById("scaleSelect").value + "\n";
           score += "; Generated: " + new Date().toISOString() + "\n\n";
@@ -4155,6 +4157,10 @@ ${orchCode}
           let time = 0;
           const maxNotes = Math.min(200, selectedPathsGlobal.length);
 
+          // Add ftables FIRST in score section
+          score += "f1 0 16384 10 1  ; Sine wave table\n\n";
+
+          // Add note events
           for (let i = 0; i < maxNotes; i++) {
             const path = selectedPathsGlobal[i];
             const ratio = Math.pow(2, (path.angle + 180) / 360);
@@ -4166,9 +4172,12 @@ ${orchCode}
             time += beatDur * 0.5;
           }
 
-          score += "\ne\n";
+          // Add reverb tail at end
+          score += `\ni 999 0 ${(time + 5).toFixed(3)}\n`;
+          score += "e\n";
 
-          const orchestra = `; Dr.C - Fractal Explorer (L-Systems) - Generated Composition
+          // Build COMPLETE .csd file: HEADER + ORCHESTRA + SCORE + FOOTER
+          const csd = `; Dr.C - Fractal Explorer (L-Systems) - Generated Composition
 <CsoundSynthesizer>
 <CsOptions>
 -odac -d
@@ -4185,8 +4194,8 @@ gaReverb init 0
 instr 1
   ; p4 = frequency (Hz)
   ; p5 = amplitude
-  ; p6 = pan (0-1, unused)
-  ; p7 = brightness (unused)
+  ; p6 = pan (0-1)
+  ; p7 = brightness
   
   iFreq = p4
   iAmp = p5
@@ -4210,21 +4219,17 @@ instr 999
   gaReverb = 0
 endin
 
-f1 0 16384 10 1
-
 </CsInstruments>
 <CsScore>
 
 ${score}
 
-i 999 0 [${time} + 5]
-
 </CsScore>
 </CsoundSynthesizer>`;
 
           // Store in global variable and display in textarea
-          currentCsdContent = orchestra;
-          document.getElementById("csoundOutput").value = orchestra;
+          currentCsdContent = csd;
+          document.getElementById("csoundOutput").value = csd;
           console.log("✓ Csound .csd file generated! Click 'Download CSD' to save.");
           alert("✓ .CSD file generated! Click 'Download CSD' to save to Downloads folder.");
         };
