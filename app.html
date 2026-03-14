@@ -930,11 +930,35 @@
             >
               <input type="checkbox" id="playOnLoad" checked />
               Auto-play on load
-            </label>
-          </div>
-        </div>
+             </label>
+           </div>
+         </div>
 
-         <!-- RANDOMIZE ALL BUTTON -->
+         <!-- EXPORT SECTION -->
+         <div class="control-section">
+           <h3>Export</h3>
+           <div class="control-group">
+             <button
+               onclick="generateCsound()"
+               style="
+                 width: 100%;
+                 padding: 10px;
+                 background: #27ae60;
+                 color: white;
+                 border: none;
+                 border-radius: 6px;
+                 cursor: pointer;
+                 font-weight: 600;
+                 font-size: 13px;
+                 margin-bottom: 8px;
+               "
+             >
+               💾 Generate .CSD File
+             </button>
+           </div>
+         </div>
+
+          <!-- RANDOMIZE ALL BUTTON -->
          <div style="padding: 0 0 12px 0; text-align: center">
            <button
              onclick="randomizeAllParameters()"
@@ -4063,11 +4087,110 @@ ${orchCode}
         }
       });
 
-      // Make functions global
-      window.savePreset = savePreset;
-      window.loadSavedPreset = loadSavedPreset;
-      window.deletePreset = deletePreset;
-      window.loadFactoryPresets = loadFactoryPresets;
+       // Generate Csound .csd file from current performance
+       window.generateCsound = function () {
+         if (selectedPathsGlobal.length === 0) {
+           alert("Generate a fractal first!");
+           return;
+         }
+
+         let score = "; Csound Score Generated from Fractal Explorer\n";
+         score += "; L-System Preset: " + document.getElementById("soundPreset").value + "\n";
+         score += "; Key: " + document.getElementById("keySelect").value + "\n";
+         score += "; Scale: " + document.getElementById("scaleSelect").value + "\n";
+         score += "; Generated: " + new Date().toISOString() + "\n\n";
+
+         const baseFreq = parseFloat(document.getElementById("baseFreq").value);
+         const tempo = parseFloat(document.getElementById("tempo").value);
+         const beatDur = 60 / tempo;
+         
+         let time = 0;
+         const maxNotes = Math.min(200, selectedPathsGlobal.length);
+
+         for (let i = 0; i < maxNotes; i++) {
+           const path = selectedPathsGlobal[i];
+           const ratio = Math.pow(2, (path.angle + 180) / 360);
+           const freq = baseFreq * ratio;
+           const dur = beatDur * (0.5 + Math.random() * 1.5);
+           const amp = 0.3 + (path.depth / Math.max(1, maxDepth)) * 0.6;
+
+           score += `i 1 ${time.toFixed(3)} ${dur.toFixed(3)} ${freq.toFixed(2)} ${amp.toFixed(3)} 0.5 0.5\n`;
+           time += beatDur * 0.5;
+         }
+
+         score += "\ne\n";
+
+         const orchestra = `; Dr.C - Fractal Explorer (L-Systems) - Generated Composition
+<CsoundSynthesizer>
+<CsOptions>
+-odac -d
+</CsOptions>
+<CsInstruments>
+
+sr = 44100
+ksmps = 32
+nchnls = 2
+0dbfs = 1
+
+gaReverb init 0
+
+instr 1
+  ; p4 = frequency (Hz)
+  ; p5 = amplitude
+  ; p6 = pan (0-1, unused)
+  ; p7 = brightness (unused)
+  
+  iFreq = p4
+  iAmp = p5
+  
+  kEnv = linsegr:k(0, 0.02, 1, 0.1, 0.8, 0.08, 0)
+  
+  iHarms = 1 + 4
+  aSig = gbuzz:a(iAmp * kEnv, iFreq, iHarms, 1, 0.9, -1)
+  
+  kCutoff = iFreq * 2.5
+  aSig = moogladder:a(aSig, kCutoff, 0.3)
+  
+  gaReverb = gaReverb + aSig * 0.3
+  
+  out(aSig * 0.7, aSig * 0.7)
+endin
+
+instr 999
+  aL, aR freeverb gaReverb, gaReverb, 0.85, 0.7
+  out(aL * 0.7, aR * 0.7)
+  gaReverb = 0
+endin
+
+f1 0 16384 10 1
+
+</CsInstruments>
+<CsScore>
+
+${score}
+
+i 999 0 [${time} + 5]
+
+</CsScore>
+</CsoundSynthesizer>`;
+
+         // Copy to clipboard and show
+         const textArea = document.createElement("textarea");
+         textArea.value = orchestra;
+         document.body.appendChild(textArea);
+         textArea.select();
+         document.execCommand("copy");
+         document.body.removeChild(textArea);
+
+         alert("✅ Csound .csd file copied to clipboard!\n\nYou can paste it into any text editor and save as '.csd' to use with Csound.");
+         debugLog("✓ Csound .csd file generated and copied to clipboard");
+       };
+
+       // Make functions global
+       window.savePreset = savePreset;
+       window.loadSavedPreset = loadSavedPreset;
+       window.deletePreset = deletePreset;
+       window.loadFactoryPresets = loadFactoryPresets;
 
       // Initialize
       window.addEventListener("DOMContentLoaded", async () => {
