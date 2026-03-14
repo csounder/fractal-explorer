@@ -114,7 +114,7 @@
       }
       #container {
         display: grid;
-        grid-template-columns: 380px 1fr;
+        grid-template-columns: 300px 1fr 340px;
         grid-template-rows: auto 1fr auto;
         height: 100vh;
         gap: 0;
@@ -197,10 +197,36 @@
       }
       #controls {
         background: var(--bg-secondary);
-        padding: 25px;
+        padding: 20px;
         overflow-y: auto;
         box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.6);
         border-right: 1px solid var(--border);
+        grid-column: 1;
+      }
+      #music-controls {
+        background: var(--bg-secondary);
+        padding: 20px;
+        overflow-y: auto;
+        box-shadow: inset -2px 0 8px rgba(0, 0, 0, 0.6);
+        border-left: 1px solid var(--border);
+        grid-column: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      #music-controls::-webkit-scrollbar {
+        width: 8px;
+      }
+      #music-controls::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      #music-controls::-webkit-scrollbar-thumb {
+        background: var(--accent-dim);
+        border-radius: 4px;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+      }
+      #music-controls::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
       }
       #controls::-webkit-scrollbar {
         width: 8px;
@@ -220,6 +246,7 @@
         background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
         position: relative;
         overflow: hidden;
+        grid-column: 2;
       }
       #visualization::before {
         content: "";
@@ -249,6 +276,9 @@
         filter: drop-shadow(0 0 20px var(--accent-glow));
       }
       #footer {
+        display: none;
+      }
+      #footer-old {
         grid-column: 1 / -1;
         background: linear-gradient(
           135deg,
@@ -524,6 +554,64 @@
         color: var(--accent);
         text-shadow: var(--glow-accent);
       }
+
+      /* Hide old fixed positioning elements */
+      .quantization-fixed {
+        display: none !important;
+      }
+      #csdOutput {
+        display: none !important;
+      }
+
+      /* Right panel sections */
+      .music-section {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 15px;
+      }
+      .music-section:last-child {
+        border-bottom: none;
+      }
+      .music-section h3 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.85em;
+        color: var(--accent);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Master Volume Control */
+      .volume-control {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      .volume-control label {
+        font-size: 0.85em;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .volume-control input[type="range"] {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      /* Playback buttons at top of left panel */
+      #playback-buttons {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+      }
+      #playback-buttons button {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 0.9em;
+        font-weight: 600;
+      }
     </style>
   </head>
   <body data-theme="green">
@@ -533,6 +621,47 @@
       </div>
 
       <div id="controls">
+        <!-- Playback Controls at Top -->
+        <div id="playback-buttons">
+          <button
+            id="playBtn"
+            onclick="play()"
+            disabled
+            style="background: var(--accent); color: var(--bg-primary)"
+          >
+            ▶ Play
+          </button>
+          <button
+            id="stopBtn"
+            onclick="stop()"
+            style="background: var(--accent-dim); color: var(--bg-primary)"
+          >
+            ⏹ Stop
+          </button>
+        </div>
+
+        <!-- Master Volume (Left Panel) -->
+        <div class="volume-control">
+          <label>🔊 Volume</label>
+          <input
+            type="range"
+            id="masterVolume"
+            min="0"
+            max="100"
+            value="70"
+            onchange="updateMasterVolume()"
+          />
+          <span
+            id="volumeValue"
+            style="
+              font-size: 0.8em;
+              color: var(--accent-dim);
+              text-align: center;
+            "
+            >70%</span
+          >
+        </div>
+
         <div class="control-group">
           <label>L-SYSTEM PRESETS</label>
           <button class="preset-btn" onclick="loadPreset('algae')">
@@ -1007,6 +1136,186 @@
 
       <div id="visualization"><canvas id="canvas"></canvas></div>
 
+      <!-- Music Controls - Right Panel -->
+      <div id="music-controls">
+        <!-- Quantize Section -->
+        <div class="music-section">
+          <h3>🎵 QUANTIZE</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <div>
+              <label
+                style="
+                  font-size: 0.8em;
+                  color: var(--accent);
+                  display: block;
+                  margin-bottom: 4px;
+                "
+                >🔑 Key</label
+              >
+              <select
+                id="keySelect"
+                onchange="updateKey()"
+                style="
+                  width: 100%;
+                  padding: 6px;
+                  background: var(--input-bg);
+                  color: var(--accent);
+                  border: 1px solid var(--border);
+                  border-radius: 3px;
+                  font-size: 11px;
+                "
+              >
+                <option value="C">C</option>
+                <option value="C#">C#</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="B">B</option>
+              </select>
+            </div>
+            <div>
+              <label
+                style="
+                  font-size: 0.8em;
+                  color: var(--accent);
+                  display: block;
+                  margin-bottom: 4px;
+                "
+                >📊 Scale</label
+              >
+              <select
+                id="scaleSelect"
+                onchange="updateScale()"
+                style="
+                  width: 100%;
+                  padding: 6px;
+                  background: var(--input-bg);
+                  color: var(--accent);
+                  border: 1px solid var(--border);
+                  border-radius: 3px;
+                  font-size: 11px;
+                "
+              >
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+                <option value="pentatonic">Pentatonic</option>
+                <option value="blues">Blues</option>
+                <option value="harmonic">Harmonic</option>
+                <option value="whole">Whole Tone</option>
+              </select>
+            </div>
+            <div>
+              <label
+                style="
+                  font-size: 0.8em;
+                  color: var(--accent);
+                  display: block;
+                  margin-bottom: 4px;
+                "
+                >⏱️ Rhythm</label
+              >
+              <input
+                type="number"
+                id="tempoInput"
+                min="40"
+                max="240"
+                value="120"
+                onchange="updateTempo()"
+                style="
+                  width: 100%;
+                  padding: 6px;
+                  background: var(--input-bg);
+                  color: var(--accent);
+                  border: 1px solid var(--border);
+                  border-radius: 3px;
+                  font-size: 11px;
+                "
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Music Settings -->
+        <div class="music-section">
+          <h3>🎛️ MUSIC SETTINGS</h3>
+          <div class="volume-control">
+            <label>Master Volume</label>
+            <input
+              type="range"
+              id="masterVolume"
+              min="0"
+              max="100"
+              value="70"
+              onchange="updateMasterVolume()"
+            />
+            <span
+              id="volumeValue"
+              style="
+                font-size: 0.8em;
+                color: var(--accent-dim);
+                text-align: center;
+              "
+              >70%</span
+            >
+          </div>
+        </div>
+
+        <!-- CSD Recording -->
+        <div
+          class="music-section"
+          style="
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            border-bottom: none;
+          "
+        >
+          <h3 style="margin-bottom: 12px">💾 RECORDING</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <button
+              id="recordCsdBtn"
+              onclick="startCSDRecording()"
+              style="
+                padding: 8px 12px;
+                background: #e74c3c;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 0.9em;
+              "
+            >
+              🔴 Record CSD
+            </button>
+            <button
+              id="downloadCsdBtn"
+              onclick="downloadCsd()"
+              disabled
+              style="
+                padding: 8px 12px;
+                background: #95a5a6;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 0.9em;
+              "
+            >
+              💾 Download CSD
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div id="footer">
         <div id="status">Loading Csound WASM...</div>
         <div
@@ -1043,8 +1352,9 @@
         </div>
       </div>
 
-      <!-- Quantization Controls -->
+      <!-- Quantization Controls - Hidden, will be in right panel -->
       <div
+        class="quantization-fixed"
         style="
           position: fixed;
           bottom: 20px;
@@ -5567,6 +5877,19 @@ ${orchCode}
         const tempoInput = document.getElementById("tempoInput");
         currentTempo = parseInt(tempoInput.value) || 120;
         debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
+      };
+
+      window.updateMasterVolume = function () {
+        const volumeSlider = document.getElementById("masterVolume");
+        const volumeValue = document.getElementById("volumeValue");
+        const volume = parseInt(volumeSlider.value);
+        volumeValue.textContent = volume + "%";
+        // Scale: 0-100 → 0.0-1.0
+        const normalizedVolume = volume / 100;
+        if (csound) {
+          csound.setControlChannel("masterVolume", normalizedVolume);
+        }
+        debugLog(`🔊 Master Volume: ${volume}%`);
       };
 
       // ========================================
