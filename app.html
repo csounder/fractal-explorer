@@ -5126,40 +5126,121 @@
       };
 
       window.exportCSD = async function() {
-        if (csdEventLog.length === 0) { alert("No events recorded. Generate and play a fractal first!"); return; }
-        const lsystemParams = {
-          axiom: document.getElementById("axiom").value,
-          rules: document.getElementById("rules").value,
-          iterations: parseFloat(document.getElementById("iterations").value),
-          angle: parseFloat(document.getElementById("angle").value),
-          baseFreq: parseFloat(document.getElementById("basefreq").value),
-          tempo: parseFloat(document.getElementById("tempo").value),
-          pitchMap: document.getElementById("pitchmap").value,
-          durMap: document.getElementById("durmap").value,
-          presetMode: document.getElementById("presetmode").value,
-        };
-        const timestamp = new Date().toISOString();
-        const orchCode = typeof orchestraCode !== "undefined" ? orchestraCode : getDefaultOrchestra();
-        const csdHeader = `<CsoundSynthesizer><CsOptions>-odac -d -m0</CsOptions><CsInstruments>${orchCode}</CsInstruments><CsScore>; L-System Generated Composition; Generated: ${timestamp}; Axiom: ${lsystemParams.axiom}; Iterations: ${lsystemParams.iterations}; Angle: ${lsystemParams.angle}°; Base Freq: ${lsystemParams.baseFreq}Hz, Tempo: ${lsystemParams.tempo}BPM; Total Events: ${csdEventLog.length};n`;
-        let scoreStatements = "";
-        csdEventLog.forEach(e => { scoreStatements += e.statement + "\n"; });
-        const fullCSD = csdHeader + scoreStatements + "\ne\n</CsScore>\n</CsoundSynthesizer>";
-        const output = document.getElementById("csdOutput");
-        output.value = fullCSD; output.style.display = "block";
-        downloadCSDFile(fullCSD);
+        console.log("exportCSD called");
+        
+        if (csdEventLog.length === 0) {
+          alert('No events recorded. Generate and play a fractal first!');
+          return;
+        }
+
+        try {
+          const lsystemParams = {
+            axiom: document.getElementById("axiom")?.value || "?",
+            rules: document.getElementById("rules")?.value || "?",
+            iterations: parseFloat(document.getElementById("iterations")?.value) || 0,
+            angle: parseFloat(document.getElementById("angle")?.value) || 0,
+            baseFreq: parseFloat(document.getElementById("basefreq")?.value) || 220,
+            tempo: parseFloat(document.getElementById("tempo")?.value) || 120,
+            pitchMap: document.getElementById("pitchmap")?.value || "depth",
+            durMap: document.getElementById("durmap")?.value || "constant",
+            presetMode: document.getElementById("presetmode")?.value || "warm_pad",
+          };
+
+          const timestamp = new Date().toISOString();
+          const orchCode = typeof orchestraCode !== 'undefined' ? orchestraCode : getDefaultOrchestra();
+          
+          const csdHeader = `<CsoundSynthesizer>
+<CsOptions>
+-odac -d -m0
+</CsOptions>
+<CsInstruments>
+${orchCode}
+</CsInstruments>
+<CsScore>
+; ============================================================
+; FRACTAL EXPLORER - L-SYSTEM GENERATED COMPOSITION
+; ============================================================
+; Generated: ${timestamp}
+;
+; L-System Configuration:
+;   Axiom: ${lsystemParams.axiom}
+;   Rules: ${lsystemParams.rules.replace(/\n/g, ' | ')}
+;   Iterations: ${lsystemParams.iterations}
+;   Angle: ${lsystemParams.angle}°
+;
+; Musical Parameters:
+;   Base Frequency: ${lsystemParams.baseFreq} Hz
+;   Tempo: ${lsystemParams.tempo} BPM
+;   Pitch Mapping: ${lsystemParams.pitchMap}
+;   Duration Mapping: ${lsystemParams.durMap}
+;   Synthesis Preset: ${lsystemParams.presetMode}
+;
+; Score Statistics:
+;   Total Events: ${csdEventLog.length}
+;   Duration: ${(csdEventLog[csdEventLog.length - 1]?.timestamp || 0).toFixed(3)}s
+; ============================================================
+
+`;
+
+          let scoreStatements = '';
+          csdEventLog.forEach(event => {
+            scoreStatements += event.statement + '\n';
+          });
+
+          const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
+          const fullCSD = csdHeader + scoreStatements + csdFooter;
+
+          // Display in textarea (create if needed)
+          let output = document.getElementById('csdOutput');
+          if (!output) {
+            console.warn('Creating textarea element...');
+            output = document.createElement('textarea');
+            output.id = 'csdOutput';
+            output.readOnly = true;
+            output.style.cssText = 'position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: "Monaco", monospace; font-size: 11px; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);';
+            document.body.appendChild(output);
+          }
+          
+          output.value = fullCSD;
+          output.style.display = 'block';
+          
+          console.log('✓ CSD content displayed in console');
+          console.log(`✓ Generated ${csdEventLog.length} events`);
+
+          downloadCSDFile(fullCSD);
+
+        } catch (error) {
+          console.error('Export error:', error);
+          alert('Error exporting CSD: ' + error.message);
+        }
       };
 
       function downloadCSDFile(content) {
-        const ts = new Date().toISOString().replace(/:/g, "-").split(".")[0];
-        const fn = `fractal-explorer_${ts}.csd`;
-        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url; a.download = fn;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        document.getElementById("status").textContent = `✓ Exported: ${fn}`;
-        debugLog(`✓ Downloaded: ${fn}`);
+        try {
+          const timestamp = new Date().toISOString().replace(/:/g, '-').split('.')[0];
+          const filename = `fractal-explorer_${timestamp}.csd`;
+
+          const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          setTimeout(() => URL.revokeObjectURL(url), 100);
+
+          document.getElementById('status').textContent = `✓ Exported: ${filename}`;
+          debugLog(`✓ Downloaded: ${filename}`);
+          console.log(`✓ File downloaded: ${filename}`);
+          
+        } catch (error) {
+          console.error('Download error:', error);
+          alert('Error downloading file: ' + error.message);
+        }
+      }
       };
 
       }
