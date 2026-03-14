@@ -2442,15 +2442,22 @@
         document.getElementById("playBtn").style.background = "var(--accent-dim)";
         document.getElementById("status").textContent = "Playing...";
 
-        const baseFreq = parseFloat(document.getElementById("baseFreq").value);
-        const tempo = parseFloat(document.getElementById("tempo").value);
-        const pitchMap = document.getElementById("pitchMap").value;
-        const durMap = document.getElementById("durMap").value;
-        const timbreMap = document.getElementById("timbreMap").value;
-        const panMap = document.getElementById("panMap").value;
-        const panTypeStr = document.getElementById("panType").value;
-        const panType = panTypeStr === "ambi" ? 2 : 0;
-        const preset = document.getElementById("soundPreset").value;
+         let baseFreq = parseFloat(document.getElementById("baseFreq").value);
+         const tempo = parseFloat(document.getElementById("tempo").value);
+         const pitchMap = document.getElementById("pitchMap").value;
+         const durMap = document.getElementById("durMap").value;
+         const timbreMap = document.getElementById("timbreMap").value;
+         const panMap = document.getElementById("panMap").value;
+         const panTypeStr = document.getElementById("panType").value;
+         const panType = panTypeStr === "ambi" ? 2 : 0;
+         const preset = document.getElementById("soundPreset").value;
+         const scaleChoice = document.getElementById("scaleSelect").value;
+         
+         // Quantize baseFreq to selected key (if scale is not "none")
+         if (scaleChoice !== "none") {
+           baseFreq = window.quantizeNoteToScale(baseFreq);
+           debugLog(`🎵 Base Frequency quantized to key: ${baseFreq.toFixed(2)} Hz`);
+         }
         const attackMs = parseFloat(document.getElementById("attack").value);
         const releaseMs = parseFloat(document.getElementById("release").value);
         const attack = attackMs / 1000;
@@ -2601,18 +2608,29 @@
             ratio = Math.pow(2, randomPitch);
           }
 
-          const freq = Math.max(100, Math.min(4000, baseFreq * ratio));
+           let freq = Math.max(100, Math.min(4000, baseFreq * ratio));
+           
+           // Quantize frequency to selected scale (if not "none")
+           if (scaleChoice !== "none") {
+             freq = window.quantizeNoteToScale(freq);
+           }
 
-          // Duration mapping - make notes shorter than spacing to avoid clouds
-          // Base duration is 80% of spacing so notes don't overlap too much
-          const baseNoteDur = (beatDur / maxPoly) * 0.8;
-          let dur = baseNoteDur;
-          if (durMap === "depth") {
-            dur = baseNoteDur * (0.5 + (path.depth / maxDepth) * 1.0);
-          } else if (durMap === "inverse") {
-            dur = baseNoteDur * (1.5 - (path.depth / maxDepth) * 0.5);
-          }
-          dur = Math.max(0.05, Math.min(2.0, dur));
+           // Duration mapping - make notes shorter than spacing to avoid clouds
+           // Base duration is 80% of spacing so notes don't overlap too much
+           const baseNoteDur = (beatDur / maxPoly) * 0.8;
+           let dur = baseNoteDur;
+           if (durMap === "depth") {
+             dur = baseNoteDur * (0.5 + (path.depth / maxDepth) * 1.0);
+           } else if (durMap === "inverse") {
+             dur = baseNoteDur * (1.5 - (path.depth / maxDepth) * 0.5);
+           }
+           dur = Math.max(0.05, Math.min(2.0, dur));
+           
+           // Apply rhythm quantization (snap to rhythm grid)
+           const rhythmChoice = document.getElementById("tempoInput").value;
+           if (rhythmChoice !== "none") {
+             dur = window.quantizeRhythm(dur, beatDur);
+           }
 
           // Timbre mapping
           let brightness = 0.5;
@@ -5753,12 +5771,49 @@ ${orchCode}
           }
         }
 
-        // Quantized MIDI note
-        const quantizedMidi = rootMidi + octaveOffset + closestDegree;
-        return midiToFrequency(quantizedMidi);
-      };
+         // Quantized MIDI note
+         const quantizedMidi = rootMidi + octaveOffset + closestDegree;
+         return midiToFrequency(quantizedMidi);
+       };
 
-      window.updateKey = function () {
+       // Rhythm quantization: snap durations to the selected rhythm grid
+       window.quantizeRhythm = function (duration, beatDuration) {
+         const rhythmValue = document.getElementById("tempoInput").value;
+         if (rhythmValue === "none") return duration; // No quantization
+         
+         // Map rhythm values to note durations (in beats)
+         const rhythmMap = {
+           "whole": 4,
+           "half": 2,
+           "quarter": 1,
+           "eighth": 0.5,
+           "sixteenth": 0.25,
+           "thirtysecond": 0.125,
+           "sixtyfourth": 0.0625,
+           "onetwentyeighth": 0.03125,
+           "dotted-whole": 6,
+           "dotted-half": 3,
+           "dotted-quarter": 1.5,
+           "dotted-eighth": 0.75,
+           "dotted-sixteenth": 0.375,
+           "dotted-thirtysecond": 0.1875,
+           "dotted-sixtyfourth": 0.09375,
+           "dotted-onetwentyeighth": 0.046875,
+           "triplet-half": 4/3,
+           "triplet-quarter": 2/3,
+           "triplet-eighth": 1/3,
+           "triplet-sixteenth": 1/6,
+           "triplet-thirtysecond": 1/12,
+         };
+         
+         const noteDuration = rhythmMap[rhythmValue];
+         if (noteDuration) {
+           return noteDuration * beatDuration;
+         }
+         return duration;
+       };
+
+       window.updateKey = function () {
         const keySelect = document.getElementById("keySelect");
         currentKey = keySelect.value;
         debugLog(`🔑 Key changed to: ${currentKey}`);
