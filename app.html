@@ -1012,10 +1012,13 @@
         <div class="btn-group" style="margin: 0">
           <button id="playBtn" onclick="play()" disabled>Play</button>
           <button id="stopBtn" onclick="stop()">Stop</button>
+          <button id="exportCsdBtn" onclick="exportCSD()" disabled style="background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">💾 Export CSD</button>
         </div>
       </div>
     </div>
 
+    <!-- CSD Output Console -->
+    <textarea id="csdOutput" readonly style="position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: 'Monaco', monospace; font-size: 11px; display: none; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);"></textarea>
     <script>
       let csound = null;
       let isPlaying = false;
@@ -2075,6 +2078,8 @@
         }
 
         isPlaying = true;
+        initializeCSDRecording();  // Start recording events for CSD export
+        enableCSDExport();  // Enable export button
         document.getElementById("playBtn").disabled = true;
         document.getElementById("status").textContent = "Playing...";
 
@@ -2475,6 +2480,7 @@
             if (isPlaying && csound && csoundReady) {
               csound.inputMessage(scoreEvent);
 
+              logEventToCSD(scoreEvent, time);  // Log for CSD export
               // Update reverb parameters (ALWAYS set channels, even in manual mode)
               let roomNorm = roomSize; // Start with slider value
               if (roomSizeMap === "depth") {
@@ -5096,6 +5102,66 @@
         } else {
           debugLog(`Factory presets already loaded (39 total)`);
         }
+      // ========================================
+      // CSD EXPORT FUNCTIONALITY
+      // ========================================
+
+      let csdEventLog = [];
+      let isCSDRecording = false;
+
+      window.initializeCSDRecording = function() {
+        csdEventLog = [];
+        isCSDRecording = true;
+      };
+
+      window.logEventToCSD = function(scoreEvent, time) {
+        if (isCSDRecording) {
+          csdEventLog.push({ statement: scoreEvent, timestamp: time });
+        }
+      };
+
+      window.enableCSDExport = function() {
+        const btn = document.getElementById("exportCsdBtn");
+        if (btn) btn.disabled = false;
+      };
+
+      window.exportCSD = async function() {
+        if (csdEventLog.length === 0) { alert("No events recorded. Generate and play a fractal first!"); return; }
+        const lsystemParams = {
+          axiom: document.getElementById("axiom").value,
+          rules: document.getElementById("rules").value,
+          iterations: parseFloat(document.getElementById("iterations").value),
+          angle: parseFloat(document.getElementById("angle").value),
+          baseFreq: parseFloat(document.getElementById("basefreq").value),
+          tempo: parseFloat(document.getElementById("tempo").value),
+          pitchMap: document.getElementById("pitchmap").value,
+          durMap: document.getElementById("durmap").value,
+          presetMode: document.getElementById("presetmode").value,
+        };
+        const timestamp = new Date().toISOString();
+        const orchCode = typeof orchestraCode !== "undefined" ? orchestraCode : getDefaultOrchestra();
+        const csdHeader = `<CsoundSynthesizer><CsOptions>-odac -d -m0</CsOptions><CsInstruments>${orchCode}</CsInstruments><CsScore>; L-System Generated Composition; Generated: ${timestamp}; Axiom: ${lsystemParams.axiom}; Iterations: ${lsystemParams.iterations}; Angle: ${lsystemParams.angle}°; Base Freq: ${lsystemParams.baseFreq}Hz, Tempo: ${lsystemParams.tempo}BPM; Total Events: ${csdEventLog.length};n`;
+        let scoreStatements = "";
+        csdEventLog.forEach(e => { scoreStatements += e.statement + "\n"; });
+        const fullCSD = csdHeader + scoreStatements + "\ne\n</CsScore>\n</CsoundSynthesizer>";
+        const output = document.getElementById("csdOutput");
+        output.value = fullCSD; output.style.display = "block";
+        downloadCSDFile(fullCSD);
+      };
+
+      function downloadCSDFile(content) {
+        const ts = new Date().toISOString().replace(/:/g, "-").split(".")[0];
+        const fn = `fractal-explorer_${ts}.csd`;
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = fn;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        document.getElementById("status").textContent = `✓ Exported: ${fn}`;
+        debugLog(`✓ Downloaded: ${fn}`);
+      };
+
       }
 
       // Make functions global
