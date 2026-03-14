@@ -1047,33 +1047,7 @@
           <input type="range" id="masterVolume" min="0" max="100" value="70" />
         </div>
 
-        <div class="control-group">
-          <label>REVERB (Freeverb)</label>
 
-          <label>Room Size <span class="value" id="roomVal">0.75</span></label>
-          <input type="range" id="roomSize" min="0" max="100" value="75" />
-          <label>Room Size Mapping</label>
-          <select id="roomSizeMap">
-            <option value="manual" selected>Manual (use slider)</option>
-            <option value="depth">Depth → Room Size (0-1)</option>
-            <option value="angle">Angle → Room Size (0-1)</option>
-            <option value="position">Position → Room Size (0-1)</option>
-            <option value="inverse">Inverse Depth → Room Size</option>
-          </select>
-
-          <label style="margin-top: 12px"
-            >Wet Mix <span class="value" id="reverbVal">45%</span></label
-          >
-          <input type="range" id="reverb" min="0" max="100" value="45" />
-          <label>Wet Mix Mapping</label>
-          <select id="reverbWetMap">
-            <option value="manual" selected>Manual (use slider)</option>
-            <option value="depth">Depth → Wet Mix (0-100%)</option>
-            <option value="angle">Angle → Wet Mix (0-100%)</option>
-            <option value="position">Position → Wet Mix (0-100%)</option>
-            <option value="inverse">Inverse Depth → Wet Mix</option>
-          </select>
-        </div>
 
         <div class="control-group">
           <label>EVENT DENSITY</label>
@@ -1206,8 +1180,38 @@
           </div>
         </div>
 
-        <!-- SOUND SYNTHESIS -->
-      </div>
+         <!-- REVERB SECTION -->
+         <div class="control-section">
+           <h3>Reverb - Freeverb</h3>
+           <div class="control-group">
+             <label>Room Size <span class="value" id="roomVal">0.75</span></label>
+             <input type="range" id="roomSize" min="0" max="100" value="75" />
+             <label>Room Size Mapping</label>
+             <select id="roomSizeMap">
+               <option value="manual" selected>Manual (use slider)</option>
+               <option value="depth">Depth → Room Size (0-1)</option>
+               <option value="angle">Angle → Room Size (0-1)</option>
+               <option value="position">Position → Room Size (0-1)</option>
+               <option value="inverse">Inverse Depth → Room Size</option>
+             </select>
+
+             <label style="margin-top: 12px"
+               >Wet Mix <span class="value" id="reverbVal">45%</span></label
+             >
+             <input type="range" id="reverb" min="0" max="100" value="45" />
+             <label>Wet Mix Mapping</label>
+             <select id="reverbWetMap">
+               <option value="manual" selected>Manual (use slider)</option>
+               <option value="depth">Depth → Wet Mix (0-100%)</option>
+               <option value="angle">Angle → Wet Mix (0-100%)</option>
+               <option value="position">Position → Wet Mix (0-100%)</option>
+               <option value="inverse">Inverse Depth → Wet Mix</option>
+             </select>
+           </div>
+         </div>
+
+         <!-- SOUND SYNTHESIS -->
+       </div>
       </div>
 
       <div id="footer">
