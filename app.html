@@ -834,25 +834,7 @@
           </select>
         </div>
 
-        <div class="control-group">
-          <label>SOUND SYNTHESIS</label>
-          <select id="soundPreset">
-            <optgroup label="🎵 Melodic Instruments">
-              <option value="pluck">Pluck (Karplus-Strong)</option>
-              <option value="fm">FM Bell</option>
-              <option value="bell">Additive Bell</option>
-              <option value="clarinet">Clarinet</option>
-              <option value="organ">Drawbar Organ</option>
-            </optgroup>
-            <optgroup label="🌊 Textural Instruments">
-              <option value="granular">Granular Synthesis</option>
-              <option value="complexfm">Complex FM (4-op)</option>
-              <option value="noisefilter">Noise & Filters</option>
-            </optgroup>
-          </select>
-        </div>
-
-        <!-- GRANULAR SYNTHESIS CONTROLS -->
+         <!-- GRANULAR SYNTHESIS CONTROLS -->
         <div class="control-group" id="granularControls" style="display: none">
           <label style="color: var(--accent); font-weight: 600"
             >⚙️ GRANULAR PARAMETERS</label
@@ -1086,7 +1068,28 @@
       <!-- Music Controls - Right Panel with FULL SYNTHESIS CONTROLS -->
       <div id="music-controls">
         
-         <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
+        <!-- SOUND SYNTHESIS -->
+        <div class="control-section">
+          <h3>Sound Synthesis</h3>
+          <div class="control-group">
+            <select id="soundPreset">
+              <optgroup label="🎵 Melodic Instruments">
+                <option value="pluck">Pluck (Karplus-Strong)</option>
+                <option value="fm">FM Bell</option>
+                <option value="bell">Additive Bell</option>
+                <option value="clarinet">Clarinet</option>
+                <option value="organ">Drawbar Organ</option>
+              </optgroup>
+              <optgroup label="🌊 Textural Instruments">
+                <option value="granular">Granular Synthesis</option>
+                <option value="complexfm">Complex FM (4-op)</option>
+                <option value="noisefilter">Noise & Filters</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+
+        <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
         <div class="control-section">
           <h3>Quantize - <span style="font-size: 0.85em">Key, Scale, Rhythm</span></h3>
           <div class="control-group">
