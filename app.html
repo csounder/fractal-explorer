@@ -1009,16 +1009,182 @@
 
       <div id="footer">
         <div id="status">Loading Csound WASM...</div>
-        <div class="btn-group" style="margin: 0">
-          <button id="playBtn" onclick="play()" disabled>Play</button>
-          <button id="stopBtn" onclick="stop()">Stop</button>
-          <button id="exportCsdBtn" onclick="exportCSD()" disabled style="background: linear-gradient(135deg, #667eea, #764ba2); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">💾 Export CSD</button>
+        <div
+          class="btn-group"
+          style="margin: 0; display: flex; gap: 8px; flex-wrap: wrap"
+        >
+          <button id="playBtn" onclick="play()" disabled>▶ Play</button>
+          <button id="stopBtn" onclick="stop()">⏹ Stop</button>
+          <button
+            id="toggleConsoleBtn"
+            onclick="toggleConsole()"
+            style="background: #667eea"
+          >
+            👁️ Hide Console
+          </button>
+          <button
+            id="recordCsdBtn"
+            onclick="startCSDRecording()"
+            style="background: #e74c3c"
+          >
+            🔴 Record CSD
+          </button>
+          <button
+            id="downloadCsdBtn"
+            onclick="downloadCsd()"
+            disabled
+            style="background: #95a5a6"
+          >
+            💾 Download
+          </button>
+          <span style="font-size: 11px; color: #aaa; line-height: 2.5"
+            >Space = play/stop</span
+          >
+        </div>
+      </div>
+
+      <!-- Quantization Controls -->
+      <div
+        style="
+          position: fixed;
+          bottom: 20px;
+          left: 20px;
+          background: rgba(10, 10, 30, 0.95);
+          border: 2px solid #00ff88;
+          border-radius: 8px;
+          padding: 15px;
+          width: 280px;
+          z-index: 999;
+        "
+      >
+        <h3 style="color: #00ff88; margin: 0 0 12px 0; font-size: 13px">
+          🎵 Quantization
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px">
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                color: #00ff88;
+                display: block;
+                margin-bottom: 4px;
+              "
+              >🔑 Key</label
+            >
+            <select
+              id="keySelect"
+              onchange="updateKey()"
+              style="
+                width: 100%;
+                padding: 6px;
+                background: #0a0a0a;
+                color: #00ff88;
+                border: 1px solid #00ff88;
+                border-radius: 3px;
+                font-size: 11px;
+              "
+            >
+              <option value="C">C</option>
+              <option value="C#">C#</option>
+              <option value="D">D</option>
+              <option value="D#">D#</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F#</option>
+              <option value="G">G</option>
+              <option value="G#">G#</option>
+              <option value="A">A</option>
+              <option value="A#">A#</option>
+              <option value="B">B</option>
+            </select>
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                color: #00ff88;
+                display: block;
+                margin-bottom: 4px;
+              "
+              >📊 Scale</label
+            >
+            <select
+              id="scaleSelect"
+              onchange="updateScale()"
+              style="
+                width: 100%;
+                padding: 6px;
+                background: #0a0a0a;
+                color: #00ff88;
+                border: 1px solid #00ff88;
+                border-radius: 3px;
+                font-size: 11px;
+              "
+            >
+              <option value="major">Major</option>
+              <option value="minor">Minor</option>
+              <option value="pentatonic">Pentatonic</option>
+              <option value="blues">Blues</option>
+              <option value="harmonic">Harmonic</option>
+              <option value="whole">Whole Tone</option>
+            </select>
+          </div>
+          <div>
+            <label
+              style="
+                font-size: 11px;
+                color: #00ff88;
+                display: block;
+                margin-bottom: 4px;
+              "
+              >⏱️ Tempo (BPM)</label
+            >
+            <input
+              type="number"
+              id="tempoInput"
+              min="40"
+              max="240"
+              value="120"
+              onchange="updateTempo()"
+              style="
+                width: 100%;
+                padding: 6px;
+                background: #0a0a0a;
+                color: #00ff88;
+                border: 1px solid #00ff88;
+                border-radius: 3px;
+                font-size: 11px;
+              "
+            />
+          </div>
         </div>
       </div>
     </div>
 
     <!-- CSD Output Console -->
-    <textarea id="csdOutput" readonly style="position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: 'Monaco', monospace; font-size: 11px; display: none; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);"></textarea>
+    <textarea
+      id="csdOutput"
+      readonly
+      style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 600px;
+        height: 450px;
+        background: rgba(10, 10, 30, 0.95);
+        color: #00ff88;
+        border: 2px solid #00ff88;
+        border-radius: 8px;
+        padding: 15px;
+        font-family: &quot;Monaco&quot;, monospace;
+        font-size: 11px;
+        display: none;
+        resize: both;
+        overflow: auto;
+        z-index: 1000;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+      "
+    ></textarea>
     <script>
       let csound = null;
       let isPlaying = false;
@@ -1057,7 +1223,7 @@
           angle: 120,
           iterations: 5,
         },
-      }
+      };
 
       // Debug console
       function debugLog(msg) {
@@ -1079,7 +1245,7 @@
           debugConsole.style.display = showDebug.checked ? "block" : "none";
           if (showDebug.checked) debugLog("Debug console enabled");
         }
-      }
+      };
 
       // Initialize Csound WASM 7 (same pattern as Weather Sonification)
       async function initCsound() {
@@ -1667,7 +1833,7 @@
           await stop();
           setTimeout(() => play(), 200);
         }
-      }
+      };
 
       // Update display values
       function updateDisplays() {
@@ -1698,7 +1864,7 @@
       const setupListener = (id, handler) => {
         const elem = document.getElementById(id);
         if (elem) elem.oninput = handler;
-      }
+      };
       setupListener("iterations", updateDisplays);
       setupListener("angle", updateDisplays);
       setupListener("maxEvents", updateDisplays);
@@ -1748,7 +1914,7 @@
           await stop();
           setTimeout(() => play(), 200);
         }
-      }
+      };
 
       // Listen to both 'change' and 'input' events to catch all interactions
       const addAutoRestart = (id) => {
@@ -1757,7 +1923,7 @@
           elem.addEventListener("change", autoRestart);
           elem.addEventListener("input", autoRestart);
         }
-      }
+      };
 
       // Show/hide complex instrument parameter controls
       function updateInstrumentControls() {
@@ -2043,7 +2209,7 @@
 
         document.getElementById("status").textContent =
           `Generated: ${paths.length} segments`;
-      }
+      };
 
       // Play
       window.play = async function () {
@@ -2078,8 +2244,8 @@
         }
 
         isPlaying = true;
-        initializeCSDRecording();  // Start recording events for CSD export
-        enableCSDExport();  // Enable export button
+        initializeCSDRecording(); // Start recording events for CSD export
+        enableCSDExport(); // Enable export button
         document.getElementById("playBtn").disabled = true;
         document.getElementById("status").textContent = "Playing...";
 
@@ -2480,7 +2646,7 @@
             if (isPlaying && csound && csoundReady) {
               csound.inputMessage(scoreEvent);
 
-              logEventToCSD(scoreEvent, time);  // Log for CSD export
+              logEventToCSD(scoreEvent, time); // Log for CSD export
               // Update reverb parameters (ALWAYS set channels, even in manual mode)
               let roomNorm = roomSize; // Start with slider value
               if (roomSizeMap === "depth") {
@@ -2545,7 +2711,7 @@
           },
           (time + 2) * 1000,
         );
-      }
+      };
 
       // Test sound - play a single 440Hz sine tone
       // Stop - immediately kill all active notes and clear scheduled timeouts
@@ -2582,7 +2748,7 @@
         if (paths.length > 0 && paths.bounds) {
           drawPaths(paths, paths.bounds, -1);
         }
-      }
+      };
 
       // ===== PRESET SAVE/LOAD SYSTEM =====
 
@@ -5068,7 +5234,7 @@
           filterResMap: "angle",
           filterModMap: "fast",
         },
-      }
+      };
 
       // Load factory presets into localStorage (force=true to overwrite)
       function loadFactoryPresets(force = false) {
@@ -5110,27 +5276,27 @@
       let csdEventLog = [];
       let isCSDRecording = false;
 
-      window.initializeCSDRecording = function() {
+      window.initializeCSDRecording = function () {
         csdEventLog = [];
         isCSDRecording = true;
-      }
+      };
 
-      window.logEventToCSD = function(scoreEvent, time) {
+      window.logEventToCSD = function (scoreEvent, time) {
         if (isCSDRecording) {
           csdEventLog.push({ statement: scoreEvent, timestamp: time });
         }
-      }
+      };
 
-      window.enableCSDExport = function() {
+      window.enableCSDExport = function () {
         const btn = document.getElementById("exportCsdBtn");
         if (btn) btn.disabled = false;
-      }
+      };
 
-      window.exportCSD = async function() {
+      window.exportCSD = async function () {
         console.log("exportCSD called");
-        
+
         if (csdEventLog.length === 0) {
-          alert('No events recorded. Generate and play a fractal first!');
+          alert("No events recorded. Generate and play a fractal first!");
           return;
         }
 
@@ -5138,18 +5304,24 @@
           const lsystemParams = {
             axiom: document.getElementById("axiom")?.value || "?",
             rules: document.getElementById("rules")?.value || "?",
-            iterations: parseFloat(document.getElementById("iterations")?.value) || 0,
+            iterations:
+              parseFloat(document.getElementById("iterations")?.value) || 0,
             angle: parseFloat(document.getElementById("angle")?.value) || 0,
-            baseFreq: parseFloat(document.getElementById("basefreq")?.value) || 220,
+            baseFreq:
+              parseFloat(document.getElementById("basefreq")?.value) || 220,
             tempo: parseFloat(document.getElementById("tempo")?.value) || 120,
             pitchMap: document.getElementById("pitchmap")?.value || "depth",
             durMap: document.getElementById("durmap")?.value || "constant",
-            presetMode: document.getElementById("presetmode")?.value || "warm_pad",
+            presetMode:
+              document.getElementById("presetmode")?.value || "warm_pad",
           };
 
           const timestamp = new Date().toISOString();
-          const orchCode = typeof orchestraCode !== 'undefined' ? orchestraCode : getDefaultOrchestra();
-          
+          const orchCode =
+            typeof orchestraCode !== "undefined"
+              ? orchestraCode
+              : getDefaultOrchestra();
+
           const csdHeader = `<CsoundSynthesizer>
 <CsOptions>
 -odac -d -m0
@@ -5165,7 +5337,7 @@ ${orchCode}
 ;
 ; L-System Configuration:
 ;   Axiom: ${lsystemParams.axiom}
-;   Rules: ${lsystemParams.rules.replace(/\n/g, ' | ')}
+;   Rules: ${lsystemParams.rules.replace(/\n/g, " | ")}
 ;   Iterations: ${lsystemParams.iterations}
 ;   Angle: ${lsystemParams.angle}°
 ;
@@ -5183,66 +5355,237 @@ ${orchCode}
 
 `;
 
-          let scoreStatements = '';
-          csdEventLog.forEach(event => {
-            scoreStatements += event.statement + '\n';
+          let scoreStatements = "";
+          csdEventLog.forEach((event) => {
+            scoreStatements += event.statement + "\n";
           });
 
           const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
           const fullCSD = csdHeader + scoreStatements + csdFooter;
 
           // Display in textarea (create if needed)
-          let output = document.getElementById('csdOutput');
+          let output = document.getElementById("csdOutput");
           if (!output) {
-            console.warn('Creating textarea element...');
-            output = document.createElement('textarea');
-            output.id = 'csdOutput';
+            console.warn("Creating textarea element...");
+            output = document.createElement("textarea");
+            output.id = "csdOutput";
             output.readOnly = true;
-            output.style.cssText = 'position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: "Monaco", monospace; font-size: 11px; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);';
+            output.style.cssText =
+              'position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: "Monaco", monospace; font-size: 11px; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);';
             document.body.appendChild(output);
           }
-          
+
           output.value = fullCSD;
-          output.style.display = 'block';
-          
-          console.log('✓ CSD content displayed in console');
+          output.style.display = "block";
+
+          console.log("✓ CSD content displayed in console");
           console.log(`✓ Generated ${csdEventLog.length} events`);
 
           downloadCSDFile(fullCSD);
-
         } catch (error) {
-          console.error('Export error:', error);
-          alert('Error exporting CSD: ' + error.message);
+          console.error("Export error:", error);
+          alert("Error exporting CSD: " + error.message);
         }
-      }
+      };
 
       function downloadCSDFile(content) {
         try {
-          const timestamp = new Date().toISOString().replace(/:/g, '-').split('.')[0];
+          const timestamp = new Date()
+            .toISOString()
+            .replace(/:/g, "-")
+            .split(".")[0];
           const filename = `fractal-explorer_${timestamp}.csd`;
 
-          const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+          const blob = new Blob([content], {
+            type: "text/plain;charset=utf-8",
+          });
           const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
+          const link = document.createElement("a");
           link.href = url;
           link.download = filename;
-          
+
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          
+
           setTimeout(() => URL.revokeObjectURL(url), 100);
 
-          document.getElementById('status').textContent = `✓ Exported: ${filename}`;
+          document.getElementById("status").textContent =
+            `✓ Exported: ${filename}`;
           debugLog(`✓ Downloaded: ${filename}`);
           console.log(`✓ File downloaded: ${filename}`);
-          
         } catch (error) {
-          console.error('Download error:', error);
-          alert('Error downloading file: ' + error.message);
+          console.error("Download error:", error);
+          alert("Error downloading file: " + error.message);
         }
       }
 
+      // ========================================
+      // UI CONTROL FUNCTIONS
+      // ========================================
+
+      window.toggleConsole = function () {
+        const output = document.getElementById("csdOutput");
+        const btn = document.getElementById("toggleConsoleBtn");
+        if (output.style.display === "none") {
+          output.style.display = "block";
+          btn.textContent = "👁️ Hide Console";
+          btn.style.background = "#667eea";
+        } else {
+          output.style.display = "none";
+          btn.textContent = "👁️ Show Console";
+          btn.style.background = "#444";
+        }
+      };
+
+      window.startCSDRecording = function () {
+        const btn = document.getElementById("recordCsdBtn");
+        const dlBtn = document.getElementById("downloadCsdBtn");
+
+        if (!isCSDRecording) {
+          // Start recording
+          csdEventLog = [];
+          isCSDRecording = true;
+          btn.textContent = "🟢 Stop Recording";
+          btn.style.background = "#27ae60";
+          dlBtn.disabled = true;
+          document.getElementById("status").textContent =
+            "🔴 Recording CSD events...";
+          debugLog("🔴 CSD Recording started");
+        } else {
+          // Stop recording
+          isCSDRecording = false;
+          btn.textContent = "🔴 Record CSD";
+          btn.style.background = "#e74c3c";
+          dlBtn.disabled = false;
+          document.getElementById("status").textContent =
+            `✓ Recording stopped (${csdEventLog.length} events)`;
+          debugLog(`✓ CSD Recording stopped (${csdEventLog.length} events)`);
+          window.exportCSD();
+        }
+      };
+
+      window.downloadCsd = function () {
+        if (csdEventLog.length === 0) {
+          alert("No events recorded. Generate and play a fractal first!");
+          return;
+        }
+        window.exportCSD();
+      };
+
+      // ========================================
+      // QUANTIZATION FUNCTIONS & SCALE LOGIC
+      // ========================================
+
+      let currentKey = "C";
+      let currentScale = "major";
+      let currentTempo = 120;
+
+      // Scale degree intervals (semitones from root)
+      const scalePatterns = {
+        major: [0, 2, 4, 5, 7, 9, 11], // Ionian
+        minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
+        pentatonic: [0, 2, 4, 7, 9], // Major pentatonic
+        blues: [0, 3, 5, 6, 7, 10], // Blues scale
+        harmonic: [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
+        whole: [0, 2, 4, 6, 8, 10], // Whole tone scale
+      };
+
+      // MIDI note to frequency mapping
+      const noteNames = [
+        "C",
+        "C#",
+        "D",
+        "D#",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "G#",
+        "A",
+        "A#",
+        "B",
+      ];
+
+      function noteToMidi(noteName) {
+        const octave = 4; // Default octave
+        const noteIndex = noteNames.indexOf(noteName);
+        return noteIndex + octave * 12 + 12; // MIDI note number
+      }
+
+      function frequencyToMidi(freq) {
+        return Math.round(12 * Math.log2(freq / 440) + 69);
+      }
+
+      function midiToFrequency(midi) {
+        return 440 * Math.pow(2, (midi - 69) / 12);
+      }
+
+      window.quantizeNoteToScale = function (frequency) {
+        // Convert frequency to MIDI note
+        let midiNote = frequencyToMidi(frequency);
+        const rootMidi = noteToMidi(currentKey);
+
+        // Get semitones above root
+        const semitonesFromRoot = midiNote - rootMidi;
+        const octaveOffset = Math.floor(semitonesFromRoot / 12) * 12;
+        const noteInOctave = ((semitonesFromRoot % 12) + 12) % 12;
+
+        // Get pattern for current scale
+        const pattern = scalePatterns[currentScale] || scalePatterns.major;
+
+        // Find closest degree in scale
+        let closestDegree = pattern[0];
+        let minDistance = Math.abs(noteInOctave - closestDegree);
+
+        for (let degree of pattern) {
+          const distance = Math.abs(noteInOctave - degree);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestDegree = degree;
+          }
+        }
+
+        // Quantized MIDI note
+        const quantizedMidi = rootMidi + octaveOffset + closestDegree;
+        return midiToFrequency(quantizedMidi);
+      };
+
+      window.updateKey = function () {
+        const keySelect = document.getElementById("keySelect");
+        currentKey = keySelect.value;
+        debugLog(`🔑 Key changed to: ${currentKey}`);
+      };
+
+      window.updateScale = function () {
+        const scaleSelect = document.getElementById("scaleSelect");
+        currentScale = scaleSelect.value;
+        debugLog(`📊 Scale changed to: ${currentScale}`);
+      };
+
+      window.updateTempo = function () {
+        const tempoInput = document.getElementById("tempoInput");
+        currentTempo = parseInt(tempoInput.value) || 120;
+        debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
+      };
+
+      // ========================================
+      // SPACE BAR CONTROL
+      // ========================================
+
+      document.addEventListener("keydown", function (event) {
+        if (event.code === "Space") {
+          event.preventDefault();
+          const playBtn = document.getElementById("playBtn");
+          if (!playBtn.disabled) {
+            if (isPlaying) {
+              stop();
+            } else {
+              play();
+            }
+          }
+        }
+      });
 
       // Make functions global
       window.savePreset = savePreset;
