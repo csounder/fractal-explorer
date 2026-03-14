@@ -657,8 +657,24 @@
            </div>
          </div>
 
-         <div class="control-group">
-          <label>L-SYSTEM PRESETS</label>
+         <!-- MASTER VOLUME (Left Panel) -->
+         <div class="control-section">
+           <h3>Master Volume</h3>
+           <div class="control-group">
+             <label>🔊 Volume <span class="value" id="volVal">70%</span></label>
+             <input
+               type="range"
+               id="masterVolume"
+               min="0"
+               max="100"
+               value="70"
+               onchange="updateMasterVolume()"
+             />
+           </div>
+         </div>
+
+          <div class="control-group">
+           <label>L-SYSTEM PRESETS</label>
           <button class="preset-btn" onclick="loadPreset('algae')">
             Algae
           </button>
@@ -3102,7 +3118,11 @@
 
         // Auto-play if checkbox is checked
         if (document.getElementById("playOnLoad").checked) {
-          setTimeout(() => play(), 200); // Small delay to ensure fractal is generated
+          setTimeout(() => {
+            if (!isPlaying) {
+              togglePlayStop();
+            }
+          }, 200); // Small delay to ensure fractal is generated
         }
       }
 
