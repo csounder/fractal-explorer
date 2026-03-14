@@ -932,9 +932,32 @@
           </div>
         </div>
 
-        <!-- SOUND SYNTHESIS -->
-        <div class="control-section">
-          <h3>Sound Synthesis</h3>
+         <!-- RANDOMIZE ALL BUTTON -->
+         <div style="padding: 0 0 12px 0; text-align: center">
+           <button
+             onclick="randomizeAllParameters()"
+             style="
+               width: 100%;
+               padding: 10px;
+               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+               color: white;
+               border: none;
+               border-radius: 6px;
+               cursor: pointer;
+               font-weight: 700;
+               font-size: 13px;
+               transition: transform 0.2s;
+             "
+             onmouseover="this.style.transform='scale(1.02)'"
+             onmouseout="this.style.transform='scale(1)'"
+           >
+             🎲 RANDOMIZE ALL
+           </button>
+         </div>
+
+         <!-- SOUND SYNTHESIS -->
+         <div class="control-section">
+           <h3>Sound Synthesis</h3>
           <div class="control-group">
             <select id="soundPreset" onchange="updateInstrumentControls()">
               <optgroup label="🎵 Melodic Instruments">
@@ -5750,22 +5773,109 @@ ${orchCode}
         debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
       };
 
-      window.updateMasterVolume = function () {
-        const volumeSlider = document.getElementById("masterVolume");
-        const volumeValue = document.getElementById("volumeValue");
-        const volume = parseInt(volumeSlider.value);
-        volumeValue.textContent = volume + "%";
-        // Scale: 0-100 → 0.0-1.0
-        const normalizedVolume = volume / 100;
-        if (csound) {
-          csound.setControlChannel("masterVolume", normalizedVolume);
-        }
-        debugLog(`🔊 Master Volume: ${volume}%`);
-      };
+       window.updateMasterVolume = function () {
+         const volumeSlider = document.getElementById("masterVolume");
+         const volumeValue = document.getElementById("volumeValue");
+         const volume = parseInt(volumeSlider.value);
+         volumeValue.textContent = volume + "%";
+         // Scale: 0-100 → 0.0-1.0
+         const normalizedVolume = volume / 100;
+         if (csound) {
+           csound.setControlChannel("masterVolume", normalizedVolume);
+         }
+         debugLog(`🔊 Master Volume: ${volume}%`);
+       };
 
-      // ========================================
-      // SPACE BAR CONTROL
-      // ========================================
+       // Randomize all parameters
+       window.randomizeAllParameters = function () {
+         // Visual parameters (L-System)
+         const lSystemPresets = ['algae', 'tree', 'dragon', 'koch', 'sierpinski'];
+         const randomPreset = lSystemPresets[Math.floor(Math.random() * lSystemPresets.length)];
+         loadPreset(randomPreset);
+
+         // Color visualization
+         const colors = ['depth', 'rainbow', 'single'];
+         document.getElementById("vizColor").value = colors[Math.floor(Math.random() * colors.length)];
+         updateDisplays();
+
+         // Sound synthesis
+         const instruments = ['pluck', 'fm', 'bell', 'clarinet', 'organ', 'granular', 'complexfm', 'noisefilter'];
+         document.getElementById("soundPreset").value = instruments[Math.floor(Math.random() * instruments.length)];
+         updateInstrumentControls();
+
+         // Key and Scale
+         const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+         document.getElementById("keySelect").value = keys[Math.floor(Math.random() * keys.length)];
+         updateKey();
+
+         const scales = ['chromatic', 'major', 'minor', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'harmonic-minor', 'melodic-minor', 'pentatonic-major', 'pentatonic-minor', 'blues', 'whole-tone'];
+         document.getElementById("scaleSelect").value = scales[Math.floor(Math.random() * scales.length)];
+         updateScale();
+
+         // Mappings
+         const mapOptions = ['angle', 'position', 'depth', 'random'];
+         document.getElementById("pitchMap").value = mapOptions.slice(0, 3)[Math.floor(Math.random() * 3)]; // angle, position, depth only
+         document.getElementById("durMap").value = ['constant', 'depth', 'inverse'][Math.floor(Math.random() * 3)];
+         document.getElementById("timbreMap").value = ['none', 'depth', 'angle'][Math.floor(Math.random() * 3)];
+         document.getElementById("panMap").value = ['none', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+
+         // Pan type
+         document.getElementById("panType").value = Math.random() > 0.5 ? 'stereo' : 'ambi';
+
+         // Envelope
+         document.getElementById("attack").value = Math.floor(Math.random() * 100) + 1;
+         document.getElementById("release").value = Math.floor(Math.random() * 1500) + 50;
+         document.getElementById("attackMapEnv").value = ['manual', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+         document.getElementById("releaseMapEnv").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
+         updateDisplays();
+
+         // Reverb
+         document.getElementById("roomSize").value = Math.floor(Math.random() * 100);
+         document.getElementById("reverb").value = Math.floor(Math.random() * 100);
+         document.getElementById("roomSizeMap").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
+         document.getElementById("reverbWetMap").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
+         updateDisplays();
+
+         // Music settings
+         document.getElementById("baseFreq").value = Math.floor(Math.random() * 500) + 50;
+         document.getElementById("tempo").value = Math.floor(Math.random() * 180) + 40;
+
+         // Granular parameters (if present)
+         if (document.getElementById("grainDensityMap")) {
+           document.getElementById("grainDensityMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+           document.getElementById("grainSizeMap").value = ['constant', 'depth', 'angle', 'inverse'][Math.floor(Math.random() * 4)];
+           document.getElementById("grainPitchVarMap").value = ['none', 'depth', 'angle', 'random'][Math.floor(Math.random() * 4)];
+           document.getElementById("grainTextureMap").value = ['constant', 'depth', 'angle'][Math.floor(Math.random() * 3)];
+         }
+
+         // FM parameters (if present)
+         if (document.getElementById("fmAlgorithm")) {
+           document.getElementById("fmAlgorithm").value = ['parallel', 'cascade', 'stack', 'complex'][Math.floor(Math.random() * 4)];
+           document.getElementById("fmModIndexMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+           document.getElementById("fmCarrierMap").value = ['harmonic', 'depth', 'angle', 'bells'][Math.floor(Math.random() * 4)];
+           document.getElementById("fmMixMap").value = ['equal', 'depth', 'angle'][Math.floor(Math.random() * 3)];
+         }
+
+         // Noise & Filter parameters (if present)
+         if (document.getElementById("noiseTypeMap")) {
+           document.getElementById("noiseTypeMap").value = ['white', 'depth', 'angle'][Math.floor(Math.random() * 3)];
+           document.getElementById("filterTypeMap").value = ['lowpass', 'depth', 'angle', 'cycle'][Math.floor(Math.random() * 4)];
+           document.getElementById("filterFreqMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+           document.getElementById("filterResMap").value = ['low', 'depth', 'angle', 'high'][Math.floor(Math.random() * 4)];
+           document.getElementById("filterModMap").value = ['none', 'depth', 'angle', 'fast'][Math.floor(Math.random() * 4)];
+         }
+
+         debugLog(`🎲 All parameters randomized!`);
+         
+         // Auto-restart if playing
+         if (isPlaying) {
+           autoRestart();
+         }
+       };
+
+       // ========================================
+       // SPACE BAR CONTROL
+       // ========================================
 
       document.addEventListener("keydown", function (event) {
         if (event.code === "Space") {
