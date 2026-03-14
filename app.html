@@ -2458,7 +2458,8 @@
         isPlaying = true;
         initializeCSDRecording(); // Start recording events for CSD export
         enableCSDExport(); // Enable export button
-        document.getElementById("playBtn").disabled = true;
+        document.getElementById("playBtn").textContent = "⏹ Stop Audio";
+        document.getElementById("playBtn").style.background = "var(--accent-dim)";
         document.getElementById("status").textContent = "Playing...";
 
         const baseFreq = parseFloat(document.getElementById("baseFreq").value);
@@ -2953,12 +2954,22 @@
 
         isPlaying = false;
         currentNoteIndex = -1;
-        document.getElementById("playBtn").disabled = false;
+        document.getElementById("playBtn").textContent = "▶ Play Audio";
+        document.getElementById("playBtn").style.background = "var(--accent)";
         document.getElementById("status").textContent = "Stopped";
 
         // Clear visualization highlighting
         if (paths.length > 0 && paths.bounds) {
           drawPaths(paths, paths.bounds, -1);
+        }
+      };
+
+      // Toggle Play/Stop with single button (like Mandelbrot Explorer)
+      window.togglePlayStop = async function () {
+        if (isPlaying) {
+          await stop();
+        } else {
+          await play();
         }
       };
 
@@ -5803,11 +5814,7 @@ ${orchCode}
           event.preventDefault();
           const playBtn = document.getElementById("playBtn");
           if (!playBtn.disabled) {
-            if (isPlaying) {
-              stop();
-            } else {
-              play();
-            }
+            togglePlayStop();
           }
         }
       });
