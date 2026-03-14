@@ -1057,7 +1057,7 @@
           angle: 120,
           iterations: 5,
         },
-      };
+      }
 
       // Debug console
       function debugLog(msg) {
@@ -1079,7 +1079,7 @@
           debugConsole.style.display = showDebug.checked ? "block" : "none";
           if (showDebug.checked) debugLog("Debug console enabled");
         }
-      };
+      }
 
       // Initialize Csound WASM 7 (same pattern as Weather Sonification)
       async function initCsound() {
@@ -1667,7 +1667,7 @@
           await stop();
           setTimeout(() => play(), 200);
         }
-      };
+      }
 
       // Update display values
       function updateDisplays() {
@@ -1698,7 +1698,7 @@
       const setupListener = (id, handler) => {
         const elem = document.getElementById(id);
         if (elem) elem.oninput = handler;
-      };
+      }
       setupListener("iterations", updateDisplays);
       setupListener("angle", updateDisplays);
       setupListener("maxEvents", updateDisplays);
@@ -1748,7 +1748,7 @@
           await stop();
           setTimeout(() => play(), 200);
         }
-      };
+      }
 
       // Listen to both 'change' and 'input' events to catch all interactions
       const addAutoRestart = (id) => {
@@ -1757,7 +1757,7 @@
           elem.addEventListener("change", autoRestart);
           elem.addEventListener("input", autoRestart);
         }
-      };
+      }
 
       // Show/hide complex instrument parameter controls
       function updateInstrumentControls() {
@@ -2043,7 +2043,7 @@
 
         document.getElementById("status").textContent =
           `Generated: ${paths.length} segments`;
-      };
+      }
 
       // Play
       window.play = async function () {
@@ -2545,7 +2545,7 @@
           },
           (time + 2) * 1000,
         );
-      };
+      }
 
       // Test sound - play a single 440Hz sine tone
       // Stop - immediately kill all active notes and clear scheduled timeouts
@@ -2582,7 +2582,7 @@
         if (paths.length > 0 && paths.bounds) {
           drawPaths(paths, paths.bounds, -1);
         }
-      };
+      }
 
       // ===== PRESET SAVE/LOAD SYSTEM =====
 
@@ -5068,7 +5068,7 @@
           filterResMap: "angle",
           filterModMap: "fast",
         },
-      };
+      }
 
       // Load factory presets into localStorage (force=true to overwrite)
       function loadFactoryPresets(force = false) {
@@ -5102,6 +5102,7 @@
         } else {
           debugLog(`Factory presets already loaded (39 total)`);
         }
+      }
       // ========================================
       // CSD EXPORT FUNCTIONALITY
       // ========================================
@@ -5112,18 +5113,18 @@
       window.initializeCSDRecording = function() {
         csdEventLog = [];
         isCSDRecording = true;
-      };
+      }
 
       window.logEventToCSD = function(scoreEvent, time) {
         if (isCSDRecording) {
           csdEventLog.push({ statement: scoreEvent, timestamp: time });
         }
-      };
+      }
 
       window.enableCSDExport = function() {
         const btn = document.getElementById("exportCsdBtn");
         if (btn) btn.disabled = false;
-      };
+      }
 
       window.exportCSD = async function() {
         console.log("exportCSD called");
@@ -5213,7 +5214,7 @@ ${orchCode}
           console.error('Export error:', error);
           alert('Error exporting CSD: ' + error.message);
         }
-      };
+      }
 
       function downloadCSDFile(content) {
         try {
