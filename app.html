@@ -997,32 +997,6 @@
                 <option value="31tet">31-Tone Equal Temperament</option>
                 <option value="53tet">53-Tone Equal Temperament</option>
               </select>
-
-              <label style="margin-top: 8px">Rhythm</label>
-              <select id="tempoInput" onchange="updateTempo()">
-                <option value="none">Non-Quantized (Continuous)</option>
-                <option value="whole">Whole Notes</option>
-                <option value="half">Half Notes</option>
-                <option value="quarter">Quarter Notes</option>
-                <option value="eighth" selected>Eighth Notes</option>
-                <option value="sixteenth">Sixteenth Notes</option>
-                <option value="thirtysecond">Thirty-Second Notes</option>
-                <option value="sixtyfourth">Sixty-Fourth Notes</option>
-                <option value="onetwentyeighth">128th Notes</option>
-                <option value="dotted-whole">Dotted Whole Notes</option>
-                <option value="dotted-half">Dotted Half Notes</option>
-                <option value="dotted-quarter">Dotted Quarter Notes</option>
-                <option value="dotted-eighth">Dotted Eighth Notes</option>
-                <option value="dotted-sixteenth">Dotted Sixteenth Notes</option>
-                <option value="dotted-thirtysecond">Dotted 32nd Notes</option>
-                <option value="dotted-sixtyfourth">Dotted 64th Notes</option>
-                <option value="dotted-onetwentyeighth">Dotted 128th Notes</option>
-                <option value="triplet-half">Triplet Half Notes</option>
-                <option value="triplet-quarter">Triplet Quarter Notes</option>
-                <option value="triplet-eighth">Triplet Eighth Notes</option>
-                <option value="triplet-sixteenth">Triplet Sixteenth Notes</option>
-                <option value="triplet-thirtysecond">Triplet 32nd Notes</option>
-              </select>
             </div>
           </div>
 
@@ -1302,36 +1276,8 @@
               <option value="harmonic">Harmonic</option>
               <option value="whole">Whole Tone</option>
             </select>
-          </div>
-          <div>
-            <label
-              style="
-                font-size: 11px;
-                color: #00ff88;
-                display: block;
-                margin-bottom: 4px;
-              "
-              >⏱️ Tempo (BPM)</label
-            >
-            <input
-              type="number"
-              id="tempoInput"
-              min="40"
-              max="240"
-              value="120"
-              onchange="updateTempo()"
-              style="
-                width: 100%;
-                padding: 6px;
-                background: #0a0a0a;
-                color: #00ff88;
-                border: 1px solid #00ff88;
-                border-radius: 3px;
-                font-size: 11px;
-              "
-            />
-          </div>
-        </div>
+           </div>
+         </div>
       </div>
     </div>
 
