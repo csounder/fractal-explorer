@@ -871,18 +871,20 @@
                 SAVE
               </button>
             </div>
-            <select
-              id="presetList"
-              size="5"
-              style="
-                width: 100%;
-                background: var(--input-bg);
-                border: 1px solid var(--border);
-                color: var(--text);
-                border-radius: 4px;
-                padding: 4px;
-              "
-            >
+             <select
+               id="presetList"
+               size="5"
+               ondblclick="loadSavedPreset()"
+               style="
+                 width: 100%;
+                 background: var(--input-bg);
+                 border: 1px solid var(--border);
+                 color: var(--text);
+                 border-radius: 4px;
+                 padding: 4px;
+                 cursor: pointer;
+               "
+             >
               <option disabled style="color: var(--text-dim)">
                 No presets saved yet
               </option>
@@ -3017,22 +3019,26 @@
         refreshPresetList();
       }
 
-      function loadSavedPreset() {
-        const select = document.getElementById("presetList");
-        const name = select.value;
-        if (!name || name === "none") {
-          alert("Please select a preset to load");
-          return;
-        }
+       function loadSavedPreset() {
+         const select = document.getElementById("presetList");
+         const name = select.value;
+         if (!name || name === "none") {
+           alert("Please select a preset to load");
+           return;
+         }
 
-        const presets = JSON.parse(
-          localStorage.getItem("fractalPresets") || "{}",
-        );
-        const preset = presets[name];
-        if (!preset) {
-          alert("Preset not found");
-          return;
-        }
+         // Try factory presets first, then saved presets
+         let preset = factoryPresets[name];
+         if (!preset) {
+           const savedPresets = JSON.parse(
+             localStorage.getItem("fractalPresets") || "{}",
+           );
+           preset = savedPresets[name];
+         }
+         if (!preset) {
+           alert("Preset not found");
+           return;
+         }
 
         // Stop playback if active
         if (isPlaying) {
@@ -3046,9 +3052,13 @@
         document.getElementById("iterations").value = preset.iterations || 4;
         document.getElementById("angle").value = preset.angle || 25;
 
-        document.getElementById("soundPreset").value =
-          preset.soundPreset || "pluck";
-        document.getElementById("attack").value = preset.attack || 10;
+         document.getElementById("soundPreset").value =
+           preset.soundPreset || "pluck";
+         document.getElementById("keySelect").value =
+           preset.keySelect || "C#";
+         document.getElementById("scaleSelect").value =
+           preset.scaleSelect || "major";
+         document.getElementById("attack").value = preset.attack || 10;
         document.getElementById("release").value = preset.release || 100;
         document.getElementById("attackMapEnv").value =
           preset.attackMapEnv || "manual";
@@ -3147,30 +3157,54 @@
         refreshPresetList();
       }
 
-      function refreshPresetList() {
-        const select = document.getElementById("presetList");
-        const presets = JSON.parse(
-          localStorage.getItem("fractalPresets") || "{}",
-        );
-        const names = Object.keys(presets).sort();
+       function refreshPresetList() {
+         const select = document.getElementById("presetList");
+         const savedPresets = JSON.parse(
+           localStorage.getItem("fractalPresets") || "{}",
+         );
+         const savedNames = Object.keys(savedPresets).sort();
+         const factoryNames = Object.keys(factoryPresets).sort();
 
-        select.innerHTML = "";
-        if (names.length === 0) {
-          const opt = document.createElement("option");
-          opt.value = "none";
-          opt.disabled = true;
-          opt.textContent = "No presets saved yet";
-          opt.style.color = "var(--text-dim)";
-          select.appendChild(opt);
-        } else {
-          names.forEach((name) => {
-            const opt = document.createElement("option");
-            opt.value = name;
-            opt.textContent = name;
-            select.appendChild(opt);
-          });
-        }
-      }
+         select.innerHTML = "";
+         
+         // Add factory presets first
+         if (factoryNames.length > 0) {
+           const factoryGroup = document.createElement("optgroup");
+           factoryGroup.label = "Factory Presets";
+           factoryNames.forEach((name) => {
+             const opt = document.createElement("option");
+             opt.value = name;
+             opt.textContent = name;
+             opt.dataset.isFactory = "true";
+             factoryGroup.appendChild(opt);
+           });
+           select.appendChild(factoryGroup);
+         }
+
+         // Add saved presets
+         if (savedNames.length > 0) {
+           const savedGroup = document.createElement("optgroup");
+           savedGroup.label = "Saved Presets";
+           savedNames.forEach((name) => {
+             const opt = document.createElement("option");
+             opt.value = name;
+             opt.textContent = name;
+             opt.dataset.isFactory = "false";
+             savedGroup.appendChild(opt);
+           });
+           select.appendChild(savedGroup);
+         }
+
+         // If both are empty
+         if (factoryNames.length === 0 && savedNames.length === 0) {
+           const opt = document.createElement("option");
+           opt.value = "none";
+           opt.disabled = true;
+           opt.textContent = "No presets available";
+           opt.style.color = "var(--text-dim)";
+           select.appendChild(opt);
+         }
+       }
 
       // ===== FACTORY PRESET BANK =====
       const factoryPresets = {
