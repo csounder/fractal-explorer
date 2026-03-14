@@ -1671,8 +1671,8 @@
         aNoise noise 1, 0
         aSource = aTone*(1-iTexture) + aNoise*iTexture
 
-        ; Apply grain envelope when triggered
-        aSig = aSource * aGrainEnv * aEnv * ampdb(-6)
+         ; Apply grain envelope when triggered
+         aSig = aSource * aGrainEnv * aEnv * ampdb(6)
 
         ; Spatialization
         if (iPanType == 0) then
@@ -1762,9 +1762,9 @@
           aSig = (aOp1 + aOp3*iOpMix + aOp4*(1-iOpMix))
         endif
 
-        ; Soft clipping to prevent overload
-        aSig tanh aSig*0.8
-        aSig *= ampdb(-6)
+         ; Soft clipping to prevent overload
+         aSig tanh aSig*0.8
+         aSig *= ampdb(6)
 
         ; Spatialization
         if (iPanType == 0) then
@@ -1851,9 +1851,9 @@
           aSig butterhp aSig, kCenterFreq
         endif
 
-        ; Hard limiting to prevent any overflow
-        aSig limit aSig*0.6, -0.95, 0.95
-        aSig *= ampdb(-3)
+         ; Hard limiting to prevent any overflow
+         aSig limit aSig*0.6, -0.95, 0.95
+         aSig *= ampdb(3)
 
         ; Spatialization
         if (iPanType == 0) then
