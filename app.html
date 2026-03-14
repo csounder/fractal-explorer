@@ -884,62 +884,7 @@
           </select>
         </div>
 
-         <div class="control-group">
-          <label>MUSIC SETTINGS</label>
-          <div class="grid-2">
-            <div>
-              <label>Base Freq (Hz)</label>
-              <input
-                type="number"
-                id="baseFreq"
-                min="100"
-                max="1000"
-                value="220"
-              />
-            </div>
-            <div>
-              <label>Tempo (BPM)</label>
-              <input type="number" id="tempo" min="30" max="300" value="120" />
-            </div>
-          </div>
-          <label>Pitch Mapping</label>
-          <select id="pitchMap">
-            <option value="angle">Angle → Pitch</option>
-            <option value="position">Position → Pitch</option>
-            <option value="depth">Depth → Pitch</option>
-            <option value="random">Random Walk</option>
-          </select>
-          <label>Duration Mapping</label>
-          <select id="durMap">
-            <option value="constant">Constant</option>
-            <option value="depth">Depth → Duration</option>
-            <option value="inverse">Inverse Depth</option>
-          </select>
-          <label>Timbre Mapping</label>
-          <select id="timbreMap">
-            <option value="none">Fixed Timbre</option>
-            <option value="depth">Depth → Brightness</option>
-            <option value="angle" selected>Angle → Brightness</option>
-          </select>
-          <label>Panning Mapping</label>
-          <select id="panMap">
-            <option value="none">Center (Mono)</option>
-            <option value="depth">Depth → Pan</option>
-            <option value="angle" selected>Angle → Pan</option>
-            <option value="position">Position → Pan</option>
-          </select>
-          <label>Spatialization Type</label>
-          <select id="panType">
-            <option value="stereo">Stereo Pan</option>
-            <option value="ambi" selected>Ambisonic (1st Order)</option>
-          </select>
-        </div>
 
-        <div class="control-group">
-          <label>MASTER VOLUME</label>
-          <label>Volume <span class="value" id="volVal">70%</span></label>
-          <input type="range" id="masterVolume" min="0" max="100" value="70" />
-        </div>
 
 
 
@@ -1164,6 +1109,60 @@
                <option value="angle">Angle → Release (10-2000ms)</option>
                <option value="position">Position → Release (10-2000ms)</option>
                <option value="inverse">Inverse Depth → Release</option>
+             </select>
+           </div>
+         </div>
+
+         <!-- MUSIC SETTINGS SECTION -->
+         <div class="control-section">
+           <h3>Music Settings</h3>
+           <div class="control-group">
+             <label>Base Freq (Hz)</label>
+             <input
+               type="number"
+               id="baseFreq"
+               min="100"
+               max="1000"
+               value="220"
+             />
+
+             <label style="margin-top: 8px">Tempo (BPM)</label>
+             <input type="number" id="tempo" min="30" max="300" value="120" />
+
+             <label style="margin-top: 8px">Pitch Mapping</label>
+             <select id="pitchMap">
+               <option value="angle">Angle → Pitch</option>
+               <option value="position">Position → Pitch</option>
+               <option value="depth">Depth → Pitch</option>
+               <option value="random">Random Walk</option>
+             </select>
+
+             <label style="margin-top: 8px">Duration Mapping</label>
+             <select id="durMap">
+               <option value="constant">Constant</option>
+               <option value="depth">Depth → Duration</option>
+               <option value="inverse">Inverse Depth</option>
+             </select>
+
+             <label style="margin-top: 8px">Timbre Mapping</label>
+             <select id="timbreMap">
+               <option value="none">Fixed Timbre</option>
+               <option value="depth">Depth → Brightness</option>
+               <option value="angle" selected>Angle → Brightness</option>
+             </select>
+
+             <label style="margin-top: 8px">Panning Mapping</label>
+             <select id="panMap">
+               <option value="none">Center (Mono)</option>
+               <option value="depth">Depth → Pan</option>
+               <option value="angle" selected>Angle → Pan</option>
+               <option value="position">Position → Pan</option>
+             </select>
+
+             <label style="margin-top: 8px">Spatialization Type</label>
+             <select id="panType">
+               <option value="stereo">Stereo Pan</option>
+               <option value="ambi" selected>Ambisonic (1st Order)</option>
              </select>
            </div>
          </div>
