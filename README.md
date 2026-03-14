@@ -364,3 +364,27 @@ If you find this project useful, please consider giving it a star on GitHub. It 
 ---
 
 **Happy Fractal Music Making! 🎵🌿**
+
+## 💾 NEW: Csound CSD Export
+
+**Export your fractal compositions as standalone `.csd` files!**
+
+Generate fractal L-System patterns, turn them into music, and download complete Csound files that:
+
+- ✅ Play in CsoundQt, Cabbage, or Csound command line
+- ✅ Include full orchestration with reverb and effects
+- ✅ Preserve all L-System parameters in comments
+- ✅ Support every synthesis preset and parameter
+- ✅ Timestamp-named files for easy organization
+- ✅ Portable - share with other Csound users
+
+**See [CSD_EXPORT_GUIDE.md](CSD_EXPORT_GUIDE.md) for full documentation.**
+
+### Quick Export Workflow:
+1. Generate a fractal (Algae, Tree, Dragon, etc.)
+2. Configure musical parameters
+3. Click **Play** to hear it
+4. Click **💾 Export CSD** 
+5. Download opens automatically
+6. Open in CsoundQt or command line: `csound yourfile.csd`
+
