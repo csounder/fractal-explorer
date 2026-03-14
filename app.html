@@ -2164,19 +2164,33 @@
         }
       });
 
-      setupListener("release", async () => {
-        updateDisplays();
-        if (csound && csoundReady) {
-          const releaseSec =
-            parseFloat(document.getElementById("release").value) / 1000;
-          await csound.setControlChannel("globalRelease", releaseSec);
-          debugLog(
-            `⚡ Release updated: ${releaseSec.toFixed(3)}s (affects new notes)`,
-          );
-        }
-      });
+       setupListener("release", async () => {
+         updateDisplays();
+         if (csound && csoundReady) {
+           const releaseSec =
+             parseFloat(document.getElementById("release").value) / 1000;
+           await csound.setControlChannel("globalRelease", releaseSec);
+           debugLog(
+             `⚡ Release updated: ${releaseSec.toFixed(3)}s (affects new notes)`,
+           );
+         }
+       });
 
-      // L-System generation
+       setupListener("tempo", async () => {
+         updateDisplays();
+         debugLog(
+           `⚡ Tempo updated: ${document.getElementById("tempo").value} BPM`,
+         );
+       });
+
+       setupListener("baseFreq", async () => {
+         updateDisplays();
+         debugLog(
+           `⚡ Base Frequency updated: ${document.getElementById("baseFreq").value} Hz`,
+         );
+       });
+
+       // L-System generation
       function generateLSystem(axiom, rules, iterations) {
         let str = axiom;
         const ruleMap = {};
