@@ -834,48 +834,29 @@
 
          <!-- EXPORT SECTION AT BOTTOM OF LEFT COLUMN -->
          <div class="control-section">
-           <h3>EXPORT COMPOSITION</h3>
+           <h3>EXPORT</h3>
            <div class="control-group">
              <button
-               onclick="generateCsound()"
+               id="csdToggleBtn"
+               onclick="toggleCsdGeneration()"
                style="
                  width: 100%;
-                 padding: 12px;
+                 padding: 10px;
                  background: #27ae60;
                  color: white;
                  border: 2px solid #229954;
                  border-radius: 6px;
                  cursor: pointer;
                  font-weight: 700;
-                 font-size: 16px;
-                 margin-bottom: 8px;
+                 font-size: 13px;
                  text-align: center;
                  transition: all 0.2s;
+                 white-space: nowrap;
                "
                onmouseover="this.style.backgroundColor='#229954'"
-               onmouseout="this.style.backgroundColor='#27ae60'"
+               onmouseout="this.style.backgroundColor=this.dataset.bgColor || '#27ae60'"
              >
-               💾 GENERATE .CSD
-             </button>
-             <button
-               onclick="downloadCsound()"
-               style="
-                 width: 100%;
-                 padding: 12px;
-                 background: #3498db;
-                 color: white;
-                 border: 2px solid #2980b9;
-                 border-radius: 6px;
-                 cursor: pointer;
-                 font-weight: 700;
-                 font-size: 16px;
-                 text-align: center;
-                 transition: all 0.2s;
-               "
-               onmouseover="this.style.backgroundColor='#2980b9'"
-               onmouseout="this.style.backgroundColor='#3498db'"
-             >
-               ⬇️ DOWNLOAD TO DOWNLOADS
+               💾 GEN CSD
              </button>
            </div>
            <textarea
@@ -4128,56 +4109,61 @@ ${orchCode}
         }
       });
 
-        // Store current CSD content globally for download
+        // Store current CSD content and state
         let currentCsdContent = "";
+        let csdGenerating = false;
 
-        // Generate Csound .csd file from current performance
-        window.generateCsound = function () {
-          if (selectedPathsGlobal.length === 0) {
-            console.log("❌ Generate a fractal first!");
-            alert("Generate a fractal first!");
-            return;
-          }
-
-          // Calculate maxDepth locally
-          const maxDepth = Math.max(...selectedPathsGlobal.map((p) => p.depth), 1);
-
-          // Build score ONLY - comments, ftables, notes, footer
-          let score = "; Csound Score Generated from Fractal Explorer\n";
-          score += "; L-System Preset: " + document.getElementById("soundPreset").value + "\n";
-          score += "; Sound Synthesis: " + document.getElementById("soundPreset").value + "\n";
-          score += "; Key: " + document.getElementById("keySelect").value + "\n";
-          score += "; Scale: " + document.getElementById("scaleSelect").value + "\n";
-          score += "; Generated: " + new Date().toISOString() + "\n\n";
-
-          const baseFreq = parseFloat(document.getElementById("baseFreq").value);
-          const tempo = parseFloat(document.getElementById("tempo").value);
-          const beatDur = 60 / tempo;
+        // Toggle CSD generation - generates on first click, saves on second click
+        window.toggleCsdGeneration = function () {
+          const btn = document.getElementById("csdToggleBtn");
           
-          let time = 0;
-          const maxNotes = Math.min(200, selectedPathsGlobal.length);
+          if (!csdGenerating) {
+            // FIRST CLICK: Generate CSD
+            if (selectedPathsGlobal.length === 0) {
+              console.log("❌ Generate a fractal first!");
+              alert("Generate a fractal first!");
+              return;
+            }
 
-          // Add ftables FIRST in score section
-          score += "f1 0 16384 10 1  ; Sine wave table\n\n";
+            // Calculate maxDepth locally
+            const maxDepth = Math.max(...selectedPathsGlobal.map((p) => p.depth), 1);
 
-          // Add note events
-          for (let i = 0; i < maxNotes; i++) {
-            const path = selectedPathsGlobal[i];
-            const ratio = Math.pow(2, (path.angle + 180) / 360);
-            const freq = baseFreq * ratio;
-            const dur = beatDur * (0.5 + Math.random() * 1.5);
-            const amp = 0.3 + (path.depth / Math.max(1, maxDepth)) * 0.6;
+            // Build score ONLY - comments, ftables, notes, footer
+            let score = "; Csound Score Generated from Fractal Explorer\n";
+            score += "; L-System Preset: " + document.getElementById("soundPreset").value + "\n";
+            score += "; Sound Synthesis: " + document.getElementById("soundPreset").value + "\n";
+            score += "; Key: " + document.getElementById("keySelect").value + "\n";
+            score += "; Scale: " + document.getElementById("scaleSelect").value + "\n";
+            score += "; Generated: " + new Date().toISOString() + "\n\n";
 
-            score += `i 1 ${time.toFixed(3)} ${dur.toFixed(3)} ${freq.toFixed(2)} ${amp.toFixed(3)} 0.5 0.5\n`;
-            time += beatDur * 0.5;
-          }
+            const baseFreq = parseFloat(document.getElementById("baseFreq").value);
+            const tempo = parseFloat(document.getElementById("tempo").value);
+            const beatDur = 60 / tempo;
+            
+            let time = 0;
+            const maxNotes = Math.min(200, selectedPathsGlobal.length);
 
-          // Add reverb tail at end
-          score += `\ni 999 0 ${(time + 5).toFixed(3)}\n`;
-          score += "e\n";
+            // Add ftables FIRST in score section
+            score += "f1 0 16384 10 1  ; Sine wave table\n\n";
 
-          // Build COMPLETE .csd file: HEADER + ORCHESTRA + SCORE + FOOTER
-          const csd = `; Dr.C - Fractal Explorer (L-Systems) - Generated Composition
+            // Add note events
+            for (let i = 0; i < maxNotes; i++) {
+              const path = selectedPathsGlobal[i];
+              const ratio = Math.pow(2, (path.angle + 180) / 360);
+              const freq = baseFreq * ratio;
+              const dur = beatDur * (0.5 + Math.random() * 1.5);
+              const amp = 0.3 + (path.depth / Math.max(1, maxDepth)) * 0.6;
+
+              score += `i 1 ${time.toFixed(3)} ${dur.toFixed(3)} ${freq.toFixed(2)} ${amp.toFixed(3)} 0.5 0.5\n`;
+              time += beatDur * 0.5;
+            }
+
+            // Add reverb tail at end
+            score += `\ni 999 0 ${(time + 5).toFixed(3)}\n`;
+            score += "e\n";
+
+            // Build COMPLETE .csd file: HEADER + ORCHESTRA + SCORE + FOOTER
+            const csd = `; Dr.C - Fractal Explorer (L-Systems) - Generated Composition
 <CsoundSynthesizer>
 <CsOptions>
 -odac -d
@@ -4227,34 +4213,47 @@ ${score}
 </CsScore>
 </CsoundSynthesizer>`;
 
-          // Store in global variable and display in textarea
-          currentCsdContent = csd;
-          document.getElementById("csoundOutput").value = csd;
-          console.log("✓ Csound .csd file generated! Click 'Download CSD' to save.");
-          alert("✓ .CSD file generated! Click 'Download CSD' to save to Downloads folder.");
-        };
+            // Store and display
+            currentCsdContent = csd;
+            document.getElementById("csoundOutput").value = csd;
+            
+            // Change button to STOP mode
+            csdGenerating = true;
+            btn.textContent = "⏹ STOP GEN";
+            btn.style.background = "#e74c3c";
+            btn.dataset.bgColor = "#e74c3c";
+            
+            console.log("✓ CSD generated. Click 'STOP GEN' to finalize and save.");
+          } else {
+            // SECOND CLICK: Stop and ask to save
+            if (!currentCsdContent) {
+              alert("No CSD generated!");
+              return;
+            }
 
-        // Download the generated CSD file
-        window.downloadCsound = function () {
-          if (!currentCsdContent) {
-            console.log("❌ Generate a .csd file first!");
-            alert("Generate a .csd file first!");
-            return;
+            // Ask user if they want to save
+            if (confirm("Save CSD file to Downloads?")) {
+              const filename = `fractal-${Date.now()}.csd`;
+              const blob = new Blob([currentCsdContent], { type: "text/plain" });
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = filename;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+
+              console.log(`✓ Saved to Downloads: ${filename}`);
+              alert(`✓ Saved: ${filename}`);
+            }
+
+            // Reset button to GENERATE mode
+            csdGenerating = false;
+            btn.textContent = "💾 GEN CSD";
+            btn.style.background = "#27ae60";
+            btn.dataset.bgColor = "#27ae60";
           }
-
-          const filename = `fractal-${Date.now()}.csd`;
-          const blob = new Blob([currentCsdContent], { type: "text/plain" });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
-
-          console.log(`✓ Downloaded: ${filename}`);
-          alert(`✓ File saved to Downloads: ${filename}`);
         };
 
        // Make functions global
