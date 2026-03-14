@@ -632,29 +632,32 @@
            </button>
          </div>
 
-        <!-- Master Volume (Left Panel) -->
-        <div class="volume-control">
-          <label>🔊 Volume</label>
-          <input
-            type="range"
-            id="masterVolume"
-            min="0"
-            max="100"
-            value="70"
-            onchange="updateMasterVolume()"
-          />
-          <span
-            id="volumeValue"
-            style="
-              font-size: 0.8em;
-              color: var(--accent-dim);
-              text-align: center;
-            "
-            >70%</span
-          >
-        </div>
+         <!-- EVENT DENSITY SECTION (Left Panel) -->
+         <div class="control-section">
+           <h3>Event Density</h3>
+           <div class="control-group">
+             <label>Max Events <span class="value" id="maxVal">500</span></label>
+             <input
+               type="range"
+               id="maxEvents"
+               min="100"
+               max="2000"
+               step="100"
+               value="500"
+             />
+             <label>Max Polyphony <span class="value" id="polyVal">2</span></label>
+             <input
+               type="range"
+               id="maxPoly"
+               min="1"
+               max="32"
+               step="1"
+               value="2"
+             />
+           </div>
+         </div>
 
-        <div class="control-group">
+         <div class="control-group">
           <label>L-SYSTEM PRESETS</label>
           <button class="preset-btn" onclick="loadPreset('algae')">
             Algae
@@ -1083,27 +1086,18 @@
       <!-- Music Controls - Right Panel with FULL SYNTHESIS CONTROLS -->
       <div id="music-controls">
         
-        <!-- EVENT DENSITY SECTION -->
+        <!-- MASTER VOLUME (Right Panel) -->
         <div class="control-section">
-          <h3>Event Density</h3>
+          <h3>Master Volume</h3>
           <div class="control-group">
-            <label>Max Events <span class="value" id="maxVal">500</span></label>
+            <label>🔊 Volume <span class="value" id="volumeValue">70%</span></label>
             <input
               type="range"
-              id="maxEvents"
-              min="100"
-              max="2000"
-              step="100"
-              value="500"
-            />
-            <label>Max Polyphony <span class="value" id="polyVal">2</span></label>
-            <input
-              type="range"
-              id="maxPoly"
-              min="1"
-              max="32"
-              step="1"
-              value="2"
+              id="masterVolume"
+              min="0"
+              max="100"
+              value="70"
+              onchange="updateMasterVolume()"
             />
           </div>
         </div>
