@@ -1619,8 +1619,8 @@
         iTexture = p9      ; noise mix (0=tone, 1=noise)
         iPan = p10
         iPanType = p11
-        iAtkP = p12        ; attack time (if < 0, use global)
-        iRelP = p13        ; release time (if < 0, use global)
+        iAtkP = -1         ; use global attack
+        iRelP = -1         ; use global release
 
         kStopFlag = chnget:k("stopAll")
         if kStopFlag == 1 then
@@ -1686,8 +1686,8 @@
         iOpMix = p9        ; operator balance (0-1)
         iPan = p10
         iPanType = p11
-        iAtkP = p12        ; attack time (if < 0, use global)
-        iRelP = p13        ; release time (if < 0, use global)
+        iAtkP = -1         ; use global attack
+        iRelP = -1         ; use global release
 
         kStopFlag = chnget:k("stopAll")
         if kStopFlag == 1 then
@@ -1778,9 +1778,9 @@
         iResonance = p9    ; Q factor (1-20)
         iModRate = p10     ; LFO modulation rate
         iPan = p11
-        iPanType = p12
-        iAtkP = p13        ; attack time (if < 0, use global)
-        iRelP = p14        ; release time (if < 0, use global)
+        iPanType = 0       ; just stereo, not ambisonic
+        iAtkP = -1         ; use global attack
+        iRelP = -1         ; use global release
 
         kStopFlag = chnget:k("stopAll")
         if kStopFlag == 1 then
