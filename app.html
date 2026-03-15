@@ -622,57 +622,59 @@
 
       <div id="controls">
         <!-- Playback Controls at Top -->
-         <div id="playback-buttons">
-           <button
-             id="playBtn"
-             onclick="togglePlayStop()"
-             style="background: var(--accent); color: var(--bg-primary)"
-           >
-             ▶ Play Audio
-           </button>
-         </div>
+        <div id="playback-buttons">
+          <button
+            id="playBtn"
+            onclick="togglePlayStop()"
+            style="background: var(--accent); color: var(--bg-primary)"
+          >
+            ▶ Play Audio
+          </button>
+        </div>
 
-          <!-- EVENT DENSITY SECTION (Left Panel) -->
-          <div class="control-section">
-            <div class="control-group">
-              <label>Max Events <span class="value" id="maxVal">500</span></label>
-              <input
-                type="range"
-                id="maxEvents"
-                min="100"
-                max="2000"
-                step="100"
-                value="500"
-              />
-              <label>Max Polyphony <span class="value" id="polyVal">2</span></label>
-              <input
-                type="range"
-                id="maxPoly"
-                min="1"
-                max="32"
-                step="1"
-                value="2"
-              />
-            </div>
-          </div>
-
-           <!-- MASTER VOLUME (Left Panel) -->
-           <div class="control-section">
-             <div class="control-group">
-               <label>Volume <span class="value" id="volVal">70%</span></label>
-               <input
-                 type="range"
-                 id="masterVolume"
-                 min="0"
-                 max="100"
-                 value="70"
-                 onchange="updateMasterVolume()"
-               />
-             </div>
-           </div>
-
+        <!-- EVENT DENSITY SECTION (Left Panel) -->
+        <div class="control-section">
           <div class="control-group">
-           <label>L-SYSTEM PRESETS</label>
+            <label>Max Events <span class="value" id="maxVal">500</span></label>
+            <input
+              type="range"
+              id="maxEvents"
+              min="100"
+              max="2000"
+              step="100"
+              value="500"
+            />
+            <label
+              >Max Polyphony <span class="value" id="polyVal">2</span></label
+            >
+            <input
+              type="range"
+              id="maxPoly"
+              min="1"
+              max="32"
+              step="1"
+              value="2"
+            />
+          </div>
+        </div>
+
+        <!-- MASTER VOLUME (Left Panel) -->
+        <div class="control-section">
+          <div class="control-group">
+            <label>Volume <span class="value" id="volVal">70%</span></label>
+            <input
+              type="range"
+              id="masterVolume"
+              min="0"
+              max="100"
+              value="70"
+              onchange="updateMasterVolume()"
+            />
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>L-SYSTEM PRESETS</label>
           <button class="preset-btn" onclick="loadPreset('algae')">
             Algae
           </button>
@@ -685,7 +687,6 @@
             Sierpinski
           </button>
         </div>
-
 
         <div class="control-group">
           <label>AXIOM</label>
@@ -720,8 +721,8 @@
           </select>
         </div>
 
-         <!-- GRANULAR SYNTHESIS CONTROLS -->
-         <!-- COMPLEX FM CONTROLS -->
+        <!-- GRANULAR SYNTHESIS CONTROLS -->
+        <!-- COMPLEX FM CONTROLS -->
         <div class="control-group" id="complexFMControls" style="display: none">
           <label style="color: var(--accent); font-weight: 600"
             >⚙️ COMPLEX FM PARAMETERS</label
@@ -800,10 +801,6 @@
           </select>
         </div>
 
-
-
-
-
         <div class="control-group">
           <label>PARAMETER MAPPINGS</label>
           <label
@@ -829,17 +826,14 @@
               display: block;
               font-family: monospace;
             "
-           ></div>
-         </div>
+          ></div>
+        </div>
+      </div>
 
-
-       </div>
-
-       <div id="visualization"><canvas id="canvas"></canvas></div>
+      <div id="visualization"><canvas id="canvas"></canvas></div>
 
       <!-- Music Controls - Right Panel with FULL SYNTHESIS CONTROLS -->
       <div id="music-controls">
-        
         <!-- PERFORMANCE PRESETS SECTION -->
         <div class="control-section">
           <h3>Performance Presets</h3>
@@ -873,20 +867,20 @@
                 SAVE
               </button>
             </div>
-             <select
-               id="presetList"
-               size="5"
-               ondblclick="loadSavedPreset()"
-               style="
-                 width: 100%;
-                 background: var(--input-bg);
-                 border: 1px solid var(--border);
-                 color: var(--text);
-                 border-radius: 4px;
-                 padding: 4px;
-                 cursor: pointer;
-               "
-             >
+            <select
+              id="presetList"
+              size="5"
+              ondblclick="loadSavedPreset()"
+              style="
+                width: 100%;
+                background: var(--input-bg);
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 4px;
+                padding: 4px;
+                cursor: pointer;
+              "
+            >
               <option disabled style="color: var(--text-dim)">
                 No presets saved yet
               </option>
@@ -932,36 +926,36 @@
             >
               <input type="checkbox" id="playOnLoad" checked />
               Auto-play on load
-             </label>
-           </div>
-         </div>
+            </label>
+          </div>
+        </div>
 
-         <!-- RANDOMIZE ALL BUTTON -->
-         <div style="padding: 0 0 12px 0; text-align: center">
-           <button
-             onclick="randomizeAllParameters()"
-             style="
-               width: 100%;
-               padding: 10px;
-               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-               color: white;
-               border: none;
-               border-radius: 6px;
-               cursor: pointer;
-               font-weight: 700;
-               font-size: 13px;
-               transition: transform 0.2s;
-             "
-             onmouseover="this.style.transform='scale(1.02)'"
-             onmouseout="this.style.transform='scale(1)'"
-           >
-             🎲 RANDOMIZE ALL
-           </button>
-         </div>
+        <!-- RANDOMIZE ALL BUTTON -->
+        <div style="padding: 0 0 12px 0; text-align: center">
+          <button
+            onclick="randomizeAllParameters()"
+            style="
+              width: 100%;
+              padding: 10px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+              font-weight: 700;
+              font-size: 13px;
+              transition: transform 0.2s;
+            "
+            onmouseover="this.style.transform='scale(1.02)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >
+            🎲 RANDOMIZE ALL
+          </button>
+        </div>
 
-         <!-- SOUND SYNTHESIS -->
-         <div class="control-section">
-           <h3>Sound Synthesis</h3>
+        <!-- SOUND SYNTHESIS -->
+        <div class="control-section">
+          <h3>Sound Synthesis</h3>
           <div class="control-group">
             <select id="soundPreset" onchange="updateInstrumentControls()">
               <optgroup label="🎵 Melodic Instruments">
@@ -980,294 +974,236 @@
           </div>
         </div>
 
-          <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
-          <div class="control-section">
-            <h3>Quantize</h3>
-            <div class="control-group">
-              <label>Key</label>
-              <select id="keySelect" onchange="updateKey()">
-                <option value="atonal">Atonal (Curve-Based)</option>
-                <option value="C">C</option>
-                <option value="C#" selected>C# / Db</option>
-                <option value="D">D</option>
-                <option value="D#">D# / Eb</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="F#">F# / Gb</option>
-                <option value="G">G</option>
-                <option value="G#">G# / Ab</option>
-                <option value="A">A</option>
-                <option value="A#">A# / Bb</option>
-                <option value="B">B</option>
-              </select>
+        <!-- QUANTIZE SECTION - MANDELBROT EXPLORER STYLE -->
+        <div class="control-section">
+          <h3>Quantize</h3>
+          <div class="control-group">
+            <label>Key</label>
+            <select id="keySelect" onchange="updateKey()">
+              <option value="atonal">Atonal (Curve-Based)</option>
+              <option value="C">C</option>
+              <option value="C#" selected>C# / Db</option>
+              <option value="D">D</option>
+              <option value="D#">D# / Eb</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F# / Gb</option>
+              <option value="G">G</option>
+              <option value="G#">G# / Ab</option>
+              <option value="A">A</option>
+              <option value="A#">A# / Bb</option>
+              <option value="B">B</option>
+            </select>
 
-              <label style="margin-top: 8px">Scale</label>
-              <select id="scaleSelect" onchange="updateScale()">
-                <option value="none">Non-Quantized (Continuous)</option>
-                <option value="chromatic">Chromatic (12-TET)</option>
-                <option value="major">Major Scale</option>
-                <option value="minor">Natural Minor</option>
-                <option value="dorian">Dorian Mode</option>
-                <option value="phrygian">Phrygian Mode</option>
-                <option value="lydian">Lydian Mode</option>
-                <option value="mixolydian">Mixolydian Mode</option>
-                <option value="locrian">Locrian Mode</option>
-                <option value="harmonic-minor">Harmonic Minor</option>
-                <option value="melodic-minor">Melodic Minor</option>
-                <option value="pentatonic-major" selected>Pentatonic Major</option>
-                <option value="pentatonic-minor">Pentatonic Minor</option>
-                <option value="blues">Blues Scale</option>
-                <option value="whole-tone">Whole Tone</option>
-                <option value="bohlen-pierce">Bohlen-Pierce (13-ET)</option>
-                <option value="quarter-tone">Quarter-Tone (24-ET)</option>
-                <option value="19tet">19-Tone Equal Temperament</option>
-                <option value="31tet">31-Tone Equal Temperament</option>
-                <option value="53tet">53-Tone Equal Temperament</option>
-              </select>
-            </div>
+            <label style="margin-top: 8px">Scale</label>
+            <select id="scaleSelect" onchange="updateScale()">
+              <option value="none">Non-Quantized (Continuous)</option>
+              <option value="chromatic">Chromatic (12-TET)</option>
+              <option value="major">Major Scale</option>
+              <option value="minor">Natural Minor</option>
+              <option value="dorian">Dorian Mode</option>
+              <option value="phrygian">Phrygian Mode</option>
+              <option value="lydian">Lydian Mode</option>
+              <option value="mixolydian">Mixolydian Mode</option>
+              <option value="locrian">Locrian Mode</option>
+              <option value="harmonic-minor">Harmonic Minor</option>
+              <option value="melodic-minor">Melodic Minor</option>
+              <option value="pentatonic-major" selected>
+                Pentatonic Major
+              </option>
+              <option value="pentatonic-minor">Pentatonic Minor</option>
+              <option value="blues">Blues Scale</option>
+              <option value="whole-tone">Whole Tone</option>
+              <option value="bohlen-pierce">Bohlen-Pierce (13-ET)</option>
+              <option value="quarter-tone">Quarter-Tone (24-ET)</option>
+              <option value="19tet">19-Tone Equal Temperament</option>
+              <option value="31tet">31-Tone Equal Temperament</option>
+              <option value="53tet">53-Tone Equal Temperament</option>
+            </select>
           </div>
-
-         <!-- REVERB SECTION -->
-         <div class="control-section">
-           <h3>Reverb - Freeverb</h3>
-           <div class="control-group">
-             <label>Room Size <span class="value" id="roomVal">0.75</span></label>
-             <input type="range" id="roomSize" min="0" max="100" value="75" />
-             <label>Room Size Mapping</label>
-             <select id="roomSizeMap">
-               <option value="manual" selected>Manual (use slider)</option>
-               <option value="depth">Depth → Room Size (0-1)</option>
-               <option value="angle">Angle → Room Size (0-1)</option>
-               <option value="position">Position → Room Size (0-1)</option>
-               <option value="inverse">Inverse Depth → Room Size</option>
-             </select>
-
-             <label style="margin-top: 12px"
-               >Wet Mix <span class="value" id="reverbVal">45%</span></label
-             >
-             <input type="range" id="reverb" min="0" max="100" value="45" />
-             <label>Wet Mix Mapping</label>
-             <select id="reverbWetMap">
-               <option value="manual" selected>Manual (use slider)</option>
-               <option value="depth">Depth → Wet Mix (0-100%)</option>
-               <option value="angle">Angle → Wet Mix (0-100%)</option>
-               <option value="position">Position → Wet Mix (0-100%)</option>
-               <option value="inverse">Inverse Depth → Wet Mix</option>
-             </select>
-          </div>
-         </div>
-
-         <!-- GRANULAR PARAMETERS SECTION -->
-         <div class="control-section" id="granularControls" style="display: none">
-           <h3>Granular Parameters</h3>
-           <div class="control-group">
-             <label>Grain Density Map</label>
-             <select id="grainDensityMap">
-               <option value="constant">Constant (20 grains/sec)</option>
-               <option value="depth">Depth → Density</option>
-               <option value="angle" selected>Angle → Density</option>
-               <option value="position">Position → Density</option>
-             </select>
-
-             <label style="margin-top: 8px">Grain Size Map</label>
-             <select id="grainSizeMap">
-               <option value="constant">Constant (50ms)</option>
-               <option value="depth" selected>Depth → Size</option>
-               <option value="angle">Angle → Size</option>
-               <option value="inverse">Inverse Depth</option>
-             </select>
-
-             <label style="margin-top: 8px">Grain Pitch Variation Map</label>
-             <select id="grainPitchVarMap">
-               <option value="none">No Variation</option>
-               <option value="depth">Depth → Pitch Spread</option>
-               <option value="angle" selected>Angle → Pitch Spread</option>
-               <option value="random">Random Variation</option>
-             </select>
-
-             <label style="margin-top: 8px">Grain Texture Map</label>
-             <select id="grainTextureMap">
-               <option value="constant">Pure Tone</option>
-               <option value="depth">Depth → Noise Mix</option>
-               <option value="angle" selected>Angle → Noise Mix</option>
-             </select>
-           </div>
-         </div>
-
-         <!-- ENVELOPE SECTION -->
-         <div class="control-section">
-           <h3>Envelope</h3>
-           <div class="control-group">
-             <label>Attack <span class="value" id="atkVal">10ms</span></label>
-             <input type="range" id="attack" min="1" max="500" value="10" />
-             <label>Attack Mapping</label>
-             <select id="attackMapEnv">
-               <option value="manual" selected>Manual (use slider)</option>
-               <option value="depth">Depth → Attack (1-1000ms)</option>
-               <option value="angle">Angle → Attack (1-1000ms)</option>
-               <option value="position">Position → Attack (1-1000ms)</option>
-               <option value="inverse">Inverse Depth → Attack</option>
-             </select>
-
-             <label style="margin-top: 8px"
-               >Release <span class="value" id="relVal">100ms</span></label
-             >
-             <input type="range" id="release" min="10" max="2000" value="100" />
-             <label>Release Mapping</label>
-             <select id="releaseMapEnv">
-               <option value="manual" selected>Manual (use slider)</option>
-               <option value="depth">Depth → Release (10-2000ms)</option>
-               <option value="angle">Angle → Release (10-2000ms)</option>
-               <option value="position">Position → Release (10-2000ms)</option>
-               <option value="inverse">Inverse Depth → Release</option>
-             </select>
-           </div>
-         </div>
-
-         <!-- MUSIC SETTINGS SECTION -->
-         <div class="control-section">
-           <h3>Music Settings</h3>
-           <div class="control-group">
-             <label>Base Freq (Hz)</label>
-             <input
-               type="number"
-               id="baseFreq"
-               min="100"
-               max="1000"
-               value="220"
-             />
-
-             <label style="margin-top: 8px">Tempo (BPM)</label>
-             <input type="number" id="tempo" min="30" max="300" value="120" />
-
-             <label style="margin-top: 8px">Pitch Mapping</label>
-             <select id="pitchMap">
-               <option value="angle">Angle → Pitch</option>
-               <option value="position">Position → Pitch</option>
-               <option value="depth">Depth → Pitch</option>
-               <option value="random">Random Walk</option>
-             </select>
-
-             <label style="margin-top: 8px">Duration Mapping</label>
-             <select id="durMap">
-               <option value="constant">Constant</option>
-               <option value="depth">Depth → Duration</option>
-               <option value="inverse">Inverse Depth</option>
-             </select>
-
-             <label style="margin-top: 8px">Timbre Mapping</label>
-             <select id="timbreMap">
-               <option value="none">Fixed Timbre</option>
-               <option value="depth">Depth → Brightness</option>
-               <option value="angle" selected>Angle → Brightness</option>
-             </select>
-
-             <label style="margin-top: 8px">Panning Mapping</label>
-             <select id="panMap">
-               <option value="none">Center (Mono)</option>
-               <option value="depth">Depth → Pan</option>
-               <option value="angle" selected>Angle → Pan</option>
-               <option value="position">Position → Pan</option>
-             </select>
-
-             <label style="margin-top: 8px">Spatialization Type</label>
-             <select id="panType">
-               <option value="stereo">Stereo Pan</option>
-               <option value="ambi" selected>Ambisonic (1st Order)</option>
-             </select>
-           </div>
-         </div>
-
-          <!-- SOUND SYNTHESIS -->
         </div>
-      </div>
 
-      <div id="footer">
-        <div id="status">Loading Csound WASM...</div>
-        <div
-          class="btn-group"
-          style="margin: 0; display: flex; gap: 8px; flex-wrap: wrap"
-        >
-
-          <button
-            id="toggleConsoleBtn"
-            onclick="toggleConsole()"
-            style="background: #667eea"
-          >
-            👁️ Hide Console
-          </button>
-          <button
-            id="recordCsdBtn"
-            onclick="startCSDRecording()"
-            style="background: #e74c3c"
-          >
-            🔴 Record CSD
-          </button>
-          <button
-            id="downloadCsdBtn"
-            onclick="downloadCsd()"
-            disabled
-            style="background: #95a5a6"
-          >
-            💾 Download
-          </button>
-          <span style="font-size: 11px; color: #aaa; line-height: 2.5"
-            >Space = play/stop</span
-          >
-        </div>
-      </div>
-
-      <!-- Quantization Controls - Hidden, will be in right panel -->
-      <div
-        class="quantization-fixed"
-        style="
-          position: fixed;
-          bottom: 20px;
-          left: 20px;
-          background: rgba(10, 10, 30, 0.95);
-          border: 2px solid #00ff88;
-          border-radius: 8px;
-          padding: 15px;
-          width: 280px;
-          z-index: 999;
-        "
-      >
-        <h3 style="color: #00ff88; margin: 0 0 12px 0; font-size: 13px">
-          🎵 Quantization
-        </h3>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 10px">
-          <div>
+        <!-- REVERB SECTION -->
+        <div class="control-section">
+          <h3>Reverb - Freeverb</h3>
+          <div class="control-group">
             <label
-              style="
-                font-size: 11px;
-                color: #00ff88;
-                display: block;
-                margin-bottom: 4px;
-              "
-      <!-- CSD Output Console -->
-    <textarea
-      id="csdOutput"
-      readonly
-      style="
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 600px;
-        height: 450px;
-        background: rgba(10, 10, 30, 0.95);
-        color: #00ff88;
-        border: 2px solid #00ff88;
-        border-radius: 8px;
-        padding: 15px;
-        font-family: &quot;Monaco&quot;, monospace;
-        font-size: 11px;
-        display: none;
-        resize: both;
-        overflow: auto;
-        z-index: 1000;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-      "
-    ></textarea>
+              >Room Size <span class="value" id="roomVal">0.75</span></label
+            >
+            <input type="range" id="roomSize" min="0" max="100" value="75" />
+            <label>Room Size Mapping</label>
+            <select id="roomSizeMap">
+              <option value="manual" selected>Manual (use slider)</option>
+              <option value="depth">Depth → Room Size (0-1)</option>
+              <option value="angle">Angle → Room Size (0-1)</option>
+              <option value="position">Position → Room Size (0-1)</option>
+              <option value="inverse">Inverse Depth → Room Size</option>
+            </select>
+
+            <label style="margin-top: 12px"
+              >Wet Mix <span class="value" id="reverbVal">45%</span></label
+            >
+            <input type="range" id="reverb" min="0" max="100" value="45" />
+            <label>Wet Mix Mapping</label>
+            <select id="reverbWetMap">
+              <option value="manual" selected>Manual (use slider)</option>
+              <option value="depth">Depth → Wet Mix (0-100%)</option>
+              <option value="angle">Angle → Wet Mix (0-100%)</option>
+              <option value="position">Position → Wet Mix (0-100%)</option>
+              <option value="inverse">Inverse Depth → Wet Mix</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- GRANULAR PARAMETERS SECTION -->
+        <div
+          class="control-section"
+          id="granularControls"
+          style="display: none"
+        >
+          <h3>Granular Parameters</h3>
+          <div class="control-group">
+            <label>Grain Density Map</label>
+            <select id="grainDensityMap">
+              <option value="constant">Constant (20 grains/sec)</option>
+              <option value="depth">Depth → Density</option>
+              <option value="angle" selected>Angle → Density</option>
+              <option value="position">Position → Density</option>
+            </select>
+
+            <label style="margin-top: 8px">Grain Size Map</label>
+            <select id="grainSizeMap">
+              <option value="constant">Constant (50ms)</option>
+              <option value="depth" selected>Depth → Size</option>
+              <option value="angle">Angle → Size</option>
+              <option value="inverse">Inverse Depth</option>
+            </select>
+
+            <label style="margin-top: 8px">Grain Pitch Variation Map</label>
+            <select id="grainPitchVarMap">
+              <option value="none">No Variation</option>
+              <option value="depth">Depth → Pitch Spread</option>
+              <option value="angle" selected>Angle → Pitch Spread</option>
+              <option value="random">Random Variation</option>
+            </select>
+
+            <label style="margin-top: 8px">Grain Texture Map</label>
+            <select id="grainTextureMap">
+              <option value="constant">Pure Tone</option>
+              <option value="depth">Depth → Noise Mix</option>
+              <option value="angle" selected>Angle → Noise Mix</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ENVELOPE SECTION -->
+        <div class="control-section">
+          <h3>Envelope</h3>
+          <div class="control-group">
+            <label>Attack <span class="value" id="atkVal">10ms</span></label>
+            <input type="range" id="attack" min="1" max="500" value="10" />
+            <label>Attack Mapping</label>
+            <select id="attackMapEnv">
+              <option value="manual" selected>Manual (use slider)</option>
+              <option value="depth">Depth → Attack (1-1000ms)</option>
+              <option value="angle">Angle → Attack (1-1000ms)</option>
+              <option value="position">Position → Attack (1-1000ms)</option>
+              <option value="inverse">Inverse Depth → Attack</option>
+            </select>
+
+            <label style="margin-top: 8px"
+              >Release <span class="value" id="relVal">100ms</span></label
+            >
+            <input type="range" id="release" min="10" max="2000" value="100" />
+            <label>Release Mapping</label>
+            <select id="releaseMapEnv">
+              <option value="manual" selected>Manual (use slider)</option>
+              <option value="depth">Depth → Release (10-2000ms)</option>
+              <option value="angle">Angle → Release (10-2000ms)</option>
+              <option value="position">Position → Release (10-2000ms)</option>
+              <option value="inverse">Inverse Depth → Release</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- MUSIC SETTINGS SECTION -->
+        <div class="control-section">
+          <h3>Music Settings</h3>
+          <div class="control-group">
+            <label>Base Freq (Hz)</label>
+            <input
+              type="number"
+              id="baseFreq"
+              min="100"
+              max="1000"
+              value="220"
+            />
+
+            <label style="margin-top: 8px">Tempo (BPM)</label>
+            <input type="number" id="tempo" min="30" max="300" value="120" />
+
+            <label style="margin-top: 8px">Pitch Mapping</label>
+            <select id="pitchMap">
+              <option value="angle">Angle → Pitch</option>
+              <option value="position">Position → Pitch</option>
+              <option value="depth">Depth → Pitch</option>
+              <option value="random">Random Walk</option>
+            </select>
+
+            <label style="margin-top: 8px">Duration Mapping</label>
+            <select id="durMap">
+              <option value="constant">Constant</option>
+              <option value="depth">Depth → Duration</option>
+              <option value="inverse">Inverse Depth</option>
+            </select>
+
+            <label style="margin-top: 8px">Timbre Mapping</label>
+            <select id="timbreMap">
+              <option value="none">Fixed Timbre</option>
+              <option value="depth">Depth → Brightness</option>
+              <option value="angle" selected>Angle → Brightness</option>
+            </select>
+
+            <label style="margin-top: 8px">Panning Mapping</label>
+            <select id="panMap">
+              <option value="none">Center (Mono)</option>
+              <option value="depth">Depth → Pan</option>
+              <option value="angle" selected>Angle → Pan</option>
+              <option value="position">Position → Pan</option>
+            </select>
+
+            <label style="margin-top: 8px">Spatialization Type</label>
+            <select id="panType">
+              <option value="stereo">Stereo Pan</option>
+              <option value="ambi" selected>Ambisonic (1st Order)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SOUND SYNTHESIS -->
+      </div>
+    </div>
+
+    <div id="footer">
+      <div id="status">Loading Csound WASM...</div>
+      <div
+        class="btn-group"
+        style="margin: 0; display: flex; gap: 8px; flex-wrap: wrap"
+      >
+        <button
+          id="toggleConsoleBtn"
+          onclick="toggleConsole()"
+          style="background: #667eea"
+        >
+          👁️ Hide Console
+        </button>
+
+        <span style="font-size: 11px; color: #aaa; line-height: 2.5"
+          >Space = play/stop</span
+        >
+      </div>
+    </div>
+
     <script>
       let csound = null;
       let isPlaying = false;
@@ -2016,24 +1952,24 @@
         .addEventListener("change", updateInstrumentControls);
       updateInstrumentControls(); // Initial state
 
-        addAutoRestart("soundPreset");
-        addAutoRestart("pitchMap");
-        addAutoRestart("durMap");
-        addAutoRestart("timbreMap");
-        addAutoRestart("panMap");
-        addAutoRestart("panType");
-        addAutoRestart("attackMapEnv");
-        addAutoRestart("releaseMapEnv");
-        addAutoRestart("roomSizeMap");
-        addAutoRestart("reverbWetMap");
-        addAutoRestart("keySelect");
-        addAutoRestart("scaleSelect");
-         addAutoRestart("maxEvents");
-         addAutoRestart("maxPoly");
-         addAutoRestart("tempo");
-         addAutoRestart("baseFreq");
+      addAutoRestart("soundPreset");
+      addAutoRestart("pitchMap");
+      addAutoRestart("durMap");
+      addAutoRestart("timbreMap");
+      addAutoRestart("panMap");
+      addAutoRestart("panType");
+      addAutoRestart("attackMapEnv");
+      addAutoRestart("releaseMapEnv");
+      addAutoRestart("roomSizeMap");
+      addAutoRestart("reverbWetMap");
+      addAutoRestart("keySelect");
+      addAutoRestart("scaleSelect");
+      addAutoRestart("maxEvents");
+      addAutoRestart("maxPoly");
+      addAutoRestart("tempo");
+      addAutoRestart("baseFreq");
 
-        // Auto-restart for complex instrument parameter changes
+      // Auto-restart for complex instrument parameter changes
       addAutoRestart("grainDensityMap");
       addAutoRestart("grainSizeMap");
       addAutoRestart("grainPitchVarMap");
@@ -2062,33 +1998,33 @@
         }
       });
 
-       setupListener("release", async () => {
-         updateDisplays();
-         if (csound && csoundReady) {
-           const releaseSec =
-             parseFloat(document.getElementById("release").value) / 1000;
-           await csound.setControlChannel("globalRelease", releaseSec);
-           debugLog(
-             `⚡ Release updated: ${releaseSec.toFixed(3)}s (affects new notes)`,
-           );
-         }
-       });
+      setupListener("release", async () => {
+        updateDisplays();
+        if (csound && csoundReady) {
+          const releaseSec =
+            parseFloat(document.getElementById("release").value) / 1000;
+          await csound.setControlChannel("globalRelease", releaseSec);
+          debugLog(
+            `⚡ Release updated: ${releaseSec.toFixed(3)}s (affects new notes)`,
+          );
+        }
+      });
 
-       setupListener("tempo", async () => {
-         updateDisplays();
-         debugLog(
-           `⚡ Tempo updated: ${document.getElementById("tempo").value} BPM`,
-         );
-       });
+      setupListener("tempo", async () => {
+        updateDisplays();
+        debugLog(
+          `⚡ Tempo updated: ${document.getElementById("tempo").value} BPM`,
+        );
+      });
 
-       setupListener("baseFreq", async () => {
-         updateDisplays();
-         debugLog(
-           `⚡ Base Frequency updated: ${document.getElementById("baseFreq").value} Hz`,
-         );
-       });
+      setupListener("baseFreq", async () => {
+        updateDisplays();
+        debugLog(
+          `⚡ Base Frequency updated: ${document.getElementById("baseFreq").value} Hz`,
+        );
+      });
 
-       // L-System generation
+      // L-System generation
       function generateLSystem(axiom, rules, iterations) {
         let str = axiom;
         const ruleMap = {};
@@ -2333,25 +2269,28 @@
 
         isPlaying = true;
         document.getElementById("playBtn").textContent = "⏹ Stop Audio";
-        document.getElementById("playBtn").style.background = "var(--accent-dim)";
+        document.getElementById("playBtn").style.background =
+          "var(--accent-dim)";
         document.getElementById("status").textContent = "Playing...";
 
-         let baseFreq = parseFloat(document.getElementById("baseFreq").value);
-         const tempo = parseFloat(document.getElementById("tempo").value);
-         const pitchMap = document.getElementById("pitchMap").value;
-         const durMap = document.getElementById("durMap").value;
-         const timbreMap = document.getElementById("timbreMap").value;
-         const panMap = document.getElementById("panMap").value;
-         const panTypeStr = document.getElementById("panType").value;
-         const panType = panTypeStr === "ambi" ? 2 : 0;
-         const preset = document.getElementById("soundPreset").value;
-         const scaleChoice = document.getElementById("scaleSelect").value;
-         
-         // Quantize baseFreq to selected key (if scale is not "none")
-         if (scaleChoice !== "none") {
-           baseFreq = window.quantizeNoteToScale(baseFreq);
-           debugLog(`🎵 Base Frequency quantized to key: ${baseFreq.toFixed(2)} Hz`);
-         }
+        let baseFreq = parseFloat(document.getElementById("baseFreq").value);
+        const tempo = parseFloat(document.getElementById("tempo").value);
+        const pitchMap = document.getElementById("pitchMap").value;
+        const durMap = document.getElementById("durMap").value;
+        const timbreMap = document.getElementById("timbreMap").value;
+        const panMap = document.getElementById("panMap").value;
+        const panTypeStr = document.getElementById("panType").value;
+        const panType = panTypeStr === "ambi" ? 2 : 0;
+        const preset = document.getElementById("soundPreset").value;
+        const scaleChoice = document.getElementById("scaleSelect").value;
+
+        // Quantize baseFreq to selected key (if scale is not "none")
+        if (scaleChoice !== "none") {
+          baseFreq = window.quantizeNoteToScale(baseFreq);
+          debugLog(
+            `🎵 Base Frequency quantized to key: ${baseFreq.toFixed(2)} Hz`,
+          );
+        }
         const attackMs = parseFloat(document.getElementById("attack").value);
         const releaseMs = parseFloat(document.getElementById("release").value);
         const attack = attackMs / 1000;
@@ -2477,12 +2416,6 @@
           }
         }
 
-         // Only record if user clicked the Record button
-         // (removed auto-recording - users must manually click 🔴 Record)
-         if (isCSDRecording) {
-           debugLog(`Event logged (${csdEventLog.length} total)`);
-         }
-
         let randomPitch = 0;
 
         for (let i = 0; i < selectedPaths.length; i++) {
@@ -2508,23 +2441,23 @@
             ratio = Math.pow(2, randomPitch);
           }
 
-           let freq = Math.max(100, Math.min(4000, baseFreq * ratio));
-           
-           // Quantize frequency to selected scale (if not "none")
-           if (scaleChoice !== "none") {
-             freq = window.quantizeNoteToScale(freq);
-           }
+          let freq = Math.max(100, Math.min(4000, baseFreq * ratio));
 
-           // Duration mapping - make notes shorter than spacing to avoid clouds
-           // Base duration is 80% of spacing so notes don't overlap too much
-           const baseNoteDur = (beatDur / maxPoly) * 0.8;
-           let dur = baseNoteDur;
-           if (durMap === "depth") {
-             dur = baseNoteDur * (0.5 + (path.depth / maxDepth) * 1.0);
-           } else if (durMap === "inverse") {
-             dur = baseNoteDur * (1.5 - (path.depth / maxDepth) * 0.5);
-           }
-           dur = Math.max(0.05, Math.min(2.0, dur));
+          // Quantize frequency to selected scale (if not "none")
+          if (scaleChoice !== "none") {
+            freq = window.quantizeNoteToScale(freq);
+          }
+
+          // Duration mapping - make notes shorter than spacing to avoid clouds
+          // Base duration is 80% of spacing so notes don't overlap too much
+          const baseNoteDur = (beatDur / maxPoly) * 0.8;
+          let dur = baseNoteDur;
+          if (durMap === "depth") {
+            dur = baseNoteDur * (0.5 + (path.depth / maxDepth) * 1.0);
+          } else if (durMap === "inverse") {
+            dur = baseNoteDur * (1.5 - (path.depth / maxDepth) * 0.5);
+          }
+          dur = Math.max(0.05, Math.min(2.0, dur));
 
           // Timbre mapping
           let brightness = 0.5;
@@ -2545,39 +2478,39 @@
           }
 
           // Attack/Release mapping
-           // Always capture slider values as defaults
-           let noteAttack = attack; // Default to slider value (in seconds)
-           let noteRelease = release; // Default to slider value (in seconds)
+          // Always capture slider values as defaults
+          let noteAttack = attack; // Default to slider value (in seconds)
+          let noteRelease = release; // Default to slider value (in seconds)
 
-           if (attackMap !== "manual") {
-             // Map to range 0.001s - 1.0s based on fractal parameters
-             let atkNorm = 0.5; // default middle
-             if (attackMap === "depth") {
-               atkNorm = path.depth / maxDepth;
-             } else if (attackMap === "angle") {
-               atkNorm = ((path.angle + 180) % 360) / 360;
-             } else if (attackMap === "position") {
-               atkNorm = i / Math.max(selectedPaths.length - 1, 1);
-             } else if (attackMap === "inverse") {
-               atkNorm = 1 - path.depth / maxDepth;
-             }
-             noteAttack = 0.001 + atkNorm * 0.999; // 1ms to 1000ms
-           }
+          if (attackMap !== "manual") {
+            // Map to range 0.001s - 1.0s based on fractal parameters
+            let atkNorm = 0.5; // default middle
+            if (attackMap === "depth") {
+              atkNorm = path.depth / maxDepth;
+            } else if (attackMap === "angle") {
+              atkNorm = ((path.angle + 180) % 360) / 360;
+            } else if (attackMap === "position") {
+              atkNorm = i / Math.max(selectedPaths.length - 1, 1);
+            } else if (attackMap === "inverse") {
+              atkNorm = 1 - path.depth / maxDepth;
+            }
+            noteAttack = 0.001 + atkNorm * 0.999; // 1ms to 1000ms
+          }
 
-           if (releaseMap !== "manual") {
-             // Map to range 0.01s - 2.0s based on fractal parameters
-             let relNorm = 0.5; // default middle
-             if (releaseMap === "depth") {
-               relNorm = path.depth / maxDepth;
-             } else if (releaseMap === "angle") {
-               relNorm = ((path.angle + 180) % 360) / 360;
-             } else if (releaseMap === "position") {
-               relNorm = i / Math.max(selectedPaths.length - 1, 1);
-             } else if (releaseMap === "inverse") {
-               relNorm = 1 - path.depth / maxDepth;
-             }
-             noteRelease = 0.01 + relNorm * 1.99; // 10ms to 2000ms
-           }
+          if (releaseMap !== "manual") {
+            // Map to range 0.01s - 2.0s based on fractal parameters
+            let relNorm = 0.5; // default middle
+            if (releaseMap === "depth") {
+              relNorm = path.depth / maxDepth;
+            } else if (releaseMap === "angle") {
+              relNorm = ((path.angle + 180) % 360) / 360;
+            } else if (releaseMap === "position") {
+              relNorm = i / Math.max(selectedPaths.length - 1, 1);
+            } else if (releaseMap === "inverse") {
+              relNorm = 1 - path.depth / maxDepth;
+            }
+            noteRelease = 0.01 + relNorm * 1.99; // 10ms to 2000ms
+          }
 
           // Calculate instrument-specific parameters
           let scoreEvent = "";
@@ -2831,10 +2764,10 @@
           try {
             // Send turnoff commands to all note-generating instruments (1, 2, 3, 4)
             // This stops all notes with immediate effect
-            await csound.inputMessage("turnoff2 1, 0, 0");  // Stop instr 1 (melodic)
-            await csound.inputMessage("turnoff2 2, 0, 0");  // Stop instr 2 (granular)
-            await csound.inputMessage("turnoff2 3, 0, 0");  // Stop instr 3 (FM)
-            await csound.inputMessage("turnoff2 4, 0, 0");  // Stop instr 4 (noise)
+            await csound.inputMessage("turnoff2 1, 0, 0"); // Stop instr 1 (melodic)
+            await csound.inputMessage("turnoff2 2, 0, 0"); // Stop instr 2 (granular)
+            await csound.inputMessage("turnoff2 3, 0, 0"); // Stop instr 3 (FM)
+            await csound.inputMessage("turnoff2 4, 0, 0"); // Stop instr 4 (noise)
             debugLog("✓ Sent turnoff to all note instruments");
           } catch (err) {
             debugLog(`⚠ Csound stop signal error: ${err.message}`);
@@ -2962,26 +2895,26 @@
         refreshPresetList();
       }
 
-       function loadSavedPreset() {
-         const select = document.getElementById("presetList");
-         const name = select.value;
-         if (!name || name === "none") {
-           alert("Please select a preset to load");
-           return;
-         }
+      function loadSavedPreset() {
+        const select = document.getElementById("presetList");
+        const name = select.value;
+        if (!name || name === "none") {
+          alert("Please select a preset to load");
+          return;
+        }
 
-         // Try factory presets first, then saved presets
-         let preset = factoryPresets[name];
-         if (!preset) {
-           const savedPresets = JSON.parse(
-             localStorage.getItem("fractalPresets") || "{}",
-           );
-           preset = savedPresets[name];
-         }
-         if (!preset) {
-           alert("Preset not found");
-           return;
-         }
+        // Try factory presets first, then saved presets
+        let preset = factoryPresets[name];
+        if (!preset) {
+          const savedPresets = JSON.parse(
+            localStorage.getItem("fractalPresets") || "{}",
+          );
+          preset = savedPresets[name];
+        }
+        if (!preset) {
+          alert("Preset not found");
+          return;
+        }
 
         // Stop playback if active
         if (isPlaying) {
@@ -2995,13 +2928,12 @@
         document.getElementById("iterations").value = preset.iterations || 4;
         document.getElementById("angle").value = preset.angle || 25;
 
-         document.getElementById("soundPreset").value =
-           preset.soundPreset || "pluck";
-         document.getElementById("keySelect").value =
-           preset.keySelect || "C#";
-         document.getElementById("scaleSelect").value =
-           preset.scaleSelect || "major";
-         document.getElementById("attack").value = preset.attack || 10;
+        document.getElementById("soundPreset").value =
+          preset.soundPreset || "pluck";
+        document.getElementById("keySelect").value = preset.keySelect || "C#";
+        document.getElementById("scaleSelect").value =
+          preset.scaleSelect || "major";
+        document.getElementById("attack").value = preset.attack || 10;
         document.getElementById("release").value = preset.release || 100;
         document.getElementById("attackMapEnv").value =
           preset.attackMapEnv || "manual";
@@ -3100,449 +3032,1144 @@
         refreshPresetList();
       }
 
-       function refreshPresetList() {
-         const select = document.getElementById("presetList");
-         const savedPresets = JSON.parse(
-           localStorage.getItem("fractalPresets") || "{}",
-         );
-         const savedNames = Object.keys(savedPresets).sort();
-         const factoryNames = Object.keys(factoryPresets).sort();
+      function refreshPresetList() {
+        const select = document.getElementById("presetList");
+        const savedPresets = JSON.parse(
+          localStorage.getItem("fractalPresets") || "{}",
+        );
+        const savedNames = Object.keys(savedPresets).sort();
+        const factoryNames = Object.keys(factoryPresets).sort();
 
-         select.innerHTML = "";
-         
-         // Add factory presets first
-         if (factoryNames.length > 0) {
-           const factoryGroup = document.createElement("optgroup");
-           factoryGroup.label = "Factory Presets";
-           factoryNames.forEach((name) => {
-             const opt = document.createElement("option");
-             opt.value = name;
-             opt.textContent = name;
-             opt.dataset.isFactory = "true";
-             factoryGroup.appendChild(opt);
-           });
-           select.appendChild(factoryGroup);
-         }
+        select.innerHTML = "";
 
-         // Add saved presets
-         if (savedNames.length > 0) {
-           const savedGroup = document.createElement("optgroup");
-           savedGroup.label = "Saved Presets";
-           savedNames.forEach((name) => {
-             const opt = document.createElement("option");
-             opt.value = name;
-             opt.textContent = name;
-             opt.dataset.isFactory = "false";
-             savedGroup.appendChild(opt);
-           });
-           select.appendChild(savedGroup);
-         }
+        // Add factory presets first
+        if (factoryNames.length > 0) {
+          const factoryGroup = document.createElement("optgroup");
+          factoryGroup.label = "Factory Presets";
+          factoryNames.forEach((name) => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            opt.dataset.isFactory = "true";
+            factoryGroup.appendChild(opt);
+          });
+          select.appendChild(factoryGroup);
+        }
 
-         // If both are empty
-         if (factoryNames.length === 0 && savedNames.length === 0) {
-           const opt = document.createElement("option");
-           opt.value = "none";
-           opt.disabled = true;
-           opt.textContent = "No presets available";
-           opt.style.color = "var(--text-dim)";
-           select.appendChild(opt);
-         }
-       }
+        // Add saved presets
+        if (savedNames.length > 0) {
+          const savedGroup = document.createElement("optgroup");
+          savedGroup.label = "Saved Presets";
+          savedNames.forEach((name) => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            opt.dataset.isFactory = "false";
+            savedGroup.appendChild(opt);
+          });
+          select.appendChild(savedGroup);
+        }
+
+        // If both are empty
+        if (factoryNames.length === 0 && savedNames.length === 0) {
+          const opt = document.createElement("option");
+          opt.value = "none";
+          opt.disabled = true;
+          opt.textContent = "No presets available";
+          opt.style.color = "var(--text-dim)";
+          select.appendChild(opt);
+        }
+      }
 
       // ===== FACTORY PRESET BANK =====
       const factoryPresets = {
         // === ALGAE CURVE PRESETS (3) ===
         "🌿 Algae: Pentatonic Dream": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "pluck", keySelect: "C", scaleSelect: "pentatonic-major",
-          attack: 15, release: 150, masterVolume: 70, roomSize: 65, reverb: 50,
-          roomSizeMap: "position", reverbWetMap: "depth",
-          baseFreq: 220, tempo: 100, pitchMap: "position", durMap: "depth",
-          timbreMap: "angle", panMap: "position", panType: "ambi",
-          maxEvents: 450, maxPoly: 2, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "pluck",
+          keySelect: "C",
+          scaleSelect: "pentatonic-major",
+          attack: 15,
+          release: 150,
+          masterVolume: 70,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "position",
+          reverbWetMap: "depth",
+          baseFreq: 220,
+          tempo: 100,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "angle",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 450,
+          maxPoly: 2,
+          vizColor: "rainbow",
         },
         "🌿 Algae: Minor Melancholy": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "fm", keySelect: "A", scaleSelect: "minor",
-          attack: 20, release: 200, masterVolume: 65, roomSize: 70, reverb: 55,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 165, tempo: 90, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "depth", panMap: "angle", panType: "ambi",
-          maxEvents: 500, maxPoly: 3, vizColor: "depth",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "fm",
+          keySelect: "A",
+          scaleSelect: "minor",
+          attack: 20,
+          release: 200,
+          masterVolume: 65,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 165,
+          tempo: 90,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "angle",
+          panType: "ambi",
+          maxEvents: 500,
+          maxPoly: 3,
+          vizColor: "depth",
         },
         "🌿 Algae: Harmonic Major": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "bell", keySelect: "G", scaleSelect: "major",
-          attack: 10, release: 120, masterVolume: 75, roomSize: 60, reverb: 45,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 330, tempo: 110, pitchMap: "depth", durMap: "constant",
-          timbreMap: "position", panMap: "depth", panType: "stereo",
-          maxEvents: 400, maxPoly: 2, vizColor: "single",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "bell",
+          keySelect: "G",
+          scaleSelect: "major",
+          attack: 10,
+          release: 120,
+          masterVolume: 75,
+          roomSize: 60,
+          reverb: 45,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 330,
+          tempo: 110,
+          pitchMap: "depth",
+          durMap: "constant",
+          timbreMap: "position",
+          panMap: "depth",
+          panType: "stereo",
+          maxEvents: 400,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === TREE CURVE PRESETS (3) ===
         "🌳 Tree: Dorian Woodland": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "organ", keySelect: "D", scaleSelect: "dorian",
-          attack: 25, release: 250, masterVolume: 70, roomSize: 75, reverb: 60,
-          roomSizeMap: "position", reverbWetMap: "inverse",
-          baseFreq: 110, tempo: 80, pitchMap: "position", durMap: "depth",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 350, maxPoly: 4, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "organ",
+          keySelect: "D",
+          scaleSelect: "dorian",
+          attack: 25,
+          release: 250,
+          masterVolume: 70,
+          roomSize: 75,
+          reverb: 60,
+          roomSizeMap: "position",
+          reverbWetMap: "inverse",
+          baseFreq: 110,
+          tempo: 80,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 350,
+          maxPoly: 4,
+          vizColor: "rainbow",
         },
         "🌳 Tree: Lydian Bright": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "clarinet", keySelect: "F", scaleSelect: "lydian",
-          attack: 12, release: 100, masterVolume: 72, roomSize: 50, reverb: 35,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 349, tempo: 120, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 500, maxPoly: 2, vizColor: "depth",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "clarinet",
+          keySelect: "F",
+          scaleSelect: "lydian",
+          attack: 12,
+          release: 100,
+          masterVolume: 72,
+          roomSize: 50,
+          reverb: 35,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 349,
+          tempo: 120,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 500,
+          maxPoly: 2,
+          vizColor: "depth",
         },
         "🌳 Tree: Harmonic Minor Ascent": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "granular", keySelect: "E", scaleSelect: "harmonic-minor",
-          attack: 30, release: 180, masterVolume: 78, roomSize: 70, reverb: 55,
-          roomSizeMap: "angle", reverbWetMap: "depth",
-          baseFreq: 275, tempo: 95, pitchMap: "position", durMap: "inverse",
-          timbreMap: "depth", panMap: "position", panType: "ambi",
-          maxEvents: 400, maxPoly: 3, vizColor: "single",
-          grainDensityMap: "position", grainSizeMap: "angle",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "granular",
+          keySelect: "E",
+          scaleSelect: "harmonic-minor",
+          attack: 30,
+          release: 180,
+          masterVolume: 78,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "angle",
+          reverbWetMap: "depth",
+          baseFreq: 275,
+          tempo: 95,
+          pitchMap: "position",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 400,
+          maxPoly: 3,
+          vizColor: "single",
+          grainDensityMap: "position",
+          grainSizeMap: "angle",
         },
 
         // === DRAGON CURVE PRESETS (3) ===
         "🐉 Dragon: Blues Chaos": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "complexfm", keySelect: "B", scaleSelect: "blues",
-          attack: 8, release: 80, masterVolume: 70, roomSize: 55, reverb: 40,
-          roomSizeMap: "position", reverbWetMap: "inverse",
-          baseFreq: 220, tempo: 140, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 600, maxPoly: 2, vizColor: "rainbow",
-          fmAlgorithm: "cascade", fmModIndexMap: "angle", fmCarrierMap: "bells",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "complexfm",
+          keySelect: "B",
+          scaleSelect: "blues",
+          attack: 8,
+          release: 80,
+          masterVolume: 70,
+          roomSize: 55,
+          reverb: 40,
+          roomSizeMap: "position",
+          reverbWetMap: "inverse",
+          baseFreq: 220,
+          tempo: 140,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 600,
+          maxPoly: 2,
+          vizColor: "rainbow",
+          fmAlgorithm: "cascade",
+          fmModIndexMap: "angle",
+          fmCarrierMap: "bells",
         },
         "🐉 Dragon: Whole Tone Spiral": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "noisefilter", keySelect: "C#", scaleSelect: "whole-tone",
-          attack: 12, release: 110, masterVolume: 75, roomSize: 60, reverb: 50,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 250, tempo: 130, pitchMap: "depth", durMap: "inverse",
-          timbreMap: "depth", panMap: "depth", panType: "ambi",
-          maxEvents: 700, maxPoly: 2, vizColor: "depth",
-          noiseTypeMap: "angle", filterTypeMap: "cycle", filterFreqMap: "angle",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "noisefilter",
+          keySelect: "C#",
+          scaleSelect: "whole-tone",
+          attack: 12,
+          release: 110,
+          masterVolume: 75,
+          roomSize: 60,
+          reverb: 50,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 250,
+          tempo: 130,
+          pitchMap: "depth",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "depth",
+          panType: "ambi",
+          maxEvents: 700,
+          maxPoly: 2,
+          vizColor: "depth",
+          noiseTypeMap: "angle",
+          filterTypeMap: "cycle",
+          filterFreqMap: "angle",
         },
         "🐉 Dragon: Phrygian Exotic": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "pluck", keySelect: "B", scaleSelect: "phrygian",
-          attack: 18, release: 140, masterVolume: 72, roomSize: 65, reverb: 48,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 246, tempo: 110, pitchMap: "position", durMap: "constant",
-          timbreMap: "position", panMap: "position", panType: "stereo",
-          maxEvents: 550, maxPoly: 2, vizColor: "single",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "pluck",
+          keySelect: "B",
+          scaleSelect: "phrygian",
+          attack: 18,
+          release: 140,
+          masterVolume: 72,
+          roomSize: 65,
+          reverb: 48,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 246,
+          tempo: 110,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "position",
+          panMap: "position",
+          panType: "stereo",
+          maxEvents: 550,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === KOCH CURVE PRESETS (3) ===
         "❄️ Koch: Chromatic Ice": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "bell", keySelect: "G#", scaleSelect: "chromatic",
-          attack: 6, release: 90, masterVolume: 70, roomSize: 50, reverb: 40,
-          roomSizeMap: "position", reverbWetMap: "depth",
-          baseFreq: 392, tempo: 150, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "ambi",
-          maxEvents: 800, maxPoly: 1, vizColor: "rainbow",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "bell",
+          keySelect: "G#",
+          scaleSelect: "chromatic",
+          attack: 6,
+          release: 90,
+          masterVolume: 70,
+          roomSize: 50,
+          reverb: 40,
+          roomSizeMap: "position",
+          reverbWetMap: "depth",
+          baseFreq: 392,
+          tempo: 150,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "ambi",
+          maxEvents: 800,
+          maxPoly: 1,
+          vizColor: "rainbow",
         },
         "❄️ Koch: Mixolydian Crystalline": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "fm", keySelect: "D", scaleSelect: "mixolydian",
-          attack: 9, release: 100, masterVolume: 68, roomSize: 55, reverb: 42,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 293, tempo: 140, pitchMap: "depth", durMap: "inverse",
-          timbreMap: "depth", panMap: "position", panType: "stereo",
-          maxEvents: 750, maxPoly: 2, vizColor: "depth",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "fm",
+          keySelect: "D",
+          scaleSelect: "mixolydian",
+          attack: 9,
+          release: 100,
+          masterVolume: 68,
+          roomSize: 55,
+          reverb: 42,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 293,
+          tempo: 140,
+          pitchMap: "depth",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "position",
+          panType: "stereo",
+          maxEvents: 750,
+          maxPoly: 2,
+          vizColor: "depth",
         },
         "❄️ Koch: Melodic Minor Snowfall": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "clarinet", keySelect: "A", scaleSelect: "melodic-minor",
-          attack: 14, release: 130, masterVolume: 71, roomSize: 60, reverb: 48,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 220, tempo: 125, pitchMap: "position", durMap: "constant",
-          timbreMap: "none", panMap: "angle", panType: "ambi",
-          maxEvents: 700, maxPoly: 2, vizColor: "single",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "clarinet",
+          keySelect: "A",
+          scaleSelect: "melodic-minor",
+          attack: 14,
+          release: 130,
+          masterVolume: 71,
+          roomSize: 60,
+          reverb: 48,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 220,
+          tempo: 125,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "none",
+          panMap: "angle",
+          panType: "ambi",
+          maxEvents: 700,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === SIERPINSKI TRIANGLE PRESETS (3) ===
         "△ Sierpinski: Pentatonic Fractal": {
-          axiom: "F-G-G", rules: "F=F-G+F+G-F\nG=GG", iterations: 5, angle: 120,
-          soundPreset: "organ", keySelect: "C", scaleSelect: "pentatonic-minor",
-          attack: 20, release: 200, masterVolume: 70, roomSize: 70, reverb: 55,
-          roomSizeMap: "position", reverbWetMap: "inverse",
-          baseFreq: 165, tempo: 85, pitchMap: "position", durMap: "depth",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 300, maxPoly: 3, vizColor: "rainbow",
+          axiom: "F-G-G",
+          rules: "F=F-G+F+G-F\nG=GG",
+          iterations: 5,
+          angle: 120,
+          soundPreset: "organ",
+          keySelect: "C",
+          scaleSelect: "pentatonic-minor",
+          attack: 20,
+          release: 200,
+          masterVolume: 70,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "position",
+          reverbWetMap: "inverse",
+          baseFreq: 165,
+          tempo: 85,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 300,
+          maxPoly: 3,
+          vizColor: "rainbow",
         },
         "△ Sierpinski: Locrian Dark": {
-          axiom: "F-G-G", rules: "F=F-G+F+G-F\nG=GG", iterations: 5, angle: 120,
-          soundPreset: "granular", keySelect: "F", scaleSelect: "locrian",
-          attack: 28, release: 220, masterVolume: 75, roomSize: 75, reverb: 60,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 176, tempo: 75, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "depth", panMap: "position", panType: "ambi",
-          maxEvents: 280, maxPoly: 2, vizColor: "depth",
-          grainDensityMap: "angle", grainSizeMap: "depth",
+          axiom: "F-G-G",
+          rules: "F=F-G+F+G-F\nG=GG",
+          iterations: 5,
+          angle: 120,
+          soundPreset: "granular",
+          keySelect: "F",
+          scaleSelect: "locrian",
+          attack: 28,
+          release: 220,
+          masterVolume: 75,
+          roomSize: 75,
+          reverb: 60,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 176,
+          tempo: 75,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 280,
+          maxPoly: 2,
+          vizColor: "depth",
+          grainDensityMap: "angle",
+          grainSizeMap: "depth",
         },
         "△ Sierpinski: Bohlen-Pierce Ethereal": {
-          axiom: "F-G-G", rules: "F=F-G+F+G-F\nG=GG", iterations: 5, angle: 120,
-          soundPreset: "complexfm", keySelect: "G", scaleSelect: "bohlen-pierce",
-          attack: 25, release: 180, masterVolume: 68, roomSize: 65, reverb: 50,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 300, tempo: 95, pitchMap: "position", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 320, maxPoly: 2, vizColor: "single",
-          fmAlgorithm: "parallel", fmModIndexMap: "position", fmCarrierMap: "bells",
+          axiom: "F-G-G",
+          rules: "F=F-G+F+G-F\nG=GG",
+          iterations: 5,
+          angle: 120,
+          soundPreset: "complexfm",
+          keySelect: "G",
+          scaleSelect: "bohlen-pierce",
+          attack: 25,
+          release: 180,
+          masterVolume: 68,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 300,
+          tempo: 95,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 320,
+          maxPoly: 2,
+          vizColor: "single",
+          fmAlgorithm: "parallel",
+          fmModIndexMap: "position",
+          fmCarrierMap: "bells",
         },
 
         // === PLUCK INSTRUMENT PRESETS (3) ===
         "🪕 Pluck: Pastoral Waltz": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "pluck", keySelect: "G", scaleSelect: "major",
-          attack: 8, release: 120, masterVolume: 72, roomSize: 45, reverb: 35,
-          roomSizeMap: "manual", reverbWetMap: "manual",
-          baseFreq: 220, tempo: 105, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 500, maxPoly: 2, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "pluck",
+          keySelect: "G",
+          scaleSelect: "major",
+          attack: 8,
+          release: 120,
+          masterVolume: 72,
+          roomSize: 45,
+          reverb: 35,
+          roomSizeMap: "manual",
+          reverbWetMap: "manual",
+          baseFreq: 220,
+          tempo: 105,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 500,
+          maxPoly: 2,
+          vizColor: "rainbow",
         },
         "🪕 Pluck: Flamenco Fury": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "pluck", keySelect: "E", scaleSelect: "phrygian",
-          attack: 5, release: 80, masterVolume: 75, roomSize: 40, reverb: 30,
-          roomSizeMap: "angle", reverbWetMap: "depth",
-          baseFreq: 246, tempo: 160, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "depth", panMap: "angle", panType: "stereo",
-          maxEvents: 650, maxPoly: 2, vizColor: "depth",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "pluck",
+          keySelect: "E",
+          scaleSelect: "phrygian",
+          attack: 5,
+          release: 80,
+          masterVolume: 75,
+          roomSize: 40,
+          reverb: 30,
+          roomSizeMap: "angle",
+          reverbWetMap: "depth",
+          baseFreq: 246,
+          tempo: 160,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 650,
+          maxPoly: 2,
+          vizColor: "depth",
         },
         "🪕 Pluck: Baroque Elegance": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "pluck", keySelect: "D", scaleSelect: "major",
-          attack: 12, release: 140, masterVolume: 70, roomSize: 50, reverb: 40,
-          roomSizeMap: "position", reverbWetMap: "angle",
-          baseFreq: 293, tempo: 100, pitchMap: "position", durMap: "constant",
-          timbreMap: "angle", panMap: "position", panType: "ambi",
-          maxEvents: 450, maxPoly: 2, vizColor: "single",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "pluck",
+          keySelect: "D",
+          scaleSelect: "major",
+          attack: 12,
+          release: 140,
+          masterVolume: 70,
+          roomSize: 50,
+          reverb: 40,
+          roomSizeMap: "position",
+          reverbWetMap: "angle",
+          baseFreq: 293,
+          tempo: 100,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 450,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === FM BELL INSTRUMENT PRESETS (3) ===
         "🔔 FM Bell: Ethereal Resonance": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "fm", keySelect: "A", scaleSelect: "minor",
-          attack: 15, release: 180, masterVolume: 68, roomSize: 65, reverb: 50,
-          roomSizeMap: "depth", reverbWetMap: "inverse",
-          baseFreq: 220, tempo: 90, pitchMap: "position", durMap: "depth",
-          timbreMap: "angle", panMap: "position", panType: "ambi",
-          maxEvents: 400, maxPoly: 3, vizColor: "rainbow",
-          fmAlgorithm: "cascade", fmModIndexMap: "depth", fmCarrierMap: "bells",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "fm",
+          keySelect: "A",
+          scaleSelect: "minor",
+          attack: 15,
+          release: 180,
+          masterVolume: 68,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "depth",
+          reverbWetMap: "inverse",
+          baseFreq: 220,
+          tempo: 90,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "angle",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 400,
+          maxPoly: 3,
+          vizColor: "rainbow",
+          fmAlgorithm: "cascade",
+          fmModIndexMap: "depth",
+          fmCarrierMap: "bells",
         },
         "🔔 FM Bell: Metallic Echo": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "fm", keySelect: "F#", scaleSelect: "dorian",
-          attack: 10, release: 150, masterVolume: 70, roomSize: 70, reverb: 55,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 370, tempo: 110, pitchMap: "angle", durMap: "constant",
-          timbreMap: "depth", panMap: "angle", panType: "stereo",
-          maxEvents: 550, maxPoly: 2, vizColor: "depth",
-          fmAlgorithm: "parallel", fmModIndexMap: "angle", fmCarrierMap: "harmonic",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "fm",
+          keySelect: "F#",
+          scaleSelect: "dorian",
+          attack: 10,
+          release: 150,
+          masterVolume: 70,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 370,
+          tempo: 110,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "depth",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 550,
+          maxPoly: 2,
+          vizColor: "depth",
+          fmAlgorithm: "parallel",
+          fmModIndexMap: "angle",
+          fmCarrierMap: "harmonic",
         },
         "🔔 FM Bell: Meditative Gong": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "fm", keySelect: "C", scaleSelect: "harmonic-minor",
-          attack: 20, release: 250, masterVolume: 65, roomSize: 75, reverb: 60,
-          roomSizeMap: "position", reverbWetMap: "depth",
-          baseFreq: 164, tempo: 70, pitchMap: "position", durMap: "inverse",
-          timbreMap: "position", panMap: "position", panType: "ambi",
-          maxEvents: 300, maxPoly: 1, vizColor: "single",
-          fmAlgorithm: "stack", fmModIndexMap: "position", fmCarrierMap: "bells",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "fm",
+          keySelect: "C",
+          scaleSelect: "harmonic-minor",
+          attack: 20,
+          release: 250,
+          masterVolume: 65,
+          roomSize: 75,
+          reverb: 60,
+          roomSizeMap: "position",
+          reverbWetMap: "depth",
+          baseFreq: 164,
+          tempo: 70,
+          pitchMap: "position",
+          durMap: "inverse",
+          timbreMap: "position",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 300,
+          maxPoly: 1,
+          vizColor: "single",
+          fmAlgorithm: "stack",
+          fmModIndexMap: "position",
+          fmCarrierMap: "bells",
         },
 
         // === ADDITIVE BELL INSTRUMENT PRESETS (3) ===
         "🎵 Bell: Shimmering Paradise": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "bell", keySelect: "F", scaleSelect: "lydian",
-          attack: 12, release: 160, masterVolume: 70, roomSize: 60, reverb: 45,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 349, tempo: 100, pitchMap: "angle", durMap: "constant",
-          timbreMap: "position", panMap: "angle", panType: "ambi",
-          maxEvents: 500, maxPoly: 2, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "bell",
+          keySelect: "F",
+          scaleSelect: "lydian",
+          attack: 12,
+          release: 160,
+          masterVolume: 70,
+          roomSize: 60,
+          reverb: 45,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 349,
+          tempo: 100,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "position",
+          panMap: "angle",
+          panType: "ambi",
+          maxEvents: 500,
+          maxPoly: 2,
+          vizColor: "rainbow",
         },
         "🎵 Bell: Glass Harmonics": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "bell", keySelect: "G", scaleSelect: "pentatonic-major",
-          attack: 8, release: 140, masterVolume: 72, roomSize: 55, reverb: 40,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 392, tempo: 120, pitchMap: "depth", durMap: "inverse",
-          timbreMap: "depth", panMap: "depth", panType: "stereo",
-          maxEvents: 600, maxPoly: 1, vizColor: "depth",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "bell",
+          keySelect: "G",
+          scaleSelect: "pentatonic-major",
+          attack: 8,
+          release: 140,
+          masterVolume: 72,
+          roomSize: 55,
+          reverb: 40,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 392,
+          tempo: 120,
+          pitchMap: "depth",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "depth",
+          panType: "stereo",
+          maxEvents: 600,
+          maxPoly: 1,
+          vizColor: "depth",
         },
         "🎵 Bell: Ancient Monastery": {
-          axiom: "F-G-G", rules: "F=F-G+F+G-F\nG=GG", iterations: 5, angle: 120,
-          soundPreset: "bell", keySelect: "D", scaleSelect: "minor",
-          attack: 18, release: 200, masterVolume: 68, roomSize: 70, reverb: 55,
-          roomSizeMap: "position", reverbWetMap: "inverse",
-          baseFreq: 293, tempo: 85, pitchMap: "position", durMap: "constant",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 350, maxPoly: 2, vizColor: "single",
+          axiom: "F-G-G",
+          rules: "F=F-G+F+G-F\nG=GG",
+          iterations: 5,
+          angle: 120,
+          soundPreset: "bell",
+          keySelect: "D",
+          scaleSelect: "minor",
+          attack: 18,
+          release: 200,
+          masterVolume: 68,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "position",
+          reverbWetMap: "inverse",
+          baseFreq: 293,
+          tempo: 85,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 350,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === SOFT WAVESHAPING INSTRUMENT PRESETS (3) ===
         "〰️ Soft Waveshaping: Dreamy Ambient": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "clarinet", keySelect: "A", scaleSelect: "minor",
-          attack: 25, release: 200, masterVolume: 65, roomSize: 70, reverb: 55,
-          roomSizeMap: "position", reverbWetMap: "position",
-          baseFreq: 220, tempo: 80, pitchMap: "position", durMap: "depth",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 400, maxPoly: 2, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "clarinet",
+          keySelect: "A",
+          scaleSelect: "minor",
+          attack: 25,
+          release: 200,
+          masterVolume: 65,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "position",
+          reverbWetMap: "position",
+          baseFreq: 220,
+          tempo: 80,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 400,
+          maxPoly: 2,
+          vizColor: "rainbow",
         },
         "〰️ Soft Waveshaping: Warm Legato": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "clarinet", keySelect: "B", scaleSelect: "major",
-          attack: 20, release: 180, masterVolume: 70, roomSize: 60, reverb: 48,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 246, tempo: 90, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 500, maxPoly: 2, vizColor: "depth",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "clarinet",
+          keySelect: "B",
+          scaleSelect: "major",
+          attack: 20,
+          release: 180,
+          masterVolume: 70,
+          roomSize: 60,
+          reverb: 48,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 246,
+          tempo: 90,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 500,
+          maxPoly: 2,
+          vizColor: "depth",
         },
         "〰️ Soft Waveshaping: Lyrical Expression": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "clarinet", keySelect: "E", scaleSelect: "dorian",
-          attack: 18, release: 170, masterVolume: 69, roomSize: 65, reverb: 50,
-          roomSizeMap: "angle", reverbWetMap: "depth",
-          baseFreq: 330, tempo: 100, pitchMap: "position", durMap: "constant",
-          timbreMap: "angle", panMap: "depth", panType: "ambi",
-          maxEvents: 450, maxPoly: 2, vizColor: "single",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "clarinet",
+          keySelect: "E",
+          scaleSelect: "dorian",
+          attack: 18,
+          release: 170,
+          masterVolume: 69,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "angle",
+          reverbWetMap: "depth",
+          baseFreq: 330,
+          tempo: 100,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "depth",
+          panType: "ambi",
+          maxEvents: 450,
+          maxPoly: 2,
+          vizColor: "single",
         },
 
         // === DRAWBAR ORGAN INSTRUMENT PRESETS (3) ===
         "🎹 Organ: Cathedral Hymn": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "organ", keySelect: "G", scaleSelect: "major",
-          attack: 30, release: 250, masterVolume: 70, roomSize: 75, reverb: 60,
-          roomSizeMap: "position", reverbWetMap: "inverse",
-          baseFreq: 196, tempo: 75, pitchMap: "position", durMap: "depth",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 350, maxPoly: 4, vizColor: "rainbow",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "organ",
+          keySelect: "G",
+          scaleSelect: "major",
+          attack: 30,
+          release: 250,
+          masterVolume: 70,
+          roomSize: 75,
+          reverb: 60,
+          roomSizeMap: "position",
+          reverbWetMap: "inverse",
+          baseFreq: 196,
+          tempo: 75,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 350,
+          maxPoly: 4,
+          vizColor: "rainbow",
         },
         "🎹 Organ: Jazz Groove": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "organ", keySelect: "F", scaleSelect: "blues",
-          attack: 15, release: 130, masterVolume: 72, roomSize: 50, reverb: 40,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 349, tempo: 130, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 600, maxPoly: 3, vizColor: "depth",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "organ",
+          keySelect: "F",
+          scaleSelect: "blues",
+          attack: 15,
+          release: 130,
+          masterVolume: 72,
+          roomSize: 50,
+          reverb: 40,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 349,
+          tempo: 130,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 600,
+          maxPoly: 3,
+          vizColor: "depth",
         },
         "🎹 Organ: Sacred Processional": {
-          axiom: "F", rules: "F=FF+[+F-F-F]-[-F+F+F]", iterations: 4, angle: 22,
-          soundPreset: "organ", keySelect: "C", scaleSelect: "minor",
-          attack: 28, release: 220, masterVolume: 68, roomSize: 70, reverb: 55,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 165, tempo: 85, pitchMap: "position", durMap: "inverse",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 380, maxPoly: 3, vizColor: "single",
+          axiom: "F",
+          rules: "F=FF+[+F-F-F]-[-F+F+F]",
+          iterations: 4,
+          angle: 22,
+          soundPreset: "organ",
+          keySelect: "C",
+          scaleSelect: "minor",
+          attack: 28,
+          release: 220,
+          masterVolume: 68,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 165,
+          tempo: 85,
+          pitchMap: "position",
+          durMap: "inverse",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 380,
+          maxPoly: 3,
+          vizColor: "single",
         },
 
         // === GRANULAR SYNTHESIS INSTRUMENT PRESETS (3) ===
         "⚛️ Granular: Ethereal Cloud": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "granular", keySelect: "A", scaleSelect: "minor",
-          attack: 30, release: 200, masterVolume: 75, roomSize: 70, reverb: 55,
-          roomSizeMap: "position", reverbWetMap: "position",
-          baseFreq: 220, tempo: 85, pitchMap: "position", durMap: "constant",
-          timbreMap: "depth", panMap: "position", panType: "ambi",
-          maxEvents: 400, maxPoly: 2, vizColor: "rainbow",
-          grainDensityMap: "position", grainSizeMap: "depth", grainPitchVarMap: "angle",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "granular",
+          keySelect: "A",
+          scaleSelect: "minor",
+          attack: 30,
+          release: 200,
+          masterVolume: 75,
+          roomSize: 70,
+          reverb: 55,
+          roomSizeMap: "position",
+          reverbWetMap: "position",
+          baseFreq: 220,
+          tempo: 85,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "depth",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 400,
+          maxPoly: 2,
+          vizColor: "rainbow",
+          grainDensityMap: "position",
+          grainSizeMap: "depth",
+          grainPitchVarMap: "angle",
         },
         "⚛️ Granular: Textural Swarm": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "granular", keySelect: "D", scaleSelect: "dorian",
-          attack: 28, release: 180, masterVolume: 78, roomSize: 65, reverb: 50,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 293, tempo: 100, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "angle", panMap: "angle", panType: "ambi",
-          maxEvents: 500, maxPoly: 3, vizColor: "depth",
-          grainDensityMap: "angle", grainSizeMap: "constant", grainPitchVarMap: "depth",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "granular",
+          keySelect: "D",
+          scaleSelect: "dorian",
+          attack: 28,
+          release: 180,
+          masterVolume: 78,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 293,
+          tempo: 100,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "ambi",
+          maxEvents: 500,
+          maxPoly: 3,
+          vizColor: "depth",
+          grainDensityMap: "angle",
+          grainSizeMap: "constant",
+          grainPitchVarMap: "depth",
         },
         "⚛️ Granular: Crystalline Bells": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "granular", keySelect: "G#", scaleSelect: "whole-tone",
-          attack: 25, release: 220, masterVolume: 80, roomSize: 60, reverb: 48,
-          roomSizeMap: "angle", reverbWetMap: "depth",
-          baseFreq: 415, tempo: 90, pitchMap: "position", durMap: "constant",
-          timbreMap: "position", panMap: "position", panType: "stereo",
-          maxEvents: 350, maxPoly: 2, vizColor: "single",
-          grainDensityMap: "depth", grainSizeMap: "angle", grainPitchVarMap: "position",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "granular",
+          keySelect: "G#",
+          scaleSelect: "whole-tone",
+          attack: 25,
+          release: 220,
+          masterVolume: 80,
+          roomSize: 60,
+          reverb: 48,
+          roomSizeMap: "angle",
+          reverbWetMap: "depth",
+          baseFreq: 415,
+          tempo: 90,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "position",
+          panMap: "position",
+          panType: "stereo",
+          maxEvents: 350,
+          maxPoly: 2,
+          vizColor: "single",
+          grainDensityMap: "depth",
+          grainSizeMap: "angle",
+          grainPitchVarMap: "position",
         },
 
         // === COMPLEX FM INSTRUMENT PRESETS (3) ===
         "⚙️ Complex FM: Sonic Vortex": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "complexfm", keySelect: "B", scaleSelect: "blues",
-          attack: 12, release: 140, masterVolume: 70, roomSize: 55, reverb: 42,
-          roomSizeMap: "position", reverbWetMap: "angle",
-          baseFreq: 246, tempo: 140, pitchMap: "angle", durMap: "inverse",
-          timbreMap: "depth", panMap: "angle", panType: "stereo",
-          maxEvents: 650, maxPoly: 2, vizColor: "depth",
-          fmAlgorithm: "cascade", fmModIndexMap: "angle", fmCarrierMap: "bells",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "complexfm",
+          keySelect: "B",
+          scaleSelect: "blues",
+          attack: 12,
+          release: 140,
+          masterVolume: 70,
+          roomSize: 55,
+          reverb: 42,
+          roomSizeMap: "position",
+          reverbWetMap: "angle",
+          baseFreq: 246,
+          tempo: 140,
+          pitchMap: "angle",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 650,
+          maxPoly: 2,
+          vizColor: "depth",
+          fmAlgorithm: "cascade",
+          fmModIndexMap: "angle",
+          fmCarrierMap: "bells",
         },
         "⚙️ Complex FM: Metallic Shimmer": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "complexfm", keySelect: "C#", scaleSelect: "chromatic",
-          attack: 8, release: 100, masterVolume: 72, roomSize: 50, reverb: 38,
-          roomSizeMap: "depth", reverbWetMap: "inverse",
-          baseFreq: 277, tempo: 160, pitchMap: "depth", durMap: "constant",
-          timbreMap: "angle", panMap: "depth", panType: "ambi",
-          maxEvents: 750, maxPoly: 1, vizColor: "rainbow",
-          fmAlgorithm: "parallel", fmModIndexMap: "position", fmCarrierMap: "harmonic",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "complexfm",
+          keySelect: "C#",
+          scaleSelect: "chromatic",
+          attack: 8,
+          release: 100,
+          masterVolume: 72,
+          roomSize: 50,
+          reverb: 38,
+          roomSizeMap: "depth",
+          reverbWetMap: "inverse",
+          baseFreq: 277,
+          tempo: 160,
+          pitchMap: "depth",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "depth",
+          panType: "ambi",
+          maxEvents: 750,
+          maxPoly: 1,
+          vizColor: "rainbow",
+          fmAlgorithm: "parallel",
+          fmModIndexMap: "position",
+          fmCarrierMap: "harmonic",
         },
         "⚙️ Complex FM: Harmonic Fusion": {
-          axiom: "F-G-G", rules: "F=F-G+F+G-F\nG=GG", iterations: 5, angle: 120,
-          soundPreset: "complexfm", keySelect: "F", scaleSelect: "lydian",
-          attack: 16, release: 170, masterVolume: 69, roomSize: 60, reverb: 48,
-          roomSizeMap: "angle", reverbWetMap: "position",
-          baseFreq: 349, tempo: 100, pitchMap: "position", durMap: "constant",
-          timbreMap: "position", panMap: "position", panType: "ambi",
-          maxEvents: 550, maxPoly: 2, vizColor: "single",
-          fmAlgorithm: "stack", fmModIndexMap: "depth", fmCarrierMap: "bells",
+          axiom: "F-G-G",
+          rules: "F=F-G+F+G-F\nG=GG",
+          iterations: 5,
+          angle: 120,
+          soundPreset: "complexfm",
+          keySelect: "F",
+          scaleSelect: "lydian",
+          attack: 16,
+          release: 170,
+          masterVolume: 69,
+          roomSize: 60,
+          reverb: 48,
+          roomSizeMap: "angle",
+          reverbWetMap: "position",
+          baseFreq: 349,
+          tempo: 100,
+          pitchMap: "position",
+          durMap: "constant",
+          timbreMap: "position",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 550,
+          maxPoly: 2,
+          vizColor: "single",
+          fmAlgorithm: "stack",
+          fmModIndexMap: "depth",
+          fmCarrierMap: "bells",
         },
 
         // === NOISE & FILTERS INSTRUMENT PRESETS (3) ===
         "🌪️ Noise & Filters: Ambient Storm": {
-          axiom: "F", rules: "F=F[+F]F[-F]F", iterations: 4, angle: 25,
-          soundPreset: "noisefilter", keySelect: "C", scaleSelect: "minor",
-          attack: 35, release: 250, masterVolume: 75, roomSize: 75, reverb: 60,
-          roomSizeMap: "position", reverbWetMap: "position",
-          baseFreq: 165, tempo: 70, pitchMap: "position", durMap: "depth",
-          timbreMap: "none", panMap: "position", panType: "ambi",
-          maxEvents: 300, maxPoly: 1, vizColor: "rainbow",
-          noiseTypeMap: "white", filterTypeMap: "lowpass", filterFreqMap: "depth",
+          axiom: "F",
+          rules: "F=F[+F]F[-F]F",
+          iterations: 4,
+          angle: 25,
+          soundPreset: "noisefilter",
+          keySelect: "C",
+          scaleSelect: "minor",
+          attack: 35,
+          release: 250,
+          masterVolume: 75,
+          roomSize: 75,
+          reverb: 60,
+          roomSizeMap: "position",
+          reverbWetMap: "position",
+          baseFreq: 165,
+          tempo: 70,
+          pitchMap: "position",
+          durMap: "depth",
+          timbreMap: "none",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 300,
+          maxPoly: 1,
+          vizColor: "rainbow",
+          noiseTypeMap: "white",
+          filterTypeMap: "lowpass",
+          filterFreqMap: "depth",
         },
         "🌪️ Noise & Filters: Glitchy Rhythms": {
-          axiom: "F++F++F", rules: "F=F-F++F-F", iterations: 4, angle: 60,
-          soundPreset: "noisefilter", keySelect: "G", scaleSelect: "pentatonic-major",
-          attack: 10, release: 120, masterVolume: 80, roomSize: 45, reverb: 35,
-          roomSizeMap: "depth", reverbWetMap: "angle",
-          baseFreq: 330, tempo: 150, pitchMap: "angle", durMap: "constant",
-          timbreMap: "angle", panMap: "angle", panType: "stereo",
-          maxEvents: 700, maxPoly: 2, vizColor: "depth",
-          noiseTypeMap: "angle", filterTypeMap: "cycle", filterFreqMap: "angle",
+          axiom: "F++F++F",
+          rules: "F=F-F++F-F",
+          iterations: 4,
+          angle: 60,
+          soundPreset: "noisefilter",
+          keySelect: "G",
+          scaleSelect: "pentatonic-major",
+          attack: 10,
+          release: 120,
+          masterVolume: 80,
+          roomSize: 45,
+          reverb: 35,
+          roomSizeMap: "depth",
+          reverbWetMap: "angle",
+          baseFreq: 330,
+          tempo: 150,
+          pitchMap: "angle",
+          durMap: "constant",
+          timbreMap: "angle",
+          panMap: "angle",
+          panType: "stereo",
+          maxEvents: 700,
+          maxPoly: 2,
+          vizColor: "depth",
+          noiseTypeMap: "angle",
+          filterTypeMap: "cycle",
+          filterFreqMap: "angle",
         },
         "🌪️ Noise & Filters: Digital Meditation": {
-          axiom: "F", rules: "F=F+G\nG=F-G", iterations: 10, angle: 90,
-          soundPreset: "noisefilter", keySelect: "A", scaleSelect: "dorian",
-          attack: 28, release: 200, masterVolume: 75, roomSize: 65, reverb: 50,
-          roomSizeMap: "angle", reverbWetMap: "depth",
-          baseFreq: 220, tempo: 80, pitchMap: "position", durMap: "inverse",
-          timbreMap: "depth", panMap: "position", panType: "ambi",
-          maxEvents: 400, maxPoly: 1, vizColor: "single",
-          noiseTypeMap: "depth", filterTypeMap: "lowpass", filterFreqMap: "position",
+          axiom: "F",
+          rules: "F=F+G\nG=F-G",
+          iterations: 10,
+          angle: 90,
+          soundPreset: "noisefilter",
+          keySelect: "A",
+          scaleSelect: "dorian",
+          attack: 28,
+          release: 200,
+          masterVolume: 75,
+          roomSize: 65,
+          reverb: 50,
+          roomSizeMap: "angle",
+          reverbWetMap: "depth",
+          baseFreq: 220,
+          tempo: 80,
+          pitchMap: "position",
+          durMap: "inverse",
+          timbreMap: "depth",
+          panMap: "position",
+          panType: "ambi",
+          maxEvents: 400,
+          maxPoly: 1,
+          vizColor: "single",
+          noiseTypeMap: "depth",
+          filterTypeMap: "lowpass",
+          filterFreqMap: "position",
         },
       };
       // Load factory presets into localStorage (force=true to overwrite)
@@ -3582,8 +4209,6 @@
       // CSD EXPORT FUNCTIONALITY
       // ========================================
 
-
-
       // ========================================
       // UI CONTROL FUNCTIONS
       // ========================================
@@ -3602,41 +4227,6 @@
         }
       };
 
-      window.startCSDRecording = function () {
-        const btn = document.getElementById("recordCsdBtn");
-        const dlBtn = document.getElementById("downloadCsdBtn");
-
-        if (!isCSDRecording) {
-          // Start recording
-          csdEventLog = [];
-          isCSDRecording = true;
-          btn.textContent = "🟢 Stop Recording";
-          btn.style.background = "#27ae60";
-          dlBtn.disabled = true;
-          document.getElementById("status").textContent =
-            "🔴 Recording CSD events...";
-          debugLog("🔴 CSD Recording started");
-        } else {
-          // Stop recording
-          isCSDRecording = false;
-          btn.textContent = "🔴 Record CSD";
-          btn.style.background = "#e74c3c";
-          dlBtn.disabled = false;
-          document.getElementById("status").textContent =
-            `✓ Recording stopped (${csdEventLog.length} events)`;
-          debugLog(`✓ CSD Recording stopped (${csdEventLog.length} events)`);
-          window.exportCSD();
-        }
-      };
-
-      window.downloadCsd = function () {
-        if (csdEventLog.length === 0) {
-          alert("No events recorded. Generate and play a fractal first!");
-          return;
-        }
-        window.exportCSD();
-      };
-
       // ========================================
       // QUANTIZATION FUNCTIONS & SCALE LOGIC
       // ========================================
@@ -3645,29 +4235,32 @@
       let currentScale = "major";
       let currentTempo = 120;
 
-       // Scale degree intervals (semitones from root)
-       const scalePatterns = {
-         none: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
-         chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
-         major: [0, 2, 4, 5, 7, 9, 11], // Ionian
-         minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
-         dorian: [0, 2, 3, 5, 7, 9, 10], // Dorian mode
-         phrygian: [0, 1, 3, 5, 7, 8, 10], // Phrygian mode
-         lydian: [0, 2, 4, 6, 7, 9, 11], // Lydian mode
-         mixolydian: [0, 2, 4, 5, 7, 9, 10], // Mixolydian mode
-         locrian: [0, 1, 3, 5, 6, 8, 10], // Locrian mode
-         "harmonic-minor": [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
-         "melodic-minor": [0, 2, 3, 5, 7, 9, 11], // Melodic minor (ascending)
-         "pentatonic-major": [0, 2, 4, 7, 9], // Major pentatonic
-         "pentatonic-minor": [0, 3, 5, 7, 10], // Minor pentatonic
-         blues: [0, 3, 5, 6, 7, 10], // Blues scale
-         "whole-tone": [0, 2, 4, 6, 8, 10], // Whole tone scale
-         "bohlen-pierce": [0, 1, 3, 5, 6, 8, 10, 12], // Bohlen-Pierce (simplified to 12 steps)
-         "quarter-tone": [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5], // Quarter tones
-         "19tet": Array.from({length: 19}, (_, i) => (i * 12) / 19), // 19-TET
-         "31tet": Array.from({length: 31}, (_, i) => (i * 12) / 31), // 31-TET
-         "53tet": Array.from({length: 53}, (_, i) => (i * 12) / 53), // 53-TET
-       };
+      // Scale degree intervals (semitones from root)
+      const scalePatterns = {
+        none: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
+        chromatic: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // All chromatic notes
+        major: [0, 2, 4, 5, 7, 9, 11], // Ionian
+        minor: [0, 2, 3, 5, 7, 8, 10], // Aeolian (natural minor)
+        dorian: [0, 2, 3, 5, 7, 9, 10], // Dorian mode
+        phrygian: [0, 1, 3, 5, 7, 8, 10], // Phrygian mode
+        lydian: [0, 2, 4, 6, 7, 9, 11], // Lydian mode
+        mixolydian: [0, 2, 4, 5, 7, 9, 10], // Mixolydian mode
+        locrian: [0, 1, 3, 5, 6, 8, 10], // Locrian mode
+        "harmonic-minor": [0, 2, 3, 5, 7, 8, 11], // Harmonic minor
+        "melodic-minor": [0, 2, 3, 5, 7, 9, 11], // Melodic minor (ascending)
+        "pentatonic-major": [0, 2, 4, 7, 9], // Major pentatonic
+        "pentatonic-minor": [0, 3, 5, 7, 10], // Minor pentatonic
+        blues: [0, 3, 5, 6, 7, 10], // Blues scale
+        "whole-tone": [0, 2, 4, 6, 8, 10], // Whole tone scale
+        "bohlen-pierce": [0, 1, 3, 5, 6, 8, 10, 12], // Bohlen-Pierce (simplified to 12 steps)
+        "quarter-tone": [
+          0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8,
+          8.5, 9, 9.5, 10, 10.5, 11, 11.5,
+        ], // Quarter tones
+        "19tet": Array.from({ length: 19 }, (_, i) => (i * 12) / 19), // 19-TET
+        "31tet": Array.from({ length: 31 }, (_, i) => (i * 12) / 31), // 31-TET
+        "53tet": Array.from({ length: 53 }, (_, i) => (i * 12) / 53), // 53-TET
+      };
 
       // MIDI note to frequency mapping
       const noteNames = [
@@ -3724,12 +4317,12 @@
           }
         }
 
-         // Quantized MIDI note
-         const quantizedMidi = rootMidi + octaveOffset + closestDegree;
-         return midiToFrequency(quantizedMidi);
-       };
+        // Quantized MIDI note
+        const quantizedMidi = rootMidi + octaveOffset + closestDegree;
+        return midiToFrequency(quantizedMidi);
+      };
 
-       window.updateKey = function () {
+      window.updateKey = function () {
         const keySelect = document.getElementById("keySelect");
         currentKey = keySelect.value;
         debugLog(`🔑 Key changed to: ${currentKey}`);
@@ -3747,111 +4340,265 @@
         debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
       };
 
-        window.updateMasterVolume = function () {
-          const volumeSlider = document.getElementById("masterVolume");
-          const volumeValue = document.getElementById("volVal");
-          const volume = parseInt(volumeSlider.value);
-          if (volumeValue) {
-            volumeValue.textContent = volume + "%";
-          }
-          // Scale: 0-100 → 0.0-1.0
-          const normalizedVolume = volume / 100;
-          if (csound) {
-            csound.setControlChannel("masterVolume", normalizedVolume);
-          }
-          debugLog(`🔊 Master Volume: ${volume}%`);
-        };
+      window.updateMasterVolume = function () {
+        const volumeSlider = document.getElementById("masterVolume");
+        const volumeValue = document.getElementById("volVal");
+        const volume = parseInt(volumeSlider.value);
+        if (volumeValue) {
+          volumeValue.textContent = volume + "%";
+        }
+        // Scale: 0-100 → 0.0-1.0
+        const normalizedVolume = volume / 100;
+        if (csound) {
+          csound.setControlChannel("masterVolume", normalizedVolume);
+        }
+        debugLog(`🔊 Master Volume: ${volume}%`);
+      };
 
-       // Randomize all parameters
-       window.randomizeAllParameters = function () {
-         // Visual parameters (L-System)
-         const lSystemPresets = ['algae', 'tree', 'dragon', 'koch', 'sierpinski'];
-         const randomPreset = lSystemPresets[Math.floor(Math.random() * lSystemPresets.length)];
-         loadPreset(randomPreset);
+      // Randomize all parameters
+      window.randomizeAllParameters = function () {
+        // Visual parameters (L-System)
+        const lSystemPresets = [
+          "algae",
+          "tree",
+          "dragon",
+          "koch",
+          "sierpinski",
+        ];
+        const randomPreset =
+          lSystemPresets[Math.floor(Math.random() * lSystemPresets.length)];
+        loadPreset(randomPreset);
 
-         // Color visualization
-         const colors = ['depth', 'rainbow', 'single'];
-         document.getElementById("vizColor").value = colors[Math.floor(Math.random() * colors.length)];
-         updateDisplays();
+        // Color visualization
+        const colors = ["depth", "rainbow", "single"];
+        document.getElementById("vizColor").value =
+          colors[Math.floor(Math.random() * colors.length)];
+        updateDisplays();
 
-         // Sound synthesis
-         const instruments = ['pluck', 'fm', 'bell', 'clarinet', 'organ', 'granular', 'complexfm', 'noisefilter'];
-         document.getElementById("soundPreset").value = instruments[Math.floor(Math.random() * instruments.length)];
-         updateInstrumentControls();
+        // Sound synthesis
+        const instruments = [
+          "pluck",
+          "fm",
+          "bell",
+          "clarinet",
+          "organ",
+          "granular",
+          "complexfm",
+          "noisefilter",
+        ];
+        document.getElementById("soundPreset").value =
+          instruments[Math.floor(Math.random() * instruments.length)];
+        updateInstrumentControls();
 
-         // Key and Scale
-         const keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-         document.getElementById("keySelect").value = keys[Math.floor(Math.random() * keys.length)];
-         updateKey();
+        // Key and Scale
+        const keys = [
+          "C",
+          "C#",
+          "D",
+          "D#",
+          "E",
+          "F",
+          "F#",
+          "G",
+          "G#",
+          "A",
+          "A#",
+          "B",
+        ];
+        document.getElementById("keySelect").value =
+          keys[Math.floor(Math.random() * keys.length)];
+        updateKey();
 
-         const scales = ['chromatic', 'major', 'minor', 'dorian', 'phrygian', 'lydian', 'mixolydian', 'harmonic-minor', 'melodic-minor', 'pentatonic-major', 'pentatonic-minor', 'blues', 'whole-tone'];
-         document.getElementById("scaleSelect").value = scales[Math.floor(Math.random() * scales.length)];
-         updateScale();
+        const scales = [
+          "chromatic",
+          "major",
+          "minor",
+          "dorian",
+          "phrygian",
+          "lydian",
+          "mixolydian",
+          "harmonic-minor",
+          "melodic-minor",
+          "pentatonic-major",
+          "pentatonic-minor",
+          "blues",
+          "whole-tone",
+        ];
+        document.getElementById("scaleSelect").value =
+          scales[Math.floor(Math.random() * scales.length)];
+        updateScale();
 
-         // Mappings
-         const mapOptions = ['angle', 'position', 'depth', 'random'];
-         document.getElementById("pitchMap").value = mapOptions.slice(0, 3)[Math.floor(Math.random() * 3)]; // angle, position, depth only
-         document.getElementById("durMap").value = ['constant', 'depth', 'inverse'][Math.floor(Math.random() * 3)];
-         document.getElementById("timbreMap").value = ['none', 'depth', 'angle'][Math.floor(Math.random() * 3)];
-         document.getElementById("panMap").value = ['none', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
+        // Mappings
+        const mapOptions = ["angle", "position", "depth", "random"];
+        document.getElementById("pitchMap").value = mapOptions.slice(0, 3)[
+          Math.floor(Math.random() * 3)
+        ]; // angle, position, depth only
+        document.getElementById("durMap").value = [
+          "constant",
+          "depth",
+          "inverse",
+        ][Math.floor(Math.random() * 3)];
+        document.getElementById("timbreMap").value = ["none", "depth", "angle"][
+          Math.floor(Math.random() * 3)
+        ];
+        document.getElementById("panMap").value = [
+          "none",
+          "depth",
+          "angle",
+          "position",
+        ][Math.floor(Math.random() * 4)];
 
-         // Pan type
-         document.getElementById("panType").value = Math.random() > 0.5 ? 'stereo' : 'ambi';
+        // Pan type
+        document.getElementById("panType").value =
+          Math.random() > 0.5 ? "stereo" : "ambi";
 
-         // Envelope
-         document.getElementById("attack").value = Math.floor(Math.random() * 100) + 1;
-         document.getElementById("release").value = Math.floor(Math.random() * 1500) + 50;
-         document.getElementById("attackMapEnv").value = ['manual', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
-         document.getElementById("releaseMapEnv").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
-         updateDisplays();
+        // Envelope
+        document.getElementById("attack").value =
+          Math.floor(Math.random() * 100) + 1;
+        document.getElementById("release").value =
+          Math.floor(Math.random() * 1500) + 50;
+        document.getElementById("attackMapEnv").value = [
+          "manual",
+          "depth",
+          "angle",
+          "position",
+        ][Math.floor(Math.random() * 4)];
+        document.getElementById("releaseMapEnv").value = [
+          "manual",
+          "depth",
+          "angle",
+          "position",
+          "inverse",
+        ][Math.floor(Math.random() * 5)];
+        updateDisplays();
 
-         // Reverb
-         document.getElementById("roomSize").value = Math.floor(Math.random() * 100);
-         document.getElementById("reverb").value = Math.floor(Math.random() * 100);
-         document.getElementById("roomSizeMap").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
-         document.getElementById("reverbWetMap").value = ['manual', 'depth', 'angle', 'position', 'inverse'][Math.floor(Math.random() * 5)];
-         updateDisplays();
+        // Reverb
+        document.getElementById("roomSize").value = Math.floor(
+          Math.random() * 100,
+        );
+        document.getElementById("reverb").value = Math.floor(
+          Math.random() * 100,
+        );
+        document.getElementById("roomSizeMap").value = [
+          "manual",
+          "depth",
+          "angle",
+          "position",
+          "inverse",
+        ][Math.floor(Math.random() * 5)];
+        document.getElementById("reverbWetMap").value = [
+          "manual",
+          "depth",
+          "angle",
+          "position",
+          "inverse",
+        ][Math.floor(Math.random() * 5)];
+        updateDisplays();
 
-         // Music settings
-         document.getElementById("baseFreq").value = Math.floor(Math.random() * 500) + 50;
-         document.getElementById("tempo").value = Math.floor(Math.random() * 180) + 40;
+        // Music settings
+        document.getElementById("baseFreq").value =
+          Math.floor(Math.random() * 500) + 50;
+        document.getElementById("tempo").value =
+          Math.floor(Math.random() * 180) + 40;
 
-         // Granular parameters (if present)
-         if (document.getElementById("grainDensityMap")) {
-           document.getElementById("grainDensityMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
-           document.getElementById("grainSizeMap").value = ['constant', 'depth', 'angle', 'inverse'][Math.floor(Math.random() * 4)];
-           document.getElementById("grainPitchVarMap").value = ['none', 'depth', 'angle', 'random'][Math.floor(Math.random() * 4)];
-           document.getElementById("grainTextureMap").value = ['constant', 'depth', 'angle'][Math.floor(Math.random() * 3)];
-         }
+        // Granular parameters (if present)
+        if (document.getElementById("grainDensityMap")) {
+          document.getElementById("grainDensityMap").value = [
+            "constant",
+            "depth",
+            "angle",
+            "position",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("grainSizeMap").value = [
+            "constant",
+            "depth",
+            "angle",
+            "inverse",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("grainPitchVarMap").value = [
+            "none",
+            "depth",
+            "angle",
+            "random",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("grainTextureMap").value = [
+            "constant",
+            "depth",
+            "angle",
+          ][Math.floor(Math.random() * 3)];
+        }
 
-         // FM parameters (if present)
-         if (document.getElementById("fmAlgorithm")) {
-           document.getElementById("fmAlgorithm").value = ['parallel', 'cascade', 'stack', 'complex'][Math.floor(Math.random() * 4)];
-           document.getElementById("fmModIndexMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
-           document.getElementById("fmCarrierMap").value = ['harmonic', 'depth', 'angle', 'bells'][Math.floor(Math.random() * 4)];
-           document.getElementById("fmMixMap").value = ['equal', 'depth', 'angle'][Math.floor(Math.random() * 3)];
-         }
+        // FM parameters (if present)
+        if (document.getElementById("fmAlgorithm")) {
+          document.getElementById("fmAlgorithm").value = [
+            "parallel",
+            "cascade",
+            "stack",
+            "complex",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("fmModIndexMap").value = [
+            "constant",
+            "depth",
+            "angle",
+            "position",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("fmCarrierMap").value = [
+            "harmonic",
+            "depth",
+            "angle",
+            "bells",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("fmMixMap").value = [
+            "equal",
+            "depth",
+            "angle",
+          ][Math.floor(Math.random() * 3)];
+        }
 
-         // Noise & Filter parameters (if present)
-         if (document.getElementById("noiseTypeMap")) {
-           document.getElementById("noiseTypeMap").value = ['white', 'depth', 'angle'][Math.floor(Math.random() * 3)];
-           document.getElementById("filterTypeMap").value = ['lowpass', 'depth', 'angle', 'cycle'][Math.floor(Math.random() * 4)];
-           document.getElementById("filterFreqMap").value = ['constant', 'depth', 'angle', 'position'][Math.floor(Math.random() * 4)];
-           document.getElementById("filterResMap").value = ['low', 'depth', 'angle', 'high'][Math.floor(Math.random() * 4)];
-           document.getElementById("filterModMap").value = ['none', 'depth', 'angle', 'fast'][Math.floor(Math.random() * 4)];
-         }
+        // Noise & Filter parameters (if present)
+        if (document.getElementById("noiseTypeMap")) {
+          document.getElementById("noiseTypeMap").value = [
+            "white",
+            "depth",
+            "angle",
+          ][Math.floor(Math.random() * 3)];
+          document.getElementById("filterTypeMap").value = [
+            "lowpass",
+            "depth",
+            "angle",
+            "cycle",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("filterFreqMap").value = [
+            "constant",
+            "depth",
+            "angle",
+            "position",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("filterResMap").value = [
+            "low",
+            "depth",
+            "angle",
+            "high",
+          ][Math.floor(Math.random() * 4)];
+          document.getElementById("filterModMap").value = [
+            "none",
+            "depth",
+            "angle",
+            "fast",
+          ][Math.floor(Math.random() * 4)];
+        }
 
-         debugLog(`🎲 All parameters randomized!`);
-         
-         // Auto-restart if playing
-         if (isPlaying) {
-           autoRestart();
-         }
-       };
+        debugLog(`🎲 All parameters randomized!`);
 
-       // ========================================
-       // SPACE BAR CONTROL
-       // ========================================
+        // Auto-restart if playing
+        if (isPlaying) {
+          autoRestart();
+        }
+      };
+
+      // ========================================
+      // SPACE BAR CONTROL
+      // ========================================
 
       document.addEventListener("keydown", function (event) {
         if (event.code === "Space") {
@@ -3863,25 +4610,11 @@
         }
       });
 
-        // Store current CSD content and state
-        let currentCsdContent = "";
-        let csdGenerating = false;
-
-        // Toggle CSD generation - generates on first click, saves on second click
-        // Toggle button now just calls the proper exportCSD function
-        window.toggleCsdGeneration = function () {
-          if (csdEventLog.length === 0) {
-            alert("No events recorded. Generate and play a fractal first!");
-            return;
-          }
-          window.exportCSD();
-        };
-
-       // Make functions global
-       window.savePreset = savePreset;
-       window.loadSavedPreset = loadSavedPreset;
-       window.deletePreset = deletePreset;
-       window.loadFactoryPresets = loadFactoryPresets;
+      // Make functions global
+      window.savePreset = savePreset;
+      window.loadSavedPreset = loadSavedPreset;
+      window.deletePreset = deletePreset;
+      window.loadFactoryPresets = loadFactoryPresets;
 
       // Initialize
       window.addEventListener("DOMContentLoaded", async () => {
