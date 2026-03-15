@@ -1400,15 +1400,18 @@
        nchnls = 2
        0dbfs = 1
 
-       ; Global reverb sends
-      gaRvbL init 0
-      gaRvbR init 0
+        ; Global reverb sends
+       gaRvbL init 0
+       gaRvbR init 0
 
-      ; Global ambisonic buses (B-format: W, X, Y, Z)
-      gaAmbiW init 0
-      gaAmbiX init 0
-      gaAmbiY init 0
-      gaAmbiZ init 0
+       ; Global ambisonic buses (B-format: W, X, Y, Z)
+       gaAmbiW init 0
+       gaAmbiX init 0
+       gaAmbiY init 0
+       gaAmbiZ init 0
+       
+       ; Master volume control (0-1, default 0.7)
+       chnset 0.7, "masterVolume"
 
       ; Panic button - set global stop flag
       instr 997
@@ -1432,10 +1435,10 @@
 
       ; Freeverb stereo reverb (master output)
       instr 999
-        ; Fixed reverb parameters (no control channels)
-        kRoomSize = 0.75
-        kWet = 0.45
-        kMasterVol = 1.0
+         ; Fixed reverb parameters (no control channels)
+         kRoomSize = 0.75
+         kWet = 0.45
+         kMasterVol chnget "masterVolume"
 
         ; Apply freeverb to accumulated signals
         aRvbL, aRvbR freeverb gaRvbL, gaRvbR, kRoomSize, 0.5
@@ -3920,18 +3923,20 @@ f1 0 16384 10 1
         debugLog(`⏱️ Tempo changed to: ${currentTempo} BPM`);
       };
 
-       window.updateMasterVolume = function () {
-         const volumeSlider = document.getElementById("masterVolume");
-         const volumeValue = document.getElementById("volumeValue");
-         const volume = parseInt(volumeSlider.value);
-         volumeValue.textContent = volume + "%";
-         // Scale: 0-100 → 0.0-1.0
-         const normalizedVolume = volume / 100;
-         if (csound) {
-           csound.setControlChannel("masterVolume", normalizedVolume);
-         }
-         debugLog(`🔊 Master Volume: ${volume}%`);
-       };
+        window.updateMasterVolume = function () {
+          const volumeSlider = document.getElementById("masterVolume");
+          const volumeValue = document.getElementById("volVal");
+          const volume = parseInt(volumeSlider.value);
+          if (volumeValue) {
+            volumeValue.textContent = volume + "%";
+          }
+          // Scale: 0-100 → 0.0-1.0
+          const normalizedVolume = volume / 100;
+          if (csound) {
+            csound.setControlChannel("masterVolume", normalizedVolume);
+          }
+          debugLog(`🔊 Master Volume: ${volume}%`);
+        };
 
        // Randomize all parameters
        window.randomizeAllParameters = function () {
