@@ -1452,13 +1452,15 @@
         clear gaRvbL, gaRvbR
       endin
 
-      ; Global control channels for real-time parameter control
-      chnset 0.01, "globalAttack"
-      chnset 0.1, "globalRelease"
-      chnset 0.75, "roomSize"
-      chnset 0.45, "reverbWet"
-      chnset 0.7, "masterVolume"
-      chnset 0, "stopAll"
+      ; Init instrument - set global control channel defaults
+      instr 0
+        chnset 0.01, "globalAttack"
+        chnset 0.1, "globalRelease"
+        chnset 0.75, "roomSize"
+        chnset 0.45, "reverbWet"
+        chnset 0.7, "masterVolume"
+        chnset 0, "stopAll"
+      endin
 
       ; Universal note instrument
       instr 1
