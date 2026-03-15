@@ -2566,6 +2566,13 @@
           }
         }
 
+        // Auto-enable CSD recording when generating notes
+        if (!isCSDRecording) {
+          csdEventLog = [];
+          isCSDRecording = true;
+          debugLog("🔴 CSD Recording auto-started");
+        }
+
         let randomPitch = 0;
 
         for (let i = 0; i < selectedPaths.length; i++) {
