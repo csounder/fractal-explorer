@@ -8,7 +8,7 @@
 
 Transform fractal geometry into music in your browser. No installation, no server, just pure algorithmic beauty.
 
-🎵 **[Launch Application](https://your-netlify-url.netlify.app/app.html)** | 📖 **[Quick Start Guide](QUICKSTART.md)** | ⚙️ **[Technical Docs](TECHNICAL.md)**
+🎵 **[Launch Application](https://csounder.github.io/fractal-explorer/app.html)** | 📖 **[Quick Start Guide](QUICKSTART.md)** | ⚙️ **[Technical Docs](TECHNICAL.md)**
 
 ---
 
@@ -22,9 +22,9 @@ Transform fractal geometry into music in your browser. No installation, no serve
 - **Koch Snowflake** - Crystalline symmetry
 - **Sierpinski Triangle** - Recursive triangles
 
-### 🎹 8 Synthesis Engines
+### 🎹 9 Synthesis Engines
 
-- **Melodic (5):** Karplus-Strong Pluck, FM Bell, Additive Bell, Clarinet, Organ
+- **Melodic (6):** Sine, Karplus-Strong Pluck, FM Bell, Additive Bell, Clarinet, Organ
 - **Textural (3):** Granular Synthesis, Complex FM (4-operator), Noise & Filters
 
 ### 🎛️ Comprehensive Parameter Mapping
@@ -364,27 +364,3 @@ If you find this project useful, please consider giving it a star on GitHub. It 
 ---
 
 **Happy Fractal Music Making! 🎵🌿**
-
-## 💾 NEW: Csound CSD Export
-
-**Export your fractal compositions as standalone `.csd` files!**
-
-Generate fractal L-System patterns, turn them into music, and download complete Csound files that:
-
-- ✅ Play in CsoundQt, Cabbage, or Csound command line
-- ✅ Include full orchestration with reverb and effects
-- ✅ Preserve all L-System parameters in comments
-- ✅ Support every synthesis preset and parameter
-- ✅ Timestamp-named files for easy organization
-- ✅ Portable - share with other Csound users
-
-**See [CSD_EXPORT_GUIDE.md](CSD_EXPORT_GUIDE.md) for full documentation.**
-
-### Quick Export Workflow:
-1. Generate a fractal (Algae, Tree, Dragon, etc.)
-2. Configure musical parameters
-3. Click **Play** to hear it
-4. Click **💾 Export CSD** 
-5. Download opens automatically
-6. Open in CsoundQt or command line: `csound yourfile.csd`
-
