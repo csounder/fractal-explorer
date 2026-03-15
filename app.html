@@ -832,51 +832,7 @@
            ></div>
          </div>
 
-         <!-- EXPORT SECTION AT BOTTOM OF LEFT COLUMN -->
-         <div class="control-section">
-           <h3>EXPORT</h3>
-           <div class="control-group">
-             <button
-               id="csdToggleBtn"
-               onclick="toggleCsdGeneration()"
-               style="
-                 width: 100%;
-                 padding: 10px;
-                 background: #27ae60;
-                 color: white;
-                 border: 2px solid #229954;
-                 border-radius: 6px;
-                 cursor: pointer;
-                 font-weight: 700;
-                 font-size: 13px;
-                 text-align: center;
-                 transition: all 0.2s;
-                 white-space: nowrap;
-               "
-               onmouseover="this.style.backgroundColor='#229954'"
-               onmouseout="this.style.backgroundColor=this.dataset.bgColor || '#27ae60'"
-             >
-               💾 GEN CSD
-             </button>
-           </div>
-           <textarea
-             id="csoundOutput"
-             placeholder="Generated Csound .csd file will appear here..."
-             style="
-               width: 100%;
-               height: 120px;
-               background: #000;
-               color: #0f0;
-               border: 1px solid #333;
-               border-radius: 4px;
-               padding: 6px;
-               font-family: monospace;
-               font-size: 9px;
-               margin-top: 8px;
-               resize: vertical;
-             "
-           ></textarea>
-         </div>
+
        </div>
 
        <div id="visualization"><canvas id="canvas"></canvas></div>
@@ -1433,28 +1389,31 @@
         clear gaAmbiW, gaAmbiX, gaAmbiY, gaAmbiZ
       endin
 
-      ; Freeverb stereo reverb (master output)
-      instr 999
-         ; Fixed reverb parameters (no control channels)
-         kRoomSize = 0.75
-         kWet = 0.45
-         kMasterVol = 0.7  ; Fixed master volume (0.7 = 70%)
+       ; Freeverb stereo reverb (master output)
+       instr 999
+          ; Fixed reverb parameters (no control channels)
+          kRoomSize = 0.75
+          kWet = 0.45
+          kMasterVol = 0.7  ; Fixed master volume (0.7 = 70%)
 
-        ; Apply freeverb to accumulated signals
-        aRvbL, aRvbR freeverb gaRvbL, gaRvbR, kRoomSize, 0.5
+         ; Apply freeverb to accumulated signals
+         aRvbL, aRvbR freeverb gaRvbL, gaRvbR, kRoomSize, 0.5
 
-        ; Mix dry/wet
-        aOutL = gaRvbL*(1-kWet) + aRvbL*kWet
-        aOutR = gaRvbR*(1-kWet) + aRvbR*kWet
+         ; Mix dry/wet
+         aOutL = gaRvbL*(1-kWet) + aRvbL*kWet
+         aOutR = gaRvbR*(1-kWet) + aRvbR*kWet
 
-        ; Apply master volume
-        aOutL = aOutL * kMasterVol
-        aOutR = aOutR * kMasterVol
+         ; Apply master volume
+         aOutL = aOutL * kMasterVol
+         aOutR = aOutR * kMasterVol
 
-        out aOutL, aOutR
+         out aOutL, aOutR
+       endin
 
-        clear gaRvbL, gaRvbR
-      endin
+       ; Clear audio buses at end of each k-cycle (CRITICAL for preventing feedback)
+       instr 1000
+         clear gaRvbL, gaRvbR
+       endin
 
       ; Universal note instrument
       instr 1
@@ -1864,6 +1823,10 @@
             debugLog("Starting instrument 999 (freeverb global reverb)...");
             await csound.inputMessage("i 999 0 -1");
             debugLog("✓ Instrument 999 started");
+
+            debugLog("Starting instrument 1000 (bus clearer)...");
+            await csound.inputMessage("i 1000 0 -1");
+            debugLog("✓ Instrument 1000 started");
           } catch (instrErr) {
             debugLog(`✗ Instrument start error: ${instrErr.message}`);
             throw instrErr;
@@ -2369,8 +2332,6 @@
         }
 
         isPlaying = true;
-        initializeCSDRecording(); // Start recording events for CSD export
-        enableCSDExport(); // Enable export button
         document.getElementById("playBtn").textContent = "⏹ Stop Audio";
         document.getElementById("playBtn").style.background = "var(--accent-dim)";
         document.getElementById("status").textContent = "Playing...";
@@ -2516,18 +2477,11 @@
           }
         }
 
-        // Auto-enable CSD recording when generating notes
-        if (!isCSDRecording) {
-          csdEventLog = [];
-          isCSDRecording = true;
-          debugLog("🔴 CSD Recording auto-started");
-          
-          // Auto-show console when recording starts
-          const output = document.getElementById("csdOutput");
-          if (output) {
-            output.style.display = "block";
-          }
-        }
+         // Only record if user clicked the Record button
+         // (removed auto-recording - users must manually click 🔴 Record)
+         if (isCSDRecording) {
+           debugLog(`Event logged (${csdEventLog.length} total)`);
+         }
 
         let randomPitch = 0;
 
@@ -2591,38 +2545,39 @@
           }
 
           // Attack/Release mapping
-          let noteAttack = -1; // -1 means use global (from slider)
-          let noteRelease = -1; // -1 means use global (from slider)
+           // Always capture slider values as defaults
+           let noteAttack = attack; // Default to slider value (in seconds)
+           let noteRelease = release; // Default to slider value (in seconds)
 
-          if (attackMap !== "manual") {
-            // Map to range 0.001s - 1.0s based on fractal parameters
-            let atkNorm = 0.5; // default middle
-            if (attackMap === "depth") {
-              atkNorm = path.depth / maxDepth;
-            } else if (attackMap === "angle") {
-              atkNorm = ((path.angle + 180) % 360) / 360;
-            } else if (attackMap === "position") {
-              atkNorm = i / Math.max(selectedPaths.length - 1, 1);
-            } else if (attackMap === "inverse") {
-              atkNorm = 1 - path.depth / maxDepth;
-            }
-            noteAttack = 0.001 + atkNorm * 0.999; // 1ms to 1000ms
-          }
+           if (attackMap !== "manual") {
+             // Map to range 0.001s - 1.0s based on fractal parameters
+             let atkNorm = 0.5; // default middle
+             if (attackMap === "depth") {
+               atkNorm = path.depth / maxDepth;
+             } else if (attackMap === "angle") {
+               atkNorm = ((path.angle + 180) % 360) / 360;
+             } else if (attackMap === "position") {
+               atkNorm = i / Math.max(selectedPaths.length - 1, 1);
+             } else if (attackMap === "inverse") {
+               atkNorm = 1 - path.depth / maxDepth;
+             }
+             noteAttack = 0.001 + atkNorm * 0.999; // 1ms to 1000ms
+           }
 
-          if (releaseMap !== "manual") {
-            // Map to range 0.01s - 2.0s based on fractal parameters
-            let relNorm = 0.5; // default middle
-            if (releaseMap === "depth") {
-              relNorm = path.depth / maxDepth;
-            } else if (releaseMap === "angle") {
-              relNorm = ((path.angle + 180) % 360) / 360;
-            } else if (releaseMap === "position") {
-              relNorm = i / Math.max(selectedPaths.length - 1, 1);
-            } else if (releaseMap === "inverse") {
-              relNorm = 1 - path.depth / maxDepth;
-            }
-            noteRelease = 0.01 + relNorm * 1.99; // 10ms to 2000ms
-          }
+           if (releaseMap !== "manual") {
+             // Map to range 0.01s - 2.0s based on fractal parameters
+             let relNorm = 0.5; // default middle
+             if (releaseMap === "depth") {
+               relNorm = path.depth / maxDepth;
+             } else if (releaseMap === "angle") {
+               relNorm = ((path.angle + 180) % 360) / 360;
+             } else if (releaseMap === "position") {
+               relNorm = i / Math.max(selectedPaths.length - 1, 1);
+             } else if (releaseMap === "inverse") {
+               relNorm = 1 - path.depth / maxDepth;
+             }
+             noteRelease = 0.01 + relNorm * 1.99; // 10ms to 2000ms
+           }
 
           // Calculate instrument-specific parameters
           let scoreEvent = "";
@@ -2797,7 +2752,6 @@
             if (isPlaying && csound && csoundReady) {
               csound.inputMessage(scoreEvent);
 
-              logEventToCSD(scoreEvent, time); // Log for CSD export
               // Update reverb parameters (ALWAYS set channels, even in manual mode)
               let roomNorm = roomSize; // Start with slider value
               if (roomSizeMap === "depth") {
@@ -2872,6 +2826,21 @@
         // Set isPlaying to false FIRST so scheduled timeouts know not to play
         isPlaying = false;
 
+        // CRITICAL: Send Csound command to turnoff all instruments immediately
+        if (csound && csoundReady) {
+          try {
+            // Send turnoff commands to all note-generating instruments (1, 2, 3, 4)
+            // This stops all notes with immediate effect
+            await csound.inputMessage("turnoff2 1, 0, 0");  // Stop instr 1 (melodic)
+            await csound.inputMessage("turnoff2 2, 0, 0");  // Stop instr 2 (granular)
+            await csound.inputMessage("turnoff2 3, 0, 0");  // Stop instr 3 (FM)
+            await csound.inputMessage("turnoff2 4, 0, 0");  // Stop instr 4 (noise)
+            debugLog("✓ Sent turnoff to all note instruments");
+          } catch (err) {
+            debugLog(`⚠ Csound stop signal error: ${err.message}`);
+          }
+        }
+
         // Clear playback end timeout
         if (playbackTimeoutId) {
           clearTimeout(playbackTimeoutId);
@@ -2897,10 +2866,18 @@
 
       // Toggle Play/Stop with single button (like Mandelbrot Explorer)
       window.togglePlayStop = async function () {
-        if (isPlaying) {
-          await stop();
-        } else {
-          await play();
+        console.log("🎛️ togglePlayStop called, isPlaying =", isPlaying);
+        try {
+          if (isPlaying) {
+            console.log("🛑 Calling stop()");
+            await stop();
+          } else {
+            console.log("▶️ Calling play()");
+            await play();
+          }
+        } catch (err) {
+          console.error("❌ togglePlayStop error:", err);
+          alert("Playback error: " + err.message);
         }
       };
 
@@ -3605,170 +3582,7 @@
       // CSD EXPORT FUNCTIONALITY
       // ========================================
 
-      let csdEventLog = [];
-      let isCSDRecording = false;
 
-      window.initializeCSDRecording = function () {
-        csdEventLog = [];
-        isCSDRecording = true;
-      };
-
-       window.logEventToCSD = function (scoreEvent, time) {
-         if (isCSDRecording) {
-           csdEventLog.push({ statement: scoreEvent, timestamp: time });
-           // Display in bottom-left textarea (csoundOutput)
-           const output = document.getElementById("csoundOutput");
-           if (output) {
-             output.value += scoreEvent + "\n";
-             output.scrollTop = output.scrollHeight; // Auto-scroll to bottom
-           }
-         }
-       };
-
-      window.enableCSDExport = function () {
-        const btn = document.getElementById("exportCsdBtn");
-        if (btn) btn.disabled = false;
-      };
-
-      window.exportCSD = async function () {
-        console.log("exportCSD called");
-
-        if (csdEventLog.length === 0) {
-          alert("No events recorded. Generate and play a fractal first!");
-          return;
-        }
-
-        try {
-          const lsystemParams = {
-            axiom: document.getElementById("axiom")?.value || "?",
-            rules: document.getElementById("rules")?.value || "?",
-            iterations:
-              parseFloat(document.getElementById("iterations")?.value) || 0,
-            angle: parseFloat(document.getElementById("angle")?.value) || 0,
-            baseFreq:
-              parseFloat(document.getElementById("basefreq")?.value) || 220,
-            tempo: parseFloat(document.getElementById("tempo")?.value) || 120,
-            pitchMap: document.getElementById("pitchmap")?.value || "depth",
-            durMap: document.getElementById("durmap")?.value || "constant",
-            presetMode:
-              document.getElementById("presetmode")?.value || "warm_pad",
-          };
-
-          const timestamp = new Date().toISOString();
-          const orchCode =
-            typeof orchestraCode !== "undefined"
-              ? orchestraCode
-              : getDefaultOrchestra();
-
-          const csdHeader = `<CsoundSynthesizer>
-<CsOptions>
--odac -d -m0
-</CsOptions>
-<CsInstruments>
-${orchCode}
-</CsInstruments>
-<CsScore>
-; ============================================================
-; FRACTAL EXPLORER - L-SYSTEM GENERATED COMPOSITION
-; ============================================================
-; Generated: ${timestamp}
-;
-; L-System Configuration:
-;   Axiom: ${lsystemParams.axiom}
-;   Rules: ${lsystemParams.rules.replace(/\n/g, " | ")}
-;   Iterations: ${lsystemParams.iterations}
-;   Angle: ${lsystemParams.angle}°
-;
-; Musical Parameters:
-;   Base Frequency: ${lsystemParams.baseFreq} Hz
-;   Tempo: ${lsystemParams.tempo} BPM
-;   Pitch Mapping: ${lsystemParams.pitchMap}
-;   Duration Mapping: ${lsystemParams.durMap}
-;   Synthesis Preset: ${lsystemParams.presetMode}
-;
-; Score Statistics:
-;   Total Events: ${csdEventLog.length}
-;   Duration: ${(csdEventLog[csdEventLog.length - 1]?.timestamp || 0).toFixed(3)}s
-; ============================================================
-
-f1 0 16384 10 1
-
-`;
-
-           let scoreStatements = "";
-           csdEventLog.forEach((event) => {
-             scoreStatements += event.statement + "\n";
-           });
-
-           // Calculate total duration and add reverb processor
-           const maxTime = csdEventLog.length > 0 
-             ? Math.max(...csdEventLog.map(e => {
-                 const match = e.statement.match(/i \d+ ([\d.]+) ([\d.]+)/);
-                 if (match) return parseFloat(match[1]) + parseFloat(match[2]);
-                 return 0;
-               }))
-             : 10;
-           
-           const reverbLine = `i 999 0 ${(maxTime + 5).toFixed(3)}\n`;
-           const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
-           const fullCSD = csdHeader + reverbLine + scoreStatements + csdFooter;
-
-          // Display in textarea (create if needed)
-          let output = document.getElementById("csdOutput");
-          if (!output) {
-            console.warn("Creating textarea element...");
-            output = document.createElement("textarea");
-            output.id = "csdOutput";
-            output.readOnly = true;
-            output.style.cssText =
-              'position: fixed; bottom: 20px; right: 20px; width: 600px; height: 450px; background: rgba(10, 10, 30, 0.95); color: #00ff88; border: 2px solid #00ff88; border-radius: 8px; padding: 15px; font-family: "Monaco", monospace; font-size: 11px; resize: both; overflow: auto; z-index: 1000; box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);';
-            document.body.appendChild(output);
-          }
-
-          output.value = fullCSD;
-          output.style.display = "block";
-
-          console.log("✓ CSD content displayed in console");
-          console.log(`✓ Generated ${csdEventLog.length} events`);
-
-          downloadCSDFile(fullCSD);
-        } catch (error) {
-          console.error("Export error:", error);
-          alert("Error exporting CSD: " + error.message);
-        }
-      };
-
-      function downloadCSDFile(content) {
-        try {
-          const timestamp = new Date()
-            .toISOString()
-            .replace(/:/g, "-")
-            .split(".")[0];
-          const filename = `fractal-explorer_${timestamp}.csd`;
-
-          const blob = new Blob([content], {
-            type: "text/plain;charset=utf-8",
-          });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = filename;
-
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-
-          setTimeout(() => URL.revokeObjectURL(url), 100);
-
-          document.getElementById("status").textContent =
-            `✓ Exported: ${filename}`;
-          debugLog(`✓ Downloaded: ${filename}`);
-          console.log(`✓ File downloaded: ${filename}`);
-        } catch (error) {
-          console.error("Download error:", error);
-          alert("Error downloading file: " + error.message);
-        }
-      }
 
       // ========================================
       // UI CONTROL FUNCTIONS
