@@ -3700,8 +3700,18 @@ f1 0 16384 10 1
              scoreStatements += event.statement + "\n";
            });
 
-          const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
-          const fullCSD = csdHeader + scoreStatements + csdFooter;
+           // Calculate total duration and add reverb processor
+           const maxTime = csdEventLog.length > 0 
+             ? Math.max(...csdEventLog.map(e => {
+                 const match = e.statement.match(/i \d+ ([\d.]+) ([\d.]+)/);
+                 if (match) return parseFloat(match[1]) + parseFloat(match[2]);
+                 return 0;
+               }))
+             : 10;
+           
+           const reverbLine = `i 999 0 ${(maxTime + 5).toFixed(3)}\n`;
+           const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
+           const fullCSD = csdHeader + reverbLine + scoreStatements + csdFooter;
 
           // Display in textarea (create if needed)
           let output = document.getElementById("csdOutput");
