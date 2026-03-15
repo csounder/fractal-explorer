@@ -1438,7 +1438,7 @@
          ; Fixed reverb parameters (no control channels)
          kRoomSize = 0.75
          kWet = 0.45
-         kMasterVol chnget "masterVolume"
+         kMasterVol = 0.7  ; Fixed master volume (0.7 = 70%)
 
         ; Apply freeverb to accumulated signals
         aRvbL, aRvbR freeverb gaRvbL, gaRvbR, kRoomSize, 0.5
