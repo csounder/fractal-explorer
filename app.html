@@ -278,23 +278,7 @@
       #footer {
         display: none;
       }
-      #footer-old {
-        grid-column: 1 / -1;
-        background: linear-gradient(
-          135deg,
-          var(--bg-tertiary) 0%,
-          var(--bg-secondary) 100%
-        );
-        padding: 20px 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 3px solid var(--accent);
-        box-shadow:
-          var(--shadow-heavy),
-          inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        position: relative;
-      }
+
       #footer::before {
         content: "";
         position: absolute;
@@ -553,14 +537,6 @@
       #status.active {
         color: var(--accent);
         text-shadow: var(--glow-accent);
-      }
-
-      /* Hide old fixed positioning elements */
-      .quantization-fixed {
-        display: none !important;
-      }
-      #csdOutput {
-        display: none !important;
       }
 
       /* Right panel sections */
@@ -1214,7 +1190,6 @@
       let scheduledTimeouts = []; // Track all scheduled note timeouts
       let currentNoteIndex = -1; // Current playing note index
       let selectedPathsGlobal = []; // Selected paths for playback visualization
-      let visualizationInterval = null; // Canvas update interval
 
       const presets = {
         algae: { axiom: "F", rules: "F=F[+F]F[-F]F", angle: 25, iterations: 4 },
