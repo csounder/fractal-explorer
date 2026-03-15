@@ -2651,7 +2651,7 @@
 
           if (instrNum === 1) {
             // Melodic instrument (original behavior)
-            scoreEvent = `i 1 0 ${dur} ${freq} 0.3 ${presetNum} ${brightness} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
+            scoreEvent = `i 1 ${time.toFixed(3)} ${dur} ${freq} 0.3 ${presetNum} ${brightness} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
           } else if (instrNum === 2) {
             // GRANULAR SYNTHESIS
             // p6=density, p7=grainSize, p8=pitchVar, p9=texture, p10=pan, p11=panType
@@ -2694,7 +2694,7 @@
               texture = (((path.angle + 180) % 360) / 360) * 0.7;
             }
 
-            scoreEvent = `i 2 0 ${dur} ${freq} 0.3 ${density.toFixed(1)} ${grainSize.toFixed(4)} ${pitchVar.toFixed(3)} ${texture.toFixed(3)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
+            scoreEvent = `i 2 ${time.toFixed(3)} ${dur} ${freq} 0.3 ${density.toFixed(1)} ${grainSize.toFixed(4)} ${pitchVar.toFixed(3)} ${texture.toFixed(3)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
           } else if (instrNum === 3) {
             // COMPLEX FM
             // p6=modIndex, p7=algorithm, p8=carrierRatio, p9=opMix, p10=pan, p11=panType
@@ -2734,7 +2734,7 @@
             } else if (fmMixMap === "angle") {
               opMix = ((path.angle + 180) % 360) / 360;
             }
-            scoreEvent = `i 3 0 ${dur} ${freq} 0.3 ${modIndex.toFixed(2)} ${algorithm} ${carrierRatio.toFixed(3)} ${opMix.toFixed(3)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
+            scoreEvent = `i 3 ${time.toFixed(3)} ${dur} ${freq} 0.3 ${modIndex.toFixed(2)} ${algorithm} ${carrierRatio.toFixed(3)} ${opMix.toFixed(3)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
           } else if (instrNum === 4) {
             // NOISE & FILTERS
             // p6=noiseColor, p7=filterType, p8=filterFreq, p9=resonance, p10=modRate, p11=pan, p12=panType
@@ -2803,7 +2803,7 @@
             resonance = Math.max(0.5, Math.min(5, resonance)); // Max Q=5 to prevent blowup
             modRate = Math.max(0, Math.min(5, modRate)); // Max 5Hz LFO
 
-            scoreEvent = `i 4 0 ${dur} ${freq} 0.3 ${noiseColor.toFixed(3)} ${filterType} ${filterFreq.toFixed(1)} ${resonance.toFixed(2)} ${modRate.toFixed(2)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
+            scoreEvent = `i 4 ${time.toFixed(3)} ${dur} ${freq} 0.3 ${noiseColor.toFixed(3)} ${filterType} ${filterFreq.toFixed(1)} ${resonance.toFixed(2)} ${modRate.toFixed(2)} ${pan} ${panType} ${noteAttack} ${noteRelease}`;
           }
 
           if (i < 3) {
