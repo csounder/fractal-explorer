@@ -2866,6 +2866,9 @@
       window.stop = async function () {
         debugLog("Stop clicked - clearing all scheduled notes");
 
+        // Set isPlaying to false FIRST so scheduled timeouts know not to play
+        isPlaying = false;
+
         // Clear playback end timeout
         if (playbackTimeoutId) {
           clearTimeout(playbackTimeoutId);
@@ -2877,17 +2880,7 @@
         scheduledTimeouts = [];
         debugLog(`✓ Cleared ${scheduledTimeouts.length} scheduled timeouts`);
 
-        // Kill all active notes using stop flag
-        if (csound && csoundReady) {
-          try {
-            await csound.setControlChannel("stopAll", 1);
-            debugLog("✓ Stop flag set - active notes terminating");
-          } catch (err) {
-            debugLog(`✗ Stop error: ${err.message}`);
-          }
-        }
-
-        isPlaying = false;
+        // Reset UI
         currentNoteIndex = -1;
         document.getElementById("playBtn").textContent = "▶ Play Audio";
         document.getElementById("playBtn").style.background = "var(--accent)";
