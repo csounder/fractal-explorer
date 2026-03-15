@@ -3645,8 +3645,8 @@
        window.logEventToCSD = function (scoreEvent, time) {
          if (isCSDRecording) {
            csdEventLog.push({ statement: scoreEvent, timestamp: time });
-           // Display in console textarea
-           const output = document.getElementById("csdOutput");
+           // Display in bottom-left textarea (csoundOutput)
+           const output = document.getElementById("csoundOutput");
            if (output) {
              output.value += scoreEvent + "\n";
              output.scrollTop = output.scrollHeight; // Auto-scroll to bottom
