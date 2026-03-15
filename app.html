@@ -3720,12 +3720,14 @@ ${orchCode}
 ;   Duration: ${(csdEventLog[csdEventLog.length - 1]?.timestamp || 0).toFixed(3)}s
 ; ============================================================
 
+f1 0 16384 10 1
+
 `;
 
-          let scoreStatements = "";
-          csdEventLog.forEach((event) => {
-            scoreStatements += event.statement + "\n";
-          });
+           let scoreStatements = "";
+           csdEventLog.forEach((event) => {
+             scoreStatements += event.statement + "\n";
+           });
 
           const csdFooter = `\ne\n</CsScore>\n</CsoundSynthesizer>`;
           const fullCSD = csdHeader + scoreStatements + csdFooter;
