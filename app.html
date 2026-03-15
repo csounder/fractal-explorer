@@ -1432,9 +1432,10 @@
 
       ; Freeverb stereo reverb (master output)
       instr 999
-        kRoomSize chnget "roomSize"
-        kWet chnget "reverbWet"
-        kMasterVol chnget "masterVolume"
+        ; Fixed reverb parameters (no control channels)
+        kRoomSize = 0.75
+        kWet = 0.45
+        kMasterVol = 1.0
 
         ; Apply freeverb to accumulated signals
         aRvbL, aRvbR freeverb gaRvbL, gaRvbR, kRoomSize, 0.5
@@ -1452,16 +1453,6 @@
         clear gaRvbL, gaRvbR
       endin
 
-      ; Init instrument - set global control channel defaults
-      instr 0
-        chnset 0.01, "globalAttack"
-        chnset 0.1, "globalRelease"
-        chnset 0.75, "roomSize"
-        chnset 0.45, "reverbWet"
-        chnset 0.7, "masterVolume"
-        chnset 0, "stopAll"
-      endin
-
       ; Universal note instrument
       instr 1
         iFreq = p4
@@ -1470,29 +1461,23 @@
         iBright = p7
         iPan = p8        ; 0-1 for stereo pan, or azimuth control
         iPanType = p9    ; 0=stereo, 2=ambisonic
-        iAtkP = p10      ; attack time (if < 0, use global)
-        iRelP = p11      ; release time (if < 0, use global)
+         iAtkP = p10      ; attack time (if < 0, use default)
+         iRelP = p11      ; release time (if < 0, use default)
 
-        ; Check stop flag every k-cycle and turnoff if set
-        kStopFlag = chnget:k("stopAll")
-        if kStopFlag == 1 then
-          turnoff
-        endif
+         ; Get attack/release - use p-field if >= 0, else use defaults
+         if (iAtkP >= 0) then
+           iAtk = iAtkP
+         else
+           iAtk = 0.01  ; Default attack 10ms
+         endif
+         if (iRelP >= 0) then
+           iRel = iRelP
+         else
+           iRel = 0.1   ; Default release 100ms
+         endif
 
-        ; Get attack/release - use p-field if >= 0, else use global channel
-        if (iAtkP >= 0) then
-          iAtk = iAtkP
-        else
-          iAtk = i(chnget:k("globalAttack"))
-        endif
-        if (iRelP >= 0) then
-          iRel = iRelP
-        else
-          iRel = i(chnget:k("globalRelease"))
-        endif
-
-        ; Envelope with attack and release
-        aEnv linsegr 0, iAtk, iAmp, iRel, 0
+         ; Envelope with attack and release
+         aEnv linsegr 0, iAtk, iAmp, iRel, 0
 
         ; === SYNTHESIS BASED ON PRESET ===
         if (iPreset == 0) then
@@ -1622,21 +1607,17 @@
         iAtkP = -1         ; use global attack
         iRelP = -1         ; use global release
 
-        kStopFlag = chnget:k("stopAll")
-        if kStopFlag == 1 then
-          turnoff
-        endif
 
         ; Get attack/release - use p-field if >= 0, else use global channel
         if (iAtkP >= 0) then
           iAtk = iAtkP
         else
-          iAtk = i(chnget:k("globalAttack"))
+          iAtk = 0.01
         endif
         if (iRelP >= 0) then
           iRel = iRelP
         else
-          iRel = i(chnget:k("globalRelease"))
+          iRel = 0.1
         endif
         aEnv linsegr 0, iAtk, iAmp, iRel, 0
 
@@ -1689,21 +1670,17 @@
         iAtkP = -1         ; use global attack
         iRelP = -1         ; use global release
 
-        kStopFlag = chnget:k("stopAll")
-        if kStopFlag == 1 then
-          turnoff
-        endif
 
         ; Get attack/release - use p-field if >= 0, else use global channel
         if (iAtkP >= 0) then
           iAtk = iAtkP
         else
-          iAtk = i(chnget:k("globalAttack"))
+          iAtk = 0.01
         endif
         if (iRelP >= 0) then
           iRel = iRelP
         else
-          iRel = i(chnget:k("globalRelease"))
+          iRel = 0.1
         endif
         aEnv linsegr 0, iAtk, iAmp, iRel, 0
 
@@ -1782,21 +1759,17 @@
         iAtkP = -1         ; use global attack
         iRelP = -1         ; use global release
 
-        kStopFlag = chnget:k("stopAll")
-        if kStopFlag == 1 then
-          turnoff
-        endif
 
         ; Get attack/release - use p-field if >= 0, else use global channel
         if (iAtkP >= 0) then
           iAtk = iAtkP
         else
-          iAtk = i(chnget:k("globalAttack"))
+          iAtk = 0.01
         endif
         if (iRelP >= 0) then
           iRel = iRelP
         else
-          iRel = i(chnget:k("globalRelease"))
+          iRel = 0.1
         endif
         aEnv linsegr 0, iAtk, iAmp, iRel, 0
 
